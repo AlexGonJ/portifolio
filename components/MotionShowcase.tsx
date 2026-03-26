@@ -8,43 +8,43 @@ import styles from '../styles/motion-showcase.module.scss'
 const slides = [
   {
     id: '01',
-    eyebrow: 'Atmosphere',
-    title: 'A imagem entra como fumaça e ganha corpo no scroll.',
+    eyebrow: 'Webdesign and development',
+    title: 'Sites e sistemas com design claro e construção inteligente.',
     description:
-      'Duas imagens reais se sobrepõem em tempos diferentes, deixando um rastro suave que parece nascer do fundo em vez de aparecer em um bloco rígido.',
+      'Projetos em stacks modernas, pensados para carregar bem, organizar melhor e converter com mais clareza.',
     primaryImage:
-      'https://images.pexels.com/photos/9907670/pexels-photo-9907670.jpeg?cs=srgb&dl=pexels-ron-lach-9907670.jpg&fm=jpg',
+      'https://images.pexels.com/photos/17036353/pexels-photo-17036353.jpeg?auto=compress&cs=tinysrgb&w=1400',
     secondaryImage:
-      'https://images.pexels.com/photos/9849939/pexels-photo-9849939.jpeg?cs=srgb&dl=pexels-ron-lach-9849939.jpg&fm=jpg',
-    accent: 'Smoke reveal',
+      '/illustrations/Foto de a href=httpsunsplash.compt-br@leecampbellutm_source=unsplash&utm_medium=referral&utm_content=creditCopyTextLee  Campbella na a href=httpsunsplash.compt-brfotografiasimac-prateado-ativado-de.jpg',
+    accent: 'Interfaces, systems and performance',
     tint: 'rgba(170, 126, 66, 0.22)',
     smoke: 'radial-gradient(circle at 42% 46%, rgba(255,255,255,0.2), transparent 26%), radial-gradient(circle at 62% 54%, rgba(217,191,135,0.18), transparent 24%), radial-gradient(circle at 28% 62%, rgba(255,255,255,0.14), transparent 22%)',
   },
   {
     id: '02',
-    eyebrow: 'Depth',
-    title: 'Planos que se atravessam sem perder a leitura.',
+    eyebrow: 'Branding',
+    title: 'Marcas com direção visual, consistência e presença.',
     description:
-      'Uma camada mais ampla ocupa o campo inteiro e a segunda aproxima a narrativa, criando uma transição menos literal e muito mais orgânica.',
+      'Identidade, web design e imagens pensadas para a marca manter unidade e valor em cada ponto de contato.',
     primaryImage:
-      'https://images.pexels.com/photos/10567351/pexels-photo-10567351.jpeg?cs=srgb&dl=pexels-ron-lach-10567351.jpg&fm=jpg',
+      '/illustrations/2h-media-NmSPbe0bDtc-unsplash.jpg',
     secondaryImage:
-      'https://images.pexels.com/photos/9850412/pexels-photo-9850412.jpeg?cs=srgb&dl=pexels-ron-lach-9850412.jpg&fm=jpg',
-    accent: 'Layered blend',
+      'https://images.pexels.com/photos/27454529/pexels-photo-27454529.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    accent: 'Identity, web and visuals',
     tint: 'rgba(94, 74, 62, 0.26)',
     smoke: 'radial-gradient(circle at 36% 42%, rgba(255,255,255,0.16), transparent 24%), radial-gradient(circle at 64% 38%, rgba(198,161,95,0.14), transparent 22%), radial-gradient(circle at 56% 68%, rgba(255,255,255,0.1), transparent 26%)',
   },
   {
     id: '03',
-    eyebrow: 'Presence',
-    title: 'O texto responde ao scroll e parece mais próximo do olhar.',
+    eyebrow: 'Digital marketing',
+    title: 'Conteúdo e campanhas para atrair, posicionar e gerar resultado.',
     description:
-      'Enquanto as imagens respiram em dupla exposição, a tipografia inclina e flutua levemente para reforçar a sensação de profundidade.',
+      'Artes para Instagram, conteúdo audiovisual e direção de comunicação para transformar presença digital em movimento real.',
     primaryImage:
-      'https://images.pexels.com/photos/9907670/pexels-photo-9907670.jpeg?cs=srgb&dl=pexels-ron-lach-9907670.jpg&fm=jpg',
+      'https://images.pexels.com/photos/7129665/pexels-photo-7129665.jpeg?auto=compress&cs=tinysrgb&w=1400',
     secondaryImage:
-      'https://images.pexels.com/photos/9849321/pexels-photo-9849321.jpeg?cs=srgb&dl=pexels-ron-lach-9849321.jpg&fm=jpg',
-    accent: 'Floating text',
+      '/illustrations/2h-media-NmSPbe0bDtc-unsplash.jpg',
+    accent: 'Content, campaigns and growth',
     tint: 'rgba(198, 161, 95, 0.2)',
     smoke: 'radial-gradient(circle at 48% 44%, rgba(255,255,255,0.14), transparent 24%), radial-gradient(circle at 70% 52%, rgba(217,191,135,0.18), transparent 24%), radial-gradient(circle at 32% 66%, rgba(255,255,255,0.1), transparent 24%)',
   },
@@ -151,7 +151,6 @@ export default function MotionShowcase() {
           0.16
         )
 
-        // Delay only the first transition so the opening frame holds longer on scroll.
         timeline.addLabel('step-1', 1.15)
 
         images.forEach((image, index) => {
@@ -247,8 +246,8 @@ export default function MotionShowcase() {
           <div className={styles.baseGradient} aria-hidden="true" />
           <div className={styles.atmosphereFog} aria-hidden="true" />
           <div className={styles.editorialMeta} aria-hidden="true">
-            <span>Image studies</span>
-            <span>Editorial pacing</span>
+            <span>Web and branding</span>
+            <span>Digital presence</span>
           </div>
 
           {slides.map((slide, index) => (
@@ -314,7 +313,7 @@ export default function MotionShowcase() {
             </div>
 
             <div className={styles.bottomNote}>
-              <span>Visual narratives built for brand, motion and interface systems.</span>
+              <span>Web, branding e marketing digital trabalhando juntos para construir marcas mais fortes.</span>
             </div>
           </div>
         </div>

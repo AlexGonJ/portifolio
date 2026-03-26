@@ -3,17 +3,18 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import styles from '../styles/selected-work.module.scss'
+import { ref } from 'node:process'
 
 const projects = [
   {
-    title: 'Mobile App Experience',
-    meta: '2023 — UI/UX',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80',
+    title: 'Web Platform Experience',
+    meta: '2025 — Dev/ Next.js/ Cybersecurity',
+    image: '/projects/post-car1.png',
   },
   {
     title: 'Brand Identity System',
-    meta: '2022 — Branding',
-    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
+    meta: '2024 — Branding',
+    image: '/projects/PlacaAline.png',
   },
   {
     title: 'Minimal Web Platform',
