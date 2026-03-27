@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from '../styles/footer.module.scss'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const socialLinks = [
   {
@@ -36,6 +37,7 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const { t } = useLanguage()
   const containerRef = useRef<HTMLDivElement | null>(null)
   const innerContentRef = useRef<HTMLDivElement | null>(null)
   const orbRef = useRef<HTMLAnchorElement | null>(null)
@@ -168,22 +170,21 @@ export default function Footer() {
 
       <div ref={innerContentRef} className={styles.inner}>
         <div className={styles.topLine}>
-          <span>Selected collaborations for brands and digital products</span>
-          <span>Available worldwide</span>
+          <span>{t.footer.topLine1}</span>
+          <span>{t.footer.topLine2}</span>
         </div>
 
         <div className={styles.main}>
           <div className={styles.copyColumn}>
-            <p className={styles.kicker}>Final CTA</p>
+            <p className={styles.kicker}>{t.footer.kicker}</p>
             <h2 ref={titleRef} className={styles.title}>
-              LET&apos;S BUILD
-              <span className={styles.titleOffset}>SOMETHING WITH</span>
-              LASTING PRESENCE
+              {t.footer.title1}
+              <span className={styles.titleOffset}>{t.footer.title2}</span>
+              {t.footer.title3}
             </h2>
 
             <p ref={copyRef} className={styles.copy}>
-              Brand systems, interfaces and motion with a more refined point of view,
-              shaped to feel clear now and memorable later.
+              {t.footer.copy}
             </p>
           </div>
 
@@ -198,15 +199,15 @@ export default function Footer() {
                 </defs>
                 <text>
                   <textPath href="#footer-orbit-path" startOffset="0%">
-                    START A CONVERSATION • START A CONVERSATION •
+                    {t.footer.orbOrbit}
                   </textPath>
                 </text>
               </svg>
 
               <span className={styles.orbCore}>
-                <span className={styles.orbEyebrow}>Open a project</span>
-                <span className={styles.orbLabel}>Let&apos;s talk</span>
-                <span className={styles.orbMeta}>Brand, motion and interface direction</span>
+                <span className={styles.orbEyebrow}>{t.footer.orbEyebrow}</span>
+                <span className={styles.orbLabel}>{t.footer.orbLabel}</span>
+                <span className={styles.orbMeta}>{t.footer.orbMeta}</span>
               </span>
 
               <span className={styles.orbArrow} aria-hidden="true">
@@ -237,15 +238,15 @@ export default function Footer() {
           <div className={styles.info}>
             <span>&copy; 2026 Alex Design</span>
             <span>
-              Local Time {new Date().getHours()}:
+              {t.footer.localTime} {new Date().getHours()}:
               {new Date().getMinutes().toString().padStart(2, '0')}
             </span>
           </div>
 
           <div className={styles.metaLinks}>
-            <a href="#projetos">Projects</a>
-            <a href="#sobre">About</a>
-            <a href="#contato">Contact</a>
+            <a href="#projetos">{t.nav.projects}</a>
+            <a href="#sobre">{t.nav.about}</a>
+            <a href="#contato">{t.nav.contact}</a>
           </div>
         </div>
       </div>

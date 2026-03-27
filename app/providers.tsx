@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from 'react'
 import Lenis from '@studio-freight/lenis'
+import { LanguageProvider } from '../i18n/LanguageContext'
 
 export default function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -62,5 +63,5 @@ export default function Providers({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  return <>{children}</>
+  return <LanguageProvider>{children}</LanguageProvider>
 }

@@ -4,10 +4,14 @@ import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import styles from '../styles/navbar.module.scss'
+import { useLanguage } from '../i18n/LanguageContext'
+import SideMenu from './SideMenu'
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false) // Troca Lista -> Sanduiche
+  const { t, lang, toggleLanguage } = useLanguage()
+  const [isScrolled, setIsScrolled] = useState(false) // Lista -> Sanduiche
   const [isPastHero, setIsPastHero] = useState(false) // Saiu da Hero
+  const [isMenuOpen, setIsMenuOpen] = useState(false) // Estado do Menu Lateral
   const navRef = useRef(null)
 
   useEffect(() => {
@@ -32,6 +36,7 @@ export default function Navbar() {
   }, [])
 
  return (
+   <>
     <nav 
       ref={navRef} 
       className={`${styles.nav} ${isPastHero ? styles.afterHero : ''}`}
@@ -41,10 +46,18 @@ export default function Navbar() {
       <div className={styles.navRight}>
         {/* Lógica mantida: O CSS cuidará de esconder isso no mobile via @media */}
         {!isScrolled && !isPastHero && (
-          <ul className={styles.menu}>
-            <li><a href="#sobre" className={styles.menuItem}>Sobre</a></li>
-            <li><a href="#projetos" className={styles.menuItem}>Projetos</a></li>
-            <li><a href="#contato" className={styles.menuItem}>Contato</a></li>
+          <ul className={styles.menu} style={{ display: 'flex', alignItems: 'center' }}>
+            <li><a href="#sobre" className={styles.menuItem}>{t.nav.about}</a></li>
+            <li><a href="#projetos" className={styles.menuItem}>{t.nav.projects}</a></li>
+            <li><a href="#contato" className={styles.menuItem}>{t.nav.contact}</a></li>
+            <li>
+              <button 
+                onClick={toggleLanguage} 
+                style={{ marginLeft: '1rem', background: 'none', border: 'none', color: '#fff', fontSize: '0.75rem', letterSpacing: '0.1em', cursor: 'pointer', opacity: 0.8 }}
+              >
+                <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
+              </button>
+            </li>
           </ul>
         )}
 
@@ -55,13 +68,27 @@ export default function Navbar() {
             display: (isScrolled || isPastHero) ? 'flex' : 'none' 
           }}
         >
-          <span>Menu</span>
-          <div className={styles.burgerLines}>
-            <div />
-            <div />
-          </div>
+          <button 
+            onClick={toggleLanguage} 
+            style={{ marginRight: '1.5rem', background: 'none', border: 'none', color: '#fff', fontSize: '0.75rem', letterSpacing: '0.1em', cursor: 'pointer', opacity: 0.8 }}
+          >
+            <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
+          </button>
+          
+          <button 
+            className={`${styles.burgerBtn} ${isMenuOpen ? styles.isOpen : ''}`} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span>{isMenuOpen ? 'Fechar' : t.nav.menu}</span>
+            <div className={styles.burgerLines}>
+              <div />
+              <div />
+            </div>
+          </button>
         </div>
       </div>
     </nav>
+    <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+   </>
   )
 }

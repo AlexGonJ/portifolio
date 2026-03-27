@@ -8,6 +8,7 @@ import About from '@/components/About'
 import MotionShowcase from '@/components/MotionShowcase'
 import EditorialBreak from '@/components/EditorialBreak'
 import Contact from '@/components/Contact'
+import Faq from '@/components/Faq'
 import Loader from '@/components/Loader'
 import Footer from '@/components/Footer'
 
@@ -40,6 +41,7 @@ export default function Home() {
           <MotionShowcase />
           <EditorialBreak />
           <Contact />
+          <Faq />
         </main>
 
         <Footer />

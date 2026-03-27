@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import styles from '../styles/motion-showcase.module.scss'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const slides = [
   {
@@ -43,7 +44,7 @@ const slides = [
     primaryImage:
       'https://images.pexels.com/photos/7129665/pexels-photo-7129665.jpeg?auto=compress&cs=tinysrgb&w=1400',
     secondaryImage:
-      '/illustrations/2h-media-NmSPbe0bDtc-unsplash.jpg',
+     '/lips.mp4',
     accent: 'Content, campaigns and growth',
     tint: 'rgba(198, 161, 95, 0.2)',
     smoke: 'radial-gradient(circle at 48% 44%, rgba(255,255,255,0.14), transparent 24%), radial-gradient(circle at 70% 52%, rgba(217,191,135,0.18), transparent 24%), radial-gradient(circle at 32% 66%, rgba(255,255,255,0.1), transparent 24%)',
@@ -51,11 +52,21 @@ const slides = [
 ]
 
 export default function MotionShowcase() {
+  const { t } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
   const copyRefs = useRef<(HTMLDivElement | null)[]>([])
   const progressLineRef = useRef<HTMLSpanElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+
+  // Use the translated slides array mapped directly
+  const activeSlides = slides.map((slide, i) => ({
+    ...slide,
+    eyebrow: t.motionShowcase.slides[i].eyebrow,
+    title: t.motionShowcase.slides[i].title,
+    description: t.motionShowcase.slides[i].description,
+    accent: t.motionShowcase.slides[i].accent,
+  }))
 
   useEffect(() => {
     let ctx: gsap.Context | undefined
@@ -111,9 +122,9 @@ export default function MotionShowcase() {
             refreshPriority: 1,
             invalidateOnRefresh: true,
             onUpdate: self => {
-              const scaledProgress = self.progress * (slides.length - 1)
+              const scaledProgress = self.progress * (activeSlides.length - 1)
               const rawIndex = Math.round(scaledProgress)
-              const nextIndex = Math.max(0, Math.min(slides.length - 1, rawIndex))
+              const nextIndex = Math.max(0, Math.min(activeSlides.length - 1, rawIndex))
               const fractional = scaledProgress - nextIndex
               const drift = Math.sin(scaledProgress * Math.PI) * 14
               const tilt = fractional * 3.5
@@ -246,11 +257,11 @@ export default function MotionShowcase() {
           <div className={styles.baseGradient} aria-hidden="true" />
           <div className={styles.atmosphereFog} aria-hidden="true" />
           <div className={styles.editorialMeta} aria-hidden="true">
-            <span>Web and branding</span>
-            <span>Digital presence</span>
+            <span>{t.motionShowcase.meta1}</span>
+            <span>{t.motionShowcase.meta2}</span>
           </div>
 
-          {slides.map((slide, index) => (
+          {activeSlides.map((slide, index) => (
             <div
               key={slide.id}
               ref={element => {
@@ -275,22 +286,37 @@ export default function MotionShowcase() {
                 />
               </div>
 
-              <div className={`${styles.imageWrap} ${styles.secondaryWrap}`}>
-                <Image
-                  src={slide.secondaryImage}
-                  alt=""
-                  fill
-                  sizes="70vw"
-                />
-              </div>
+             <div className={`${styles.imageWrap} ${styles.secondaryWrap}`}>
+  {slide.secondaryImage.includes('/video/') || slide.secondaryImage.match(/\.(mp4|webm|ogg)$/) ? (
+    <video
+      src={slide.secondaryImage}
+      autoPlay
+      loop
+      muted
+      playsInline
+      style={{
+        objectFit: 'cover',
+        width: '100%',
+        height: '100%',
+      }}
+    />
+  ) : (
+    <Image
+      src={slide.secondaryImage}
+      alt=""
+      fill
+      sizes="70vw"
+    />
+  )}
+</div>
             </div>
           ))}
 
           <div className={styles.foregroundCopy}>
-            <p className={styles.kicker}>Before contact</p>
+            <p className={styles.kicker}>{t.motionShowcase.kicker}</p>
 
             <div className={styles.copyViewport}>
-              {slides.map((slide, index) => (
+              {activeSlides.map((slide, index) => (
                 <div
                   key={slide.id}
                   ref={element => {
@@ -313,7 +339,7 @@ export default function MotionShowcase() {
             </div>
 
             <div className={styles.bottomNote}>
-              <span>Web, branding e marketing digital trabalhando juntos para construir marcas mais fortes.</span>
+              <span>{t.motionShowcase.bottomNote}</span>
             </div>
           </div>
         </div>

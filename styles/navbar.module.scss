@@ -97,9 +97,35 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    min-width: 50px;
+    text-align: right;
 
     @media (max-width: 480px) {
-      display: none; // Esconde a palavra "Menu" em telas muito pequenas para poupar espaço
+      display: none; 
+    }
+  }
+}
+
+.burgerBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 101; // acima de tudo
+  
+  &.isOpen {
+    mix-blend-mode: normal; // Evita bugar invertido qd menu está aberto escuro
+
+    .burgerLines {
+      div:nth-child(1) {
+        transform: translateY(3.2px) rotate(45deg);
+      }
+      div:nth-child(2) {
+        transform: translateY(-3.2px) rotate(-45deg);
+      }
     }
   }
 }
@@ -112,5 +138,6 @@
     width: 22px;
     height: 1.5px;
     background-color: #ffffff;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }

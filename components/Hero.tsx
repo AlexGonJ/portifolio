@@ -4,12 +4,14 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import SplitText from './SplitText'
 import styles from '../styles/hero.module.scss'
+import { useLanguage } from '../i18n/LanguageContext'
 
 interface HeroProps {
   start: boolean
 }
 
 export default function Hero({ start }: HeroProps) {
+  const { t } = useLanguage()
   const sectionRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
@@ -97,20 +99,20 @@ useEffect(() => {
       <div className={styles.content} ref={textRef}>
         <h1>
           <SplitText animate={start}>
-            Designing digital experiences with <br />
-            clarity & purpose
+            {t.hero.title1} <br />
+            {t.hero.title2}
           </SplitText>
         </h1>
 
         <p ref={pRef} style={{ opacity: 0 }}>
-          Focused on crafting thoughtful interfaces and meaningful digital products.
+          {t.hero.description}
         </p>
 
         <div className={styles.actions}>
           <a ref={ctaRef} href="#projetos" className={styles.cta}>
             <span className={styles.ctaSurface}>
-              <span className={styles.ctaEyebrow}>Selected work</span>
-              <span className={styles.ctaLabel}>See the work</span>
+              <span className={styles.ctaEyebrow}>{t.hero.ctaEyebrow}</span>
+              <span className={styles.ctaLabel}>{t.hero.ctaLabel}</span>
             </span>
 
             <span className={styles.ctaIcon} aria-hidden="true">

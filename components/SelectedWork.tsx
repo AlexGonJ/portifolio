@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import styles from '../styles/selected-work.module.scss'
 import { ref } from 'node:process'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const projects = [
   {
@@ -24,6 +25,7 @@ const projects = [
 ]
 
 export default function SelectedWork() {
+  const { t } = useLanguage()
   const sectionRef   = useRef<HTMLElement>(null)
   const previewRef   = useRef<HTMLDivElement>(null)
   const cursorRef    = useRef<HTMLDivElement>(null)
@@ -179,7 +181,7 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
 
   return (
     <section id="projetos" ref={sectionRef} className={styles.selectedWork}>
-      <p className={styles.sectionLabel}>Selected Work</p>
+      <p className={styles.sectionLabel}>{t.selectedWork.label}</p>
 
       <ul className={styles.list}>
         {projects.map((project, i) => (
@@ -197,8 +199,8 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
             <div className={styles.itemContent}>
               <span className={styles.itemNum}>{String(i + 1).padStart(2, '0')}</span>
               <div className={styles.itemCenter}>
-                <h3>{project.title}</h3>
-                <span className={styles.itemMeta}>{project.meta}</span>
+                <h3>{t.selectedWork.projects[i].title}</h3>
+                <span className={styles.itemMeta}>{t.selectedWork.projects[i].meta}</span>
               </div>
             </div>
           </li>
@@ -226,7 +228,7 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
           </div>
 
           <div ref={cursorRef} className={styles.viewCursor} aria-hidden="true">
-            VIEW
+            {t.selectedWork.view}
           </div>
         </>
       )}

@@ -1,8 +1,11 @@
 'use client'
 import styles from '../styles/about.module.scss'
 import ScrollReveal from './ScrollReveal'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function About() {
+  const { t } = useLanguage()
+  
   return (
     <section id="sobre" className={styles.about}>
       {/* Lado Esquerdo: Título maior */}
@@ -14,7 +17,7 @@ export default function About() {
           blurStrength={10} // Reduzi levemente para não pesar no mobile
           containerClassName={styles.customH2}
         >
-          Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.
+          {t.about.title}
         </ScrollReveal>
       </div>
 
@@ -26,7 +29,7 @@ export default function About() {
           blurStrength={5}
           containerClassName={styles.customP}
         >
-          Focused on crafting thoughtful interfaces and meaningful digital products that leave a lasting impression.
+          {t.about.description}
         </ScrollReveal>
       </div>
     </section>

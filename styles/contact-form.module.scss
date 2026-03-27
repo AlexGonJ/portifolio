@@ -1,0 +1,94 @@
+@use './variables' as vars;
+
+.formContainer {
+  /* GLASSMORPHISM CARD DESIGN */
+  width: 100%;
+  margin-bottom: 6rem;
+  padding: 3.5rem;
+  background: rgba(20, 16, 13, 0.65); /* Dark warm tint matching website soul */
+  backdrop-filter: blur(24px); /* Frosted glass */
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Minimal rim light reflection */
+  border-radius: 1.5rem; /* Soft round corners */
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1); /* Floating feel */
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 600px;
+}
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15); /* Softer un-focused state */
+  color: var(--color-surface);
+  font-size: 1.25rem;
+  font-family: inherit;
+  padding: 0.5rem 0;
+  outline: none;
+  transition: border-bottom-color 0.4s ease, border-bottom-style 0.4s ease, box-shadow 0.4s ease;
+  width: 100%;
+}
+
+.input:focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-gold);
+  box-shadow: 0 8px 12px -8px rgba(201, 168, 76, 0.3); /* Subtle gold glow underneath */
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 300;
+  transition: opacity 0.3s ease;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 48px;
+}
+
+.submitBtn {
+  align-self: flex-start;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.03); /* Slight fill so it feels like a button */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-surface);
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Snappy transition */
+  font-family: inherit;
+}
+
+.submitBtn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: rgba(201, 168, 76, 0.08); /* Glow fill on hover containing gold var */
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px rgba(201, 168, 76, 0.4); /* Glow shadow */
+}

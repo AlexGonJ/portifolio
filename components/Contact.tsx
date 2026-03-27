@@ -3,7 +3,10 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import ResultCards from './ResultCards'
+import ContactForm from './ContactForm'
 import styles from '../styles/contact.module.scss'
+import { useLanguage } from '../i18n/LanguageContext'
 
 // Carrega o Masonry apenas no cliente para evitar erros de SSR no build
 const Masonry = dynamic(() => import('./Masonry'), {
@@ -26,6 +29,7 @@ const items = [
 ]
 
 export default function Contact() {
+  const { t } = useLanguage()
   const [parallaxY, setParallaxY] = useState(0)
   const parallaxStyle = { '--parallax-y': `${parallaxY}px` } as CSSProperties
 
@@ -55,23 +59,26 @@ export default function Contact() {
       <div className={styles.container}>
         <div className={styles.introRow}>
           <div className={styles.header}>
-            <p className={styles.label}>Connect</p>
+            <p className={styles.label}>{t.contact.label}</p>
             <h2 className={styles.title}>
-              <span className={styles.line1}>Get in</span>
-              <span className={styles.line2}>touch</span>
+              <span className={styles.line1}>{t.contact.title1}</span>
+              <span className={styles.line2}>{t.contact.title2}</span>
             </h2>
           </div>
 
           <div className={styles.editorialAside}>
             <p className={styles.asideLead}>
-              Disponível para branding, motion, visual systems e interfaces com direção mais autoral.
+              {t.contact.asideLead}
             </p>
             <div className={styles.asideMeta}>
-              <span>Brazil / Remote</span>
-              <span>2026 bookings open</span>
+              <span>{t.contact.asideMeta1}</span>
+              <span>{t.contact.asideMeta2}</span>
             </div>
           </div>
         </div>
+
+        <ResultCards />
+        <ContactForm />
 
         <div className={styles.masonryWrapper}>
           <div className={styles.masonryBackdrop} aria-hidden="true">
