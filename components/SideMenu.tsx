@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from '../styles/side-menu.module.scss'
@@ -12,20 +12,20 @@ interface SideMenuProps {
 }
 
 // O Backbone do Backdrop escuro da tela que restou dos 60%
-const backdropVariants = {
+const backdropVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1, 
-    transition: { duration: 0.5, ease: 'easeOut' } 
+    transition: { duration: 0.5, ease: 'easeOut' as const } 
   },
   exit: { 
     opacity: 0, 
-    transition: { duration: 0.5, ease: 'easeIn', delay: 0.3 } 
+    transition: { duration: 0.5, ease: 'easeIn' as const, delay: 0.3 } 
   }
 }
 
 // O Efeito curva sofisticado: começa esférico na lateral esquerda superior e inferior (border radius) e estica para placa plana. 
-const drawerVariants = {
+const drawerVariants: Variants = {
   hidden: { 
     x: '100%', 
     borderTopLeftRadius: '50vw',
@@ -51,7 +51,7 @@ const drawerVariants = {
   }
 }
 
-const contentVariants = {
+const contentVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -63,10 +63,10 @@ const contentVariants = {
   }
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } },
-  exit: { y: -10, opacity: 0, transition: { duration: 0.3, ease: 'easeIn' } }
+  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  exit: { y: -10, opacity: 0, transition: { duration: 0.3, ease: 'easeIn' as const } }
 }
 
 const getSocialIcon = (name: string) => {
