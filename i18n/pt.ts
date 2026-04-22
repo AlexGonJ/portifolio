@@ -123,9 +123,6 @@ export const pt: TranslatorProps = {
     emailPlaceholder: 'Seu endereço de e-mail',
     messagePlaceholder: 'Qual desafio do seu negócio posso resolver?',
     submit: 'Enviar mensagem',
-    pending: 'Contato em configuração',
-    helper:
-      'Defina `NEXT_PUBLIC_FORMSPREE_ENDPOINT` para ativar o formulário e transformar esta seção em um ponto real de conversão.',
   },
   faq: {
     label: 'Detalhes',

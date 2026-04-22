@@ -119,15 +119,10 @@ export default function ContactForm() {
           ref={btnRef} 
           type="submit" 
           className={`${styles.submitBtn} gsap-form-item`}
-          disabled={!endpoint}
         >
-          {endpoint ? t.contactForm.submit : t.contactForm.pending}
+          {t.contactForm.submit}
         </button>
       </form>
-
-      {!endpoint && (
-        <p className={styles.helper}>{t.contactForm.helper}</p>
-      )}
     </div>
   )
 }

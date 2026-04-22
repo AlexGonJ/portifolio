@@ -121,9 +121,6 @@ export const en = {
     emailPlaceholder: 'Your email address',
     messagePlaceholder: 'What business challenge can I help you solve?',
     submit: 'Send Message',
-    pending: 'Contact coming soon',
-    helper:
-      'Set `NEXT_PUBLIC_FORMSPREE_ENDPOINT` to activate the form and turn this section into a real conversion point.',
   },
   faq: {
     label: 'Details',
