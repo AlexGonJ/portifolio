@@ -9,6 +9,7 @@ export default function ContactForm() {
   const { t } = useLanguage()
   const btnRef = useRef<HTMLButtonElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
+  const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT
 
   // Floating Magnetic Button Effect (same aesthetic as SelectedWork)
   useEffect(() => {
@@ -45,25 +46,32 @@ export default function ContactForm() {
 
   // Reveal Animation
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.gsap-form-item',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: 'top 85%'
-          }
-        }
-      )
-    }, formRef)
+    let ctx: gsap.Context | undefined
 
-    return () => ctx.revert()
+    ;(async () => {
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          '.gsap-form-item',
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.72,
+            stagger: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: formRef.current,
+              start: 'top 85%'
+            }
+          }
+        )
+      }, formRef)
+    })()
+
+    return () => ctx?.revert()
   }, [])
 
   return (
@@ -71,7 +79,7 @@ export default function ContactForm() {
       <form 
         ref={formRef}
         className={styles.form}
-        action="https://formspree.io/f/SEU_ID_DO_FORMSPREE_AQUI" 
+        action={endpoint}
         method="POST"
       >
         <div className={`${styles.inputGroup} gsap-form-item`}>
@@ -111,10 +119,15 @@ export default function ContactForm() {
           ref={btnRef} 
           type="submit" 
           className={`${styles.submitBtn} gsap-form-item`}
+          disabled={!endpoint}
         >
-          {t.contactForm.submit}
+          {endpoint ? t.contactForm.submit : t.contactForm.pending}
         </button>
       </form>
+
+      {!endpoint && (
+        <p className={styles.helper}>{t.contactForm.helper}</p>
+      )}
     </div>
   )
 }

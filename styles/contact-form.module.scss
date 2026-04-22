@@ -92,3 +92,18 @@ textarea.input {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -10px rgba(201, 168, 76, 0.4); /* Glow shadow */
 }
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.helper {
+  margin-top: 1rem;
+  max-width: 48ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.56);
+}

@@ -94,13 +94,16 @@ const IMAGES = [
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const pathname = usePathname()
   const { t } = useLanguage()
-  const [hoveredIndex, setHoveredIndex] = useState(0)
+  const [hoveredIndex] = useState(0)
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
-      setHoveredIndex(0) // reset local image
     } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
       document.body.style.overflow = ''
     }
   }, [isOpen])
@@ -172,7 +175,6 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                         className={styles.navItem}
                         variants={itemVariants}
                         onClick={onClose}
-                        onMouseEnter={() => setHoveredIndex(link.index === -1 ? 0 : link.index)}
                       >
                         <span className={styles.num}>0{i + 1}</span>
                         {link.label}

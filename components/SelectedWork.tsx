@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import Image from 'next/image'
 import styles from '../styles/selected-work.module.scss'
-import { ref } from 'node:process'
 import { useLanguage } from '../i18n/LanguageContext'
 
 const projects = [
@@ -196,7 +196,7 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
             className={styles.item}
             data-project-item
             data-image={project.image}
-            onClick={(e) => {
+            onClick={() => {
               if (project.href && project.href !== '#') {
                 router.push(project.href)
               }
@@ -205,7 +205,7 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
           >
             {isMobile && (
               <div className={styles.mobileImage}>
-                <img src={project.image} alt={project.title} />
+                <Image src={project.image} alt={project.title} fill sizes="100vw" />
               </div>
             )}
             <div className={styles.itemContent}>

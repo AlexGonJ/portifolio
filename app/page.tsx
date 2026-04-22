@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import SelectedWork from '@/components/SelectedWork'
 import About from '@/components/About'
+import Services from '@/components/Services'
 import MotionShowcase from '@/components/MotionShowcase'
 import EditorialBreak from '@/components/EditorialBreak'
 import Contact from '@/components/Contact'
@@ -37,6 +38,7 @@ export default function Home() {
           <Navbar />
           <Hero start={!isLoading} />
           <About />
+          <Services />
           <SelectedWork />
           <MotionShowcase />
           <EditorialBreak />

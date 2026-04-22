@@ -50,7 +50,7 @@
   min-width: 0;
 
   h3 {
-    font-size: clamp(1.6rem, 4.5vw, 3.2rem);
+    font-size: clamp(1.6rem, 1.05rem + 3.1vw, 3.2rem);
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -66,23 +66,24 @@
 .itemMeta {
   display: block;
   margin-top: 0.4rem;
-  font-size: 0.82rem;
+  font-size: var(--step--1);
   color: var(--color-muted);
 }
 
-// ─── Mobile ───────────────────────────────────────────────────────────────
+// ─── Mobile Image ─────────────────────────────────────────────────────────
 .mobileImage {
   display: none;
 
   @media (max-width: 1024px) {
     display: block;
+    position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 4px;
     margin-top: 1rem;
 
-    img {
+    :global(img) {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -101,25 +102,22 @@
   z-index: 50;
   border-radius: 4px;
   overflow: hidden;
-  // posição e opacidade controladas por GSAP
 }
 
-// Fundo da moldura — substitui o .previewBg atual
 .previewBg {
   position: absolute;
   inset: 0;
-  background: #f0eeeb; // um tom abaixo do branco do site
+  background: #f0eeeb;
   z-index: 0;
   border-radius: 4px;
 }
 
-// Container das imagens — recua para criar a moldura
 .previewImgWrap {
   position: absolute;
-  inset: 30px; // espaço da moldura — ajuste aqui se quiser mais ou menos
+  inset: 30px;
   z-index: 1;
   overflow: hidden;
-  border-radius: 3px; // levemente menor que o container
+  border-radius: 3px;
 }
 
 .previewImg {
@@ -178,7 +176,6 @@
   color: var(--color-ink);
   overflow: hidden;
 
-  // ─── BORDA MAIS FORTE ───────────────────────────
   border: 1.5px solid rgba(201,168,76,0.7);
 
   background: transparent;
@@ -190,7 +187,6 @@
     z-index: 3;
   }
 
-  // ─── BORDA ANIMADA MAIS VISÍVEL ─────────────────
   &::after {
     content: '';
     position: absolute;
@@ -225,7 +221,6 @@
     mask-composite: exclude;
   }
 
-  // ─── FILL PRETO (CORRIGIDO 100%) ────────────────
   &::before {
     content: '';
     position: absolute;
@@ -233,14 +228,13 @@
 
     background: var(--color-ink);
 
-    transform: translateY(110%); // 🔥 agora não vaza
+    transform: translateY(110%);
     border-radius: 0;
 
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1;
   }
 
-  // ─── HOVER ──────────────────────────────────────
   &:hover {
     color: var(--color-surface);
     transform: scale(1.04);
@@ -248,12 +242,12 @@
     border-color: rgba(201,168,76,1);
 
     &::before {
-      transform: translateY(0); // sobe limpo
+      transform: translateY(0);
     }
 
     &::after {
-      opacity: 1; // brilho mais forte
-      animation-duration: 3s; // acelera no hover
+      opacity: 1;
+      animation-duration: 3s;
     }
   }
 }
@@ -264,5 +258,35 @@
   }
   100% {
     transform: translate(30%, 30%);
+  }
+}
+
+// ─── Mobile responsive ───────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .selectedWork {
+    padding: clamp(3rem, 8vw, 5rem) 5vw;
+  }
+
+  .itemContent {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem) 0;
+  }
+
+  .itemCenter h3 {
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+  }
+
+  .itemMeta {
+    font-size: clamp(0.65rem, 2vw, 0.8rem);
+  }
+
+  .mobileImage {
+    aspect-ratio: 16 / 10;
+  }
+
+  .buttonWrapper {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
   }
 }

@@ -8,7 +8,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     // Simulação de carregamento (ou você pode usar imagens carregadas)
-    const tl = gsap.timeline({
+    gsap.timeline({
       onComplete: () => {
         // Animação de saída da tela preta
         gsap.to(".loader-container", {

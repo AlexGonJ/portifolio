@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import Image from 'next/image'
 import SplitText from './SplitText'
 import styles from '../styles/hero.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -20,23 +21,31 @@ export default function Hero({ start }: HeroProps) {
 
 useEffect(() => {
   let ctx: gsap.Context | undefined
-
-  const move = (e: MouseEvent) => {
-    const x = (e.clientX / window.innerWidth  - 0.5) * 30
-    const y = (e.clientY / window.innerHeight - 0.5) * 30
-
-    gsap.to(imageRef.current, {
-      x, y,
-      duration: 1.2,
-      ease: 'power3.out',
-    })
-  }
+  let removeMoveListener: (() => void) | undefined
 
   ;(async () => {
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')
     gsap.registerPlugin(ScrollTrigger)
 
     ctx = gsap.context(() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const isDesktop = window.innerWidth > 900
+
+      if (isDesktop && !prefersReducedMotion && imageRef.current) {
+        const xTo = gsap.quickTo(imageRef.current, 'x', { duration: 0.55, ease: 'power2.out' })
+        const yTo = gsap.quickTo(imageRef.current, 'y', { duration: 0.55, ease: 'power2.out' })
+
+        const move = (e: MouseEvent) => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 18
+          const y = (e.clientY / window.innerHeight - 0.5) * 18
+          xTo(x)
+          yTo(y)
+        }
+
+        window.addEventListener('mousemove', move, { passive: true })
+        removeMoveListener = () => window.removeEventListener('mousemove', move)
+      }
+
       // Imagem sobe pouco
       gsap.to(imageRef.current, {
         y: 80,
@@ -76,22 +85,24 @@ useEffect(() => {
       }
     }, sectionRef)
 
-    window.addEventListener('mousemove', move)
   })()
 
   return () => {
     ctx?.revert()
-    window.removeEventListener('mousemove', move)
+    removeMoveListener?.()
   }
 }, [start])
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-      <img
+      <Image
         ref={imageRef}
         className={styles.heroBg}
-        src="./heroi1.png"
+        src="/heroi1.png"
         alt="Hero background"
+        fill
+        priority
+        sizes="100vw"
       />
 
       <div className={styles.overlayNoise} />

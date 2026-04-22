@@ -18,7 +18,7 @@ const socialLinks = [
   },
   {
     label: 'Instagram',
-    href: '#',
+    href: 'https://www.instagram.com/lexon.digital/',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7.8 3h8.4A4.8 4.8 0 0 1 21 7.8v8.4a4.8 4.8 0 0 1-4.8 4.8H7.8A4.8 4.8 0 0 1 3 16.2V7.8A4.8 4.8 0 0 1 7.8 3Zm0 1.8A3 3 0 0 0 4.8 7.8v8.4a3 3 0 0 0 3 3h8.4a3 3 0 0 0 3-3V7.8a3 3 0 0 0-3-3H7.8Zm8.85 1.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1ZM12 7.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 1.8A2.7 2.7 0 1 0 14.7 12 2.7 2.7 0 0 0 12 9.3Z" />
@@ -189,7 +189,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.actionColumn}>
-            <a ref={orbRef} href="#contato" className={styles.orb}>
+            <a ref={orbRef} href="https://w.app/lexondigital" target="_blank" rel="noreferrer" className={styles.orb}>
               <svg className={styles.orbTrack} viewBox="0 0 220 220" aria-hidden="true">
                 <defs>
                   <path

@@ -24,7 +24,7 @@ const items = [
   { id: "8", img: "/projects/sport.png", height: 380, url: "#" },
   { id: "9", img: "/projects/golde.png", height: 800, url: "#" },
   { id: "10", img: "/projects/PlacaAline.png", height: 480, url: "#" },
-  { id: "11", img: "/projects/.png", height: 360, url: "#" },
+  { id: "11", img: "/projects/enge.png", height: 360, url: "#" },
   { id: "12", img: "/projects/dental.png", height: 340, url: "#" },
 ]
 

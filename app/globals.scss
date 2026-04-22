@@ -1,37 +1,65 @@
 @use '../styles/variables' as vars;
 
-
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-html, body {
-background: vars.$bg;
-color: vars.$text-primary;
-font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-font-weight: 400;
-letter-spacing: -0.01em;
-overflow-x: hidden;
+html {
+  /* Removed scroll-behavior: smooth as it conflicts with GSAP ScrollTrigger */
 }
 
+body {
+  background: vars.$bg;
+  color: vars.$text-primary;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
 
 section {
-padding: 12vh 6vw;
-}
-html, body {
-  overscroll-behavior: none;
+  padding: 12vh 6vw;
 }
 
 .hide-system-cursor {
   cursor: none !important;
 }
+
 :root {
+  --step--1: clamp(0.76rem, 0.72rem + 0.18vw, 0.9rem);
+  --step-0: clamp(0.98rem, 0.92rem + 0.32vw, 1.14rem);
+  --step-1: clamp(1.18rem, 1.03rem + 0.7vw, 1.56rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.05vw, 2.15rem);
+  --step-3: clamp(2rem, 1.5rem + 1.8vw, 3.25rem);
+  --step-4: clamp(2.7rem, 1.9rem + 3vw, 5.2rem);
   --color-gold:    #c9a84c;
   --color-ink:     #0d0d0d;
   --color-surface: #ffffff;
   --color-muted:   rgba(0, 0, 0, 0.35);
   --color-border:  rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

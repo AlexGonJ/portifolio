@@ -1,7 +1,10 @@
 'use client'
 
-let gsapInstance: any = null
-let ScrollTriggerInstance: any = null
+type GsapType = typeof import('gsap').default
+type ScrollTriggerType = typeof import('gsap/ScrollTrigger').default
+
+let gsapInstance: GsapType | null = null
+let ScrollTriggerInstance: ScrollTriggerType | null = null
 
 const loadGSAP = async () => {
   if (typeof window === 'undefined') return null
