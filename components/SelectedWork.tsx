@@ -11,20 +11,26 @@ const projects = [
     title: 'Web Platform Experience',
     meta: '2025 — Dev/ Next.js/ Cybersecurity',
     image: '/projects/post-car1.png',
+    href: '/work/localiza-multas',
   },
   {
     title: 'Brand Identity System',
     meta: '2024 — Branding',
     image: '/projects/PlacaAline.png',
+    href: '#',
   },
   {
     title: 'Minimal Web Platform',
     meta: '2024 — Web Design',
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
+    href: '#',
   },
 ]
 
+import { useRouter } from 'next/navigation'
+
 export default function SelectedWork() {
+  const router = useRouter()
   const { t } = useLanguage()
   const sectionRef   = useRef<HTMLElement>(null)
   const previewRef   = useRef<HTMLDivElement>(null)
@@ -190,6 +196,12 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
             className={styles.item}
             data-project-item
             data-image={project.image}
+            onClick={(e) => {
+              if (project.href && project.href !== '#') {
+                router.push(project.href)
+              }
+            }}
+            style={{ cursor: project.href !== '#' ? 'none' : 'default' }}
           >
             {isMobile && (
               <div className={styles.mobileImage}>

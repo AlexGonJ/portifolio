@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 export default function Hero({ start }: HeroProps) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const sectionRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
@@ -98,7 +98,7 @@ useEffect(() => {
 
       <div className={styles.content} ref={textRef}>
         <h1>
-          <SplitText animate={start}>
+          <SplitText key={lang} animate={start}>
             {t.hero.title1} <br />
             {t.hero.title2}
           </SplitText>

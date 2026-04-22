@@ -115,7 +115,7 @@ export default function MotionShowcase() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top top',
-            end: '+=370%',
+            end: '+=600%',
             pin: true,
             scrub: 1.15,
             anticipatePin: 1,

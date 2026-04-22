@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from '../styles/side-menu.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 interface SideMenuProps {
   isOpen: boolean
@@ -90,6 +92,7 @@ const IMAGES = [
 ]
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
+  const pathname = usePathname()
   const { t } = useLanguage()
   const [hoveredIndex, setHoveredIndex] = useState(0)
 
@@ -103,9 +106,10 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   }, [isOpen])
 
   const navLinks = [
-    { label: t.nav.about, href: '#sobre', index: 0 },
-    { label: t.nav.projects, href: '#projetos', index: 1 },
-    { label: t.nav.contact, href: '#contato', index: 2 }
+    ...(pathname !== '/' ? [{ label: 'Home', href: '/', index: -1 }] : []),
+    { label: t.nav.about, href: pathname === '/' ? '#sobre' : '/#sobre', index: 0 },
+    { label: t.nav.projects, href: pathname === '/' ? '#projetos' : '/#projetos', index: 1 },
+    { label: t.nav.contact, href: pathname === '/' ? '#contato' : '/#contato', index: 2 }
   ]
 
   return (
@@ -162,18 +166,18 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
               {/* O Bloco Direito de Navegação */}
               <div className={styles.rightCol}>
                 <div className={styles.mainNav}>
-                  {navLinks.map((link) => (
-                    <motion.a 
-                      key={link.index}
-                      href={link.href}
-                      className={styles.navItem}
-                      variants={itemVariants}
-                      onClick={onClose}
-                      onMouseEnter={() => setHoveredIndex(link.index)}
-                    >
-                      <span className={styles.num}>0{link.index + 1}</span>
-                      {link.label}
-                    </motion.a>
+                  {navLinks.map((link, i) => (
+                    <Link key={link.index} href={link.href} passHref legacyBehavior>
+                      <motion.a 
+                        className={styles.navItem}
+                        variants={itemVariants}
+                        onClick={onClose}
+                        onMouseEnter={() => setHoveredIndex(link.index === -1 ? 0 : link.index)}
+                      >
+                        <span className={styles.num}>0{i + 1}</span>
+                        {link.label}
+                      </motion.a>
+                    </Link>
                   ))}
                 </div>
 

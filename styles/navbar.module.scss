@@ -12,22 +12,26 @@
   color: #ffffff;
   transition: transform 0.3s ease;
 
+  pointer-events: none; // let clicks pass through the invisible nav container
+
   @media (max-width: 768px) {
     padding: 2.5vh 6vw; // Padding menor no mobile
   }
 
   &.afterHero {
-    mix-blend-mode: difference;
-    
     .logo {
       opacity: 0;
       visibility: hidden;
-      pointer-events: none;
+    }
+    
+    .navRight {
+      mix-blend-mode: difference;
     }
   }
 }
 
 .logo {
+  pointer-events: auto;
   font-weight: 600;
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -43,6 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  pointer-events: auto;
 }
 
 .menu {
@@ -139,5 +144,44 @@
     height: 1.5px;
     background-color: #ffffff;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.langBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  opacity: 0.8;
+  margin-left: 1rem;
+}
+
+.mobileLangBtn {
+  margin-left: 0;
+  margin-right: 1.5rem;
+}
+
+.projectNav {
+  color: #111;
+
+  .menuItem {
+    color: #111;
+    &::after {
+      background-color: #111;
+    }
+  }
+
+  .burgerBtn {
+    color: #111;
+  }
+  
+  .burgerLines div {
+    background-color: #111;
+  }
+
+  .langBtn {
+    color: #111;
   }
 }

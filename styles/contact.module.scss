@@ -58,7 +58,7 @@
 }
 
 .title {
-  font-size: clamp(3.5rem, 12vw, 10rem);
+  font-size: clamp(2.2rem, 5.5vw, 7.5rem);
   font-weight: 500;
   line-height: 0.85;
   text-transform: uppercase;
@@ -72,7 +72,7 @@
 }
 
 .line2 {
-  padding-left: clamp(4rem, 15vw, 15rem);
+  padding-left: clamp(2rem, 8vw, 8rem);
   color: #d8b36b;
   background-image:
     linear-gradient(125deg, #7f6224 0%, #f4e2b7 32%, #af8a40 56%, #ffeec6 74%, #8a6a2f 100%),
@@ -100,7 +100,7 @@
   }
 
   .line2 {
-    padding-left: clamp(2rem, 10vw, 6rem);
+    padding-left: clamp(1rem, 5vw, 3rem);
   }
 }
 

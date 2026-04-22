@@ -6,8 +6,11 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import styles from '../styles/navbar.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 import SideMenu from './SideMenu'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-export default function Navbar() {
+export default function Navbar({ isProjectPage = false }: { isProjectPage?: boolean }) {
+  const pathname = usePathname()
   const { t, lang, toggleLanguage } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false) // Lista -> Sanduiche
   const [isPastHero, setIsPastHero] = useState(false) // Saiu da Hero
@@ -27,19 +30,21 @@ export default function Navbar() {
     })
 
     // 2. Detecta quando a Hero termina
-    ScrollTrigger.create({
-      trigger: "section:first-of-type", // Alvo: Sua Hero
-      start: "bottom 10%", // Quando o fim da hero chega no topo
-      onEnter: () => setIsPastHero(true),
-      onEnterBack: () => setIsPastHero(false),
-    })
-  }, [])
+    if (!isProjectPage) {
+      ScrollTrigger.create({
+        trigger: "section:first-of-type", // Alvo: Sua Hero
+        start: "bottom 10%", // Quando o fim da hero chega no topo
+        onEnter: () => setIsPastHero(true),
+        onEnterBack: () => setIsPastHero(false),
+      })
+    }
+  }, [isProjectPage])
 
  return (
    <>
     <nav 
       ref={navRef} 
-      className={`${styles.nav} ${isPastHero ? styles.afterHero : ''}`}
+      className={`${styles.nav} ${isPastHero ? styles.afterHero : ''} ${isProjectPage ? styles.projectNav : ''}`}
     >
       <span className={styles.logo}>Code by Alex</span>
       
@@ -47,13 +52,16 @@ export default function Navbar() {
         {/* Lógica mantida: O CSS cuidará de esconder isso no mobile via @media */}
         {!isScrolled && !isPastHero && (
           <ul className={styles.menu} style={{ display: 'flex', alignItems: 'center' }}>
-            <li><a href="#sobre" className={styles.menuItem}>{t.nav.about}</a></li>
-            <li><a href="#projetos" className={styles.menuItem}>{t.nav.projects}</a></li>
-            <li><a href="#contato" className={styles.menuItem}>{t.nav.contact}</a></li>
+            {pathname !== '/' && (
+              <li><Link href="/" className={styles.menuItem}>Home</Link></li>
+            )}
+            <li><Link href={pathname === '/' ? "#sobre" : "/#sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
+            <li><Link href={pathname === '/' ? "#projetos" : "/#projetos"} className={styles.menuItem}>{t.nav.projects}</Link></li>
+            <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
             <li>
               <button 
                 onClick={toggleLanguage} 
-                style={{ marginLeft: '1rem', background: 'none', border: 'none', color: '#fff', fontSize: '0.75rem', letterSpacing: '0.1em', cursor: 'pointer', opacity: 0.8 }}
+                className={styles.langBtn}
               >
                 <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
               </button>
@@ -70,7 +78,7 @@ export default function Navbar() {
         >
           <button 
             onClick={toggleLanguage} 
-            style={{ marginRight: '1.5rem', background: 'none', border: 'none', color: '#fff', fontSize: '0.75rem', letterSpacing: '0.1em', cursor: 'pointer', opacity: 0.8 }}
+            className={`${styles.langBtn} ${styles.mobileLangBtn}`}
           >
             <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
           </button>

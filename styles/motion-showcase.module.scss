@@ -2,11 +2,11 @@
   --text-shift: 0px;
   --text-tilt: 0deg;
   --text-blur: 0px;
-  --copy-safe-bottom: clamp(5.25rem, 9vh, 6.5rem);
+  --copy-safe-bottom: clamp(5.25rem, 9svh, 6.5rem);
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   margin-top: -50rem;
-  padding: 3rem 0 0;
+  padding: 1rem 0 0;
   overflow: clip;
   background:
     linear-gradient(180deg, #f7f1e8 0%, #f0e6d9 100%);
@@ -76,13 +76,13 @@
 .inner {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.6rem, 3.2vw, 2.6rem) clamp(2.2rem, 4vw, 3rem);
+  min-height: 100svh;
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 2vw, 1.5rem);
 }
 
 .visualStage {
   position: relative;
-  min-height: calc(100vh - clamp(4rem, 8vw, 6rem));
+  min-height: calc(100svh - clamp(2rem, 4vw, 3rem));
   border-radius: clamp(1rem, 1.8vw, 1.4rem);
   overflow: hidden;
   isolation: isolate;
@@ -242,7 +242,7 @@
 
 .copyViewport {
   position: relative;
-  min-height: clamp(21rem, 38vh, 27rem);
+  min-height: clamp(32rem, 50svh, 48rem);
   max-width: min(34rem, 54%);
 }
 
@@ -363,7 +363,7 @@
 @media (max-width: 960px) {
   .showcase {
     margin-top: -3rem;
-    padding-top: 3rem;
+    padding-top: 1rem;
     --copy-safe-bottom: 5.25rem;
   }
 
@@ -373,7 +373,7 @@
   }
 
   .visualStage {
-    min-height: max(88vh, 44rem);
+    min-height: max(94svh, 44rem);
   }
 
   .editorialMeta {
@@ -406,7 +406,7 @@
 
   .copyViewport {
     max-width: 100%;
-    min-height: 24rem;
+    min-height: 36rem;
   }
 
   .copyBlock {
@@ -433,7 +433,7 @@
 
 @media (max-width: 640px) {
   .visualStage {
-    min-height: max(96vh, 42rem);
+    min-height: max(96svh, 42rem);
     border-radius: 1.1rem;
   }
 
@@ -442,7 +442,7 @@
   }
 
   .copyViewport {
-    min-height: 26rem;
+    min-height: 30rem;
   }
 
   .secondaryWrap {
@@ -487,7 +487,7 @@
   }
 
   .copyViewport {
-    min-height: 20.5rem;
+    min-height: 28rem;
     max-width: min(32rem, 52%);
   }
 
@@ -512,7 +512,7 @@
   }
 
   .copyViewport {
-    min-height: 18.75rem;
+    min-height: 24rem;
   }
 
   .copyBlock h2 {
