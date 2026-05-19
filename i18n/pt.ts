@@ -31,7 +31,7 @@ export const pt: TranslatorProps = {
       {
         title: 'Web design e desenvolvimento',
         description:
-          'Sites institucionais, landing pages e experiências sob medida com aparência premium e boa performance.',
+          'Sites institucionais, landing pages, sistemas e experiências sob medida com aparência premium e boa performance.',
         details: ['Estrutura guiada por estratégia', 'Interfaces responsivas e coerentes', 'Cuidado com performance e SEO'],
       },
       {

@@ -9,7 +9,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 const socialLinks = [
   {
     label: 'LinkedIn',
-    href: '#',
+    href: 'www.linkedin.com/in/alexander-goncalvesdev',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6.94 8.5H3.56V20h3.38V8.5Zm.22-3.56c0-1.08-.82-1.94-1.92-1.94s-1.93.86-1.93 1.94c0 1.06.82 1.93 1.9 1.93h.03c1.12 0 1.92-.87 1.92-1.93ZM20.44 13.08c0-3.5-1.86-5.13-4.35-5.13-2 0-2.9 1.1-3.4 1.88V8.5H9.31c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.92.27-.67.9-1.37 1.96-1.37 1.39 0 1.94 1.03 1.94 2.55V20H20v-6.92Z" />
@@ -189,7 +189,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.actionColumn}>
-            <a ref={orbRef} href="https://w.app/lexondigital" target="_blank" rel="noreferrer" className={styles.orb}>
+            <a ref={orbRef} href="https://wa.me/38999023012" target="_blank" rel="noreferrer" className={styles.orb}>
               <svg className={styles.orbTrack} viewBox="0 0 220 220" aria-hidden="true">
                 <defs>
                   <path
