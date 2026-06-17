@@ -121,6 +121,9 @@ export const en = {
     emailPlaceholder: 'Your email address',
     messagePlaceholder: 'What business challenge can I help you solve?',
     submit: 'Send Message',
+    sending: 'Sending...',
+    success: 'Message sent successfully!',
+    error: 'An error occurred. Please try again.',
   },
   faq: {
     label: 'Details',

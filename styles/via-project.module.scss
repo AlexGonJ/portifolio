@@ -376,8 +376,9 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   transition: transform 0.4s ease;
 
-  &:hover {
+  &:not(.playing):hover {
     transform: scale(1.02);
+    cursor: pointer;
 
     .playButton {
       background: #d2ff54;
@@ -451,6 +452,48 @@
     font-weight: 600;
     color: #ffffff;
     line-height: 1.25;
+  }
+}
+
+.videoIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 10;
+  border-radius: 20px;
+  background: #000000;
+}
+
+.closeVideoButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #d2ff54;
+    color: #0b0c10;
+    border-color: #d2ff54;
+    transform: scale(1.05);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
   }
 }
 

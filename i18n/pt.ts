@@ -123,6 +123,9 @@ export const pt: TranslatorProps = {
     emailPlaceholder: 'Seu endereço de e-mail',
     messagePlaceholder: 'Qual desafio do seu negócio posso resolver?',
     submit: 'Enviar mensagem',
+    sending: 'Enviando...',
+    success: 'Mensagem enviada com sucesso!',
+    error: 'Ocorreu um erro. Tente novamente.',
   },
   faq: {
     label: 'Detalhes',

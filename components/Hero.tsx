@@ -19,79 +19,79 @@ export default function Hero({ start }: HeroProps) {
   const pRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLAnchorElement>(null)
 
-useEffect(() => {
-  let ctx: gsap.Context | undefined
-  let removeMoveListener: (() => void) | undefined
+  useEffect(() => {
+    let ctx: gsap.Context | undefined
+    let removeMoveListener: (() => void) | undefined
 
-  ;(async () => {
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-    gsap.registerPlugin(ScrollTrigger)
+      ; (async () => {
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+        gsap.registerPlugin(ScrollTrigger)
 
-    ctx = gsap.context(() => {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      const isDesktop = window.innerWidth > 900
+        ctx = gsap.context(() => {
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          const isDesktop = window.innerWidth > 900
 
-      if (isDesktop && !prefersReducedMotion && imageRef.current) {
-        const xTo = gsap.quickTo(imageRef.current, 'x', { duration: 0.55, ease: 'power2.out' })
-        const yTo = gsap.quickTo(imageRef.current, 'y', { duration: 0.55, ease: 'power2.out' })
+          if (isDesktop && !prefersReducedMotion && imageRef.current) {
+            const xTo = gsap.quickTo(imageRef.current, 'x', { duration: 0.55, ease: 'power2.out' })
+            const yTo = gsap.quickTo(imageRef.current, 'y', { duration: 0.55, ease: 'power2.out' })
 
-        const move = (e: MouseEvent) => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 18
-          const y = (e.clientY / window.innerHeight - 0.5) * 18
-          xTo(x)
-          yTo(y)
-        }
+            const move = (e: MouseEvent) => {
+              const x = (e.clientX / window.innerWidth - 0.5) * 18
+              const y = (e.clientY / window.innerHeight - 0.5) * 18
+              xTo(x)
+              yTo(y)
+            }
 
-        window.addEventListener('mousemove', move, { passive: true })
-        removeMoveListener = () => window.removeEventListener('mousemove', move)
-      }
+            window.addEventListener('mousemove', move, { passive: true })
+            removeMoveListener = () => window.removeEventListener('mousemove', move)
+          }
 
-      // Imagem sobe pouco
-      gsap.to(imageRef.current, {
-        y: 80,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-      })
+          // Imagem sobe pouco
+          gsap.to(imageRef.current, {
+            y: 80,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 1.5,
+            },
+          })
 
-      // Texto sobe bem mais — defasagem evidente
-      gsap.to(textRef.current, {
-        y: '-34%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-      })
+          // Texto sobe bem mais — defasagem evidente
+          gsap.to(textRef.current, {
+            y: '-34%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 1.5,
+            },
+          })
 
-      if (start) {
-        gsap.fromTo(
-          pRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 }
-        )
+          if (start) {
+            gsap.fromTo(
+              pRef.current,
+              { y: 30, opacity: 0 },
+              { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 }
+            )
 
-        gsap.fromTo(
-          ctaRef.current,
-          { y: 24, opacity: 0, scale: 0.96 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 1.35 }
-        )
-      }
-    }, sectionRef)
+            gsap.fromTo(
+              ctaRef.current,
+              { y: 24, opacity: 0, scale: 0.96 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 1.35 }
+            )
+          }
+        }, sectionRef)
 
-  })()
+      })()
 
-  return () => {
-    ctx?.revert()
-    removeMoveListener?.()
-  }
-}, [start])
+    return () => {
+      ctx?.revert()
+      removeMoveListener?.()
+    }
+  }, [start])
 
   return (
     <section ref={sectionRef} className={styles.hero}>

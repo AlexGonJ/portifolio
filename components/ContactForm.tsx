@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import styles from '../styles/contact-form.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -9,7 +9,43 @@ export default function ContactForm() {
   const { t } = useLanguage()
   const btnRef = useRef<HTMLButtonElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
-  const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (status === 'submitting') return
+
+    setStatus('submitting')
+
+    const formData = new FormData(e.currentTarget)
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
+      }
+
+      setStatus('success')
+      if (formRef.current) {
+        formRef.current.reset()
+      }
+    } catch (err) {
+      console.error(err)
+      setStatus('error')
+    }
+  }
 
   // Floating Magnetic Button Effect (same aesthetic as SelectedWork)
   useEffect(() => {
@@ -79,8 +115,7 @@ export default function ContactForm() {
       <form 
         ref={formRef}
         className={styles.form}
-        action={endpoint}
-        method="POST"
+        onSubmit={handleSubmit}
       >
         <div className={`${styles.inputGroup} gsap-form-item`}>
           <input 
@@ -118,10 +153,23 @@ export default function ContactForm() {
         <button 
           ref={btnRef} 
           type="submit" 
+          disabled={status === 'submitting'}
           className={`${styles.submitBtn} gsap-form-item`}
         >
-          {t.contactForm.submit}
+          {status === 'submitting' ? t.contactForm.sending : t.contactForm.submit}
         </button>
+
+        {status === 'success' && (
+          <div className={styles.successMessage}>
+            {t.contactForm.success}
+          </div>
+        )}
+
+        {status === 'error' && (
+          <div className={styles.errorMessage}>
+            {t.contactForm.error}
+          </div>
+        )}
       </form>
     </div>
   )

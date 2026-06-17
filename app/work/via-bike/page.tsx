@@ -12,6 +12,9 @@ import styles from '@/styles/via-project.module.scss'
 
 export default function ViaBikeProject() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isPlayingVideo1, setIsPlayingVideo1] = useState(false)
+  const [isPlayingVideo2, setIsPlayingVideo2] = useState(false)
+  const [isPlayingVideo3, setIsPlayingVideo3] = useState(false)
 
   useEffect(() => {
     if (isLoading) return
@@ -48,7 +51,7 @@ export default function ViaBikeProject() {
             <section className={styles.heroWrapper}>
               <div className={styles.heroBackground}>
                 <Image
-                  src="/projects/via-bike/poster-stand.png"
+                  src="/projects/via-bike/logo.png"
                   alt="Via Bike Hero Background"
                   fill
                   priority
@@ -63,7 +66,7 @@ export default function ViaBikeProject() {
                   <p className={styles.eyebrow}>Rebranding & Fachada Comercial</p>
                   <h1 className={styles.title}>Via<br /><span>Bike</span></h1>
                   <p className={styles.subtitle}>
-                    Um rebranding completo para revolucionar o posicionamento de uma loja e oficina de ciclismo. 
+                    Um rebranding completo para revolucionar o posicionamento de uma loja e oficina de ciclismo.
                     Desde a identidade visual moderna até o desenho técnico da fachada e materiais de marketing físico.
                   </p>
                 </div>
@@ -130,7 +133,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/facade1.png"
+                      src="/projects/via-bike/fachada.jpeg"
                       alt="Fachada Desenho e Proposta 1"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -175,7 +178,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/facade4.png"
+                      src="/projects/via-bike/frente.JPEG"
                       alt="Fachada Opção Finalizada"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -226,64 +229,160 @@ export default function ViaBikeProject() {
                 </div>
 
                 <div className={`${styles.videoGrid} project-animate`}>
-                  <div className={styles.videoPlaceholder}>
-                    <div className={styles.videoBgImage}>
-                      <Image
-                        src="/projects/via-bike/laptop.jpg"
-                        alt="Reels Oficina e Diagnóstico"
-                        fill
-                      />
-                    </div>
-                    <div className={styles.videoOverlay}></div>
-                    <div className={styles.playButton}>
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <div className={styles.videoInfo}>
-                      <span>Reels #1</span>
-                      <h3>Bastidores da Oficina: Diagnóstico Tecnológico</h3>
-                    </div>
+                  <div 
+                    className={`${styles.videoPlaceholder} ${isPlayingVideo1 ? styles.playing : ''}`}
+                    onClick={() => {
+                      if (!isPlayingVideo1) setIsPlayingVideo1(true)
+                    }}
+                  >
+                    {isPlayingVideo1 ? (
+                      <>
+                        <iframe
+                          src="https://www.instagram.com/reel/DRNNbeJkXZG/embed"
+                          className={styles.videoIframe}
+                          allowFullScreen
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                        />
+                        <button 
+                          className={styles.closeVideoButton}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setIsPlayingVideo1(false)
+                          }}
+                          aria-label="Fechar vídeo"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className={styles.videoBgImage}>
+                          <Image
+                            src="/projects/via-bike/laptop.jpg"
+                            alt="Reels Oficina e Diagnóstico"
+                            fill
+                          />
+                        </div>
+                        <div className={styles.videoOverlay}></div>
+                        <div className={styles.playButton}>
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                        <div className={styles.videoInfo}>
+                          <span>Reels #1</span>
+                          <h3>Ações Promocionais: Atração e Engajamento</h3>
+                        </div>
+                      </>
+                    )}
                   </div>
 
-                  <div className={styles.videoPlaceholder}>
-                    <div className={styles.videoBgImage}>
-                      <Image
-                        src="/projects/via-bike/cap.jpg"
-                        alt="Reels Vestuário e Acessórios"
-                        fill
-                      />
-                    </div>
-                    <div className={styles.videoOverlay}></div>
-                    <div className={styles.playButton}>
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <div className={styles.videoInfo}>
-                      <span>Reels #2</span>
-                      <h3>Merchandising e Acessórios de Performance</h3>
-                    </div>
+                  <div 
+                    className={`${styles.videoPlaceholder} ${isPlayingVideo2 ? styles.playing : ''}`}
+                    onClick={() => {
+                      if (!isPlayingVideo2) setIsPlayingVideo2(true)
+                    }}
+                  >
+                    {isPlayingVideo2 ? (
+                      <>
+                        <iframe
+                          src="https://www.instagram.com/reel/DY2xnaiRcde/embed"
+                          className={styles.videoIframe}
+                          allowFullScreen
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                        />
+                        <button 
+                          className={styles.closeVideoButton}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setIsPlayingVideo2(false)
+                          }}
+                          aria-label="Fechar vídeo"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className={styles.videoBgImage}>
+                          <Image
+                            src="/projects/via-bike/cap.jpg"
+                            alt="Reels Vestuário e Acessórios"
+                            fill
+                          />
+                        </div>
+                        <div className={styles.videoOverlay}></div>
+                        <div className={styles.playButton}>
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                        <div className={styles.videoInfo}>
+                          <span>Reels #2</span>
+                          <h3>Merchandising e Acessórios de Performance</h3>
+                        </div>
+                      </>
+                    )}
                   </div>
 
-                  <div className={styles.videoPlaceholder}>
-                    <div className={styles.videoBgImage}>
-                      <Image
-                        src="/projects/via-bike/mockup.jpg"
-                        alt="Reels Campanha Promocional"
-                        fill
-                      />
-                    </div>
-                    <div className={styles.videoOverlay}></div>
-                    <div className={styles.playButton}>
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <div className={styles.videoInfo}>
-                      <span>Reels #3</span>
-                      <h3>Campanha Promocional: Sertão Via Bike</h3>
-                    </div>
+                  <div 
+                    className={`${styles.videoPlaceholder} ${isPlayingVideo3 ? styles.playing : ''}`}
+                    onClick={() => {
+                      if (!isPlayingVideo3) setIsPlayingVideo3(true)
+                    }}
+                  >
+                    {isPlayingVideo3 ? (
+                      <>
+                        <iframe
+                          src="https://www.instagram.com/reel/C9uqldWAVZC/embed"
+                          className={styles.videoIframe}
+                          allowFullScreen
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                        />
+                        <button 
+                          className={styles.closeVideoButton}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setIsPlayingVideo3(false)
+                          }}
+                          aria-label="Fechar vídeo"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className={styles.videoBgImage}>
+                          <Image
+                            src="/projects/via-bike/mockup.jpg"
+                            alt="Reels Campanha Promocional"
+                            fill
+                          />
+                        </div>
+                        <div className={styles.videoOverlay}></div>
+                        <div className={styles.playButton}>
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                        <div className={styles.videoInfo}>
+                          <span>Reels #3</span>
+                          <h3>Campanha Promocional: Sertão Via Bike</h3>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

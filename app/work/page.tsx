@@ -12,21 +12,29 @@ import { useLanguage } from '@/i18n/LanguageContext'
 import styles from '@/styles/work-list.module.scss'
 
 const heroShowcase = [
+  { src: '/projects/vitrine-masculina/hero.png', alt: 'Vitrine Masculina' },
   { src: '/projects/post-car1.png', alt: 'Localiza Multas' },
   { src: '/projects/moda-home.png', alt: 'Moda Agency' },
   { src: '/projects/PlacaAline.png', alt: 'Dra. Aline Gonçalves' },
   { src: '/projects/via-bike/poster-stand.png', alt: 'Via Bike' },
   { src: '/projects/sport.png', alt: 'Sport Campaign' },
-  { src: '/projects/bag.png', alt: 'E-commerce' },
 ]
 
 const allProjects = [
+  {
+    title: { en: 'Vitrine Masculina E-commerce', pt: 'E-commerce Vitrine Masculina' },
+    meta: { en: 'Medusa v2 · Mercado Pago Integration · Full-Stack', pt: 'Medusa v2 · Integração Mercado Pago · Full-Stack' },
+    year: '2026',
+    tags: ['Medusa v2', 'Next.js', 'Mercado Pago', 'E-commerce'],
+    image: '/projects/vitrine-masculina/hero.png',
+    href: '/work/vitrine-masculina',
+  },
   {
     title: { en: 'Via Bike Rebranding', pt: 'Rebranding Via Bike' },
     meta: { en: 'Brand Identity & Shop Facade', pt: 'Identidade de Marca e Fachada Comercial' },
     year: '2026',
     tags: ['Branding', 'Storefront Design', 'Banners', 'Video Production'],
-    image: '/projects/via-bike/poster-stand.png',
+    image: '/projects/via-bike/cap.jpg',
     href: '/work/via-bike',
   },
   {
