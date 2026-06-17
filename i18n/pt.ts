@@ -55,7 +55,7 @@ export const pt: TranslatorProps = {
     projects: [
       { title: 'Plataforma web', meta: 'Website e Sistema ERP' },
       { title: 'Identidade de Marca', meta: 'Branding e Design' },
-      { title: 'Serviços de Marca', meta: 'Social Media' },
+      { title: 'Plataforma Web Editorial', meta: 'Website e Animações GSAP — Moda Agency' },
     ],
   },
   motionShowcase: {

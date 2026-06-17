@@ -17,13 +17,13 @@ const projects = [
     title: 'Brand Identity System',
     meta: '2024 — Branding',
     image: '/projects/PlacaAline.png',
-    href: '#',
+    href: '/work/aline-goncalves',
   },
   {
     title: 'Minimal Web Platform',
     meta: '2024 — Web Design',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
-    href: '#',
+    image: '/projects/moda-home.png',
+    href: '/work/moda-agency',
   },
 ]
 
@@ -222,10 +222,12 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
 <div className={styles.buttonWrapper}>
  <a
   ref={btnRef}
+  href="/work"
   className={styles.moreWorkBtn}
   onMouseMove={handleGlow}
+  onClick={(e) => { e.preventDefault(); router.push('/work'); }}
 ><div className={styles.borderGlow}></div>
-  <span>More work</span>
+  <span>{t.selectedWork.moreWork}</span>
 </a>
 </div>
 

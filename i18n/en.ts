@@ -53,7 +53,7 @@ export const en = {
     projects: [
       { title: 'Web Platform', meta: 'Website and ERP System' },
       { title: 'Brand Identity', meta: 'Branding and Design' },
-      { title: 'Brand Services', meta: 'Social Media' },
+      { title: 'Editorial Web Platform', meta: 'Website and GSAP Animations — Moda Agency' },
     ],
   },
   motionShowcase: {

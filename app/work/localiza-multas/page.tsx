@@ -20,9 +20,11 @@ export default function LocalizaMultas() {
   const imageRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
-    if (!isLoading) {
-      gsap.registerPlugin(ScrollTrigger)
+    if (isLoading) return
 
+    gsap.registerPlugin(ScrollTrigger)
+
+    const ctx = gsap.context(() => {
       // Hero entrance
       gsap.fromTo(
         '.project-animate',
@@ -69,12 +71,12 @@ export default function LocalizaMultas() {
           duration: 2, ease: 'none'
         }, 1.2)
       }
+    })
 
-      setTimeout(() => ScrollTrigger.refresh(), 600)
-    }
+    setTimeout(() => ScrollTrigger.refresh(), 600)
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill())
+      ctx.revert()
     }
   }, [isLoading])
 
@@ -292,8 +294,8 @@ export default function LocalizaMultas() {
             {/* ── NEXT PROJECT ── */}
             <section className={styles.nextProject}>
               <span className={styles.nextLabel}>Próximo Projeto</span>
-              <Link href="/#projetos" className={styles.nextLink}>
-                Brand Identity System
+              <Link href="/work/aline-goncalves" className={styles.nextLink}>
+                Dra. Aline Gonçalves
               </Link>
             </section>
 
