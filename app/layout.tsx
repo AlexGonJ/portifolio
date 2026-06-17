@@ -1,6 +1,7 @@
 import Providers from './providers'
 import './globals.scss'
 import CustomCursor from '../components/CustomCursor'
+import CodeProtection from '../components/CodeProtection'
 
 export default function RootLayout({
   children,
@@ -11,6 +12,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+          <CodeProtection />
           <CustomCursor/>
           {children}
         </Providers>

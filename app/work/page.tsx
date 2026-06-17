@@ -97,8 +97,7 @@ const allProjects = [
 
 export default function WorkPage() {
   const [isLoading, setIsLoading] = useState(true)
-  const { language } = useLanguage()
-  const lang = language === 'pt' ? 'pt' : 'en'
+  const { lang } = useLanguage()
   const heroRef = useRef<HTMLElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
   const marqueeRef = useRef<HTMLDivElement>(null)
