@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import Image from 'next/image'
 import SplitText from './SplitText'
 import styles from '../styles/hero.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
+
+const WHATSAPP_URL = 'https://wa.me/38999023012'
 
 interface HeroProps {
   start: boolean
@@ -14,10 +15,28 @@ interface HeroProps {
 export default function Hero({ start }: HeroProps) {
   const { t, lang } = useLanguage()
   const sectionRef = useRef<HTMLDivElement>(null)
-  const imageRef = useRef<HTMLImageElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const pRef = useRef<HTMLParagraphElement>(null)
-  const ctaRef = useRef<HTMLAnchorElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check() // check on mount
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // Control video play when start is true (page loaded)
+  useEffect(() => {
+    if (start && videoRef.current) {
+      videoRef.current.play().catch(err => {
+        console.error('Error playing video:', err)
+      })
+    }
+  }, [start])
 
   useEffect(() => {
     let ctx: gsap.Context | undefined
@@ -31,9 +50,9 @@ export default function Hero({ start }: HeroProps) {
           const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
           const isDesktop = window.innerWidth > 900
 
-          if (isDesktop && !prefersReducedMotion && imageRef.current) {
-            const xTo = gsap.quickTo(imageRef.current, 'x', { duration: 0.55, ease: 'power2.out' })
-            const yTo = gsap.quickTo(imageRef.current, 'y', { duration: 0.55, ease: 'power2.out' })
+          if (isDesktop && !prefersReducedMotion && videoRef.current) {
+            const xTo = gsap.quickTo(videoRef.current, 'x', { duration: 0.55, ease: 'power2.out' })
+            const yTo = gsap.quickTo(videoRef.current, 'y', { duration: 0.55, ease: 'power2.out' })
 
             const move = (e: MouseEvent) => {
               const x = (e.clientX / window.innerWidth - 0.5) * 18
@@ -46,8 +65,8 @@ export default function Hero({ start }: HeroProps) {
             removeMoveListener = () => window.removeEventListener('mousemove', move)
           }
 
-          // Imagem sobe pouco
-          gsap.to(imageRef.current, {
+          // Vídeo sobe pouco no scroll
+          gsap.to(videoRef.current, {
             y: 80,
             ease: 'none',
             scrollTrigger: {
@@ -82,6 +101,23 @@ export default function Hero({ start }: HeroProps) {
               { y: 24, opacity: 0, scale: 0.96 },
               { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 1.35 }
             )
+
+            // Scroll indicator
+            gsap.fromTo(
+              scrollRef.current,
+              { opacity: 0 },
+              { opacity: 1, duration: 1, ease: 'power2.out', delay: 2 }
+            )
+
+            // Bounce loop for scroll indicator
+            gsap.to(scrollRef.current, {
+              y: 8,
+              duration: 1.4,
+              ease: 'power1.inOut',
+              yoyo: true,
+              repeat: -1,
+              delay: 2.5
+            })
           }
         }, sectionRef)
 
@@ -95,14 +131,13 @@ export default function Hero({ start }: HeroProps) {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-      <Image
-        ref={imageRef}
+      <video
+        ref={videoRef}
         className={styles.heroBg}
-        src="/heroi1.png"
-        alt="Hero background"
-        fill
-        priority
-        sizes="100vw"
+        src={isMobile ? "/mobilehero.mp4" : "/herovideo.mp4"}
+        muted
+        playsInline
+        preload="auto"
       />
 
       <div className={styles.overlayNoise} />
@@ -119,8 +154,8 @@ export default function Hero({ start }: HeroProps) {
           {t.hero.description}
         </p>
 
-        <div className={styles.actions}>
-          <a ref={ctaRef} href="#projetos" className={styles.cta}>
+        <div ref={ctaRef} className={styles.actions} style={{ opacity: 0 }}>
+          <a href="#contato" className={styles.cta}>
             <span className={styles.ctaSurface}>
               <span className={styles.ctaEyebrow}>{t.hero.ctaEyebrow}</span>
               <span className={styles.ctaLabel}>{t.hero.ctaLabel}</span>
@@ -132,7 +167,19 @@ export default function Hero({ start }: HeroProps) {
               </svg>
             </span>
           </a>
+
+          <a href="#projetos" className={styles.ctaSecondary}>
+            {t.hero.ctaSecondaryLabel}
+            <svg viewBox="0 0 24 24" className={styles.ctaSecondaryIcon}>
+              <path d="M7 17 17 7M8.5 7H17v8.5" />
+            </svg>
+          </a>
         </div>
+      </div>
+
+      <div ref={scrollRef} className={styles.scrollIndicator} style={{ opacity: 0 }}>
+        <span className={styles.scrollLine} />
+        <span className={styles.scrollText}>{t.hero.scrollText}</span>
       </div>
     </section>
   )

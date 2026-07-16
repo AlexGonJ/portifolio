@@ -203,13 +203,13 @@ const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
             }}
             style={{ cursor: project.href !== '#' ? 'none' : 'default' }}
           >
-            {isMobile && (
-              <div className={styles.mobileImage}>
-                <Image src={project.image} alt={project.title} fill sizes="100vw" />
-              </div>
-            )}
             <div className={styles.itemContent}>
               <span className={styles.itemNum}>{String(i + 1).padStart(2, '0')}</span>
+              {isMobile && (
+                <div className={styles.mobileImage}>
+                  <Image src={project.image} alt={project.title} fill sizes="(max-width: 1024px) 100px, 100vw" />
+                </div>
+              )}
               <div className={styles.itemCenter}>
                 <h3>{t.selectedWork.projects[i].title}</h3>
                 <span className={styles.itemMeta}>{t.selectedWork.projects[i].meta}</span>

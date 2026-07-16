@@ -41,13 +41,14 @@ const Masonry: React.FC<MasonryProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
-  const [isMounted] = useState(typeof window !== 'undefined');
+  const [isMounted, setIsMounted] = useState(false);
   const [imagesReady, setImagesReady] = useState(false);
   const hasMountedAnimation = useRef(false);
   const introAnimationPlayed = useRef(false);
 
   // Controle de Hydration para Next.js
   useEffect(() => {
+    setIsMounted(true);
     const handleResize = () => {
       if (containerRef.current) setWidth(containerRef.current.offsetWidth);
     };
@@ -59,7 +60,6 @@ const Masonry: React.FC<MasonryProps> = ({
   // Lógica de Grid e Altura Dinâmica
   const { grid, totalHeight } = useMemo(() => {
     if (!isMounted || !width) return { grid: [] as GridItem[], totalHeight: 0 };
-
     const isMobile = window.innerWidth < 768;
     const columns = isMobile ? 2 : window.innerWidth < 1000 ? 3 : 4;
     

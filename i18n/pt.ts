@@ -13,40 +13,69 @@ export const pt: TranslatorProps = {
     title2: 'decisões que convertem',
     description:
       'Estratégia visual, sites e identidades que transformam visitantes em clientes com design premium que posiciona sua marca acima da concorrência.',
-    ctaEyebrow: 'Resultados reais',
-    ctaLabel: 'Ver os projetos',
+    ctaEyebrow: 'Próximo passo',
+    ctaLabel: 'Solicitar orçamento',
+    ctaSecondaryLabel: 'Ver projetos',
+    scrollText: 'Scroll',
+    whatsappTooltip: 'Fale comigo',
   },
   about: {
     title:
       'Projeto sites e marcas que não apenas impressionam, eles vendem. Cada decisão é guiada por um objetivo: fazer o seu negócio crescer.',
     description:
       'Design não é decoração, é a engrenagem silenciosa por trás de cada venda. Combino estética premium com estratégia de conversão para entregar projetos que geram resultado mensurável.',
+    ctaText: 'Conheça meu processo',
+    availableText: 'Disponível',
   },
   services: {
-    label: 'Serviços',
-    title: 'O que construímos para fazer sua marca avançar.',
+    label: 'Serviços & Soluções',
+    title: 'O que construímos para sua empresa.',
     description:
-      'Uma camada comercial mais clara antes dos cases: cada serviço existe para melhorar percepção, fortalecer posicionamento e transformar mais visitas em conversas qualificadas.',
+      'Soluções tecnológicas e visuais desenvolvidas para otimizar processos, fortalecer sua marca e impulsionar vendas.',
     items: [
       {
-        title: 'Web design e desenvolvimento',
+        title: 'Sistema Fiscal de Emissão de Notas',
         description:
-          'Sites institucionais, landing pages, sistemas e experiências sob medida com aparência premium e boa performance.',
-        details: ['Estrutura guiada por estratégia', 'Interfaces responsivas e coerentes', 'Cuidado com performance e SEO'],
+          'Emissor de notas fiscais prático e seguro, integrado com as secretarias da fazenda para agilizar o faturamento do seu negócio.',
+        details: ['Emissão simplificada', 'Armazenamento seguro em nuvem', 'Integração contábil'],
+        link: '/servicos/sistema-fiscal',
+        isExternal: false,
+        bgImage: '/projects/vitrine-masculina/hero.png' // Imagem de exemplo com baixa exposição
       },
       {
-        title: 'Sistemas de identidade visual',
+        title: 'Lexon Agendamento',
         description:
-          'Identidades que dão voz, presença e valor percebido maior para o seu negócio em todos os pontos de contato.',
-        details: ['Logo e linguagem visual', 'Tipografia e sistema de cores', 'Consistência da marca na comunicação'],
+          'Plataforma completa de agendamento online para clínicas, salões e profissionais autônomos. Reduza faltas e organize sua agenda.',
+        details: ['Lembretes automáticos (WhatsApp)', 'Gestão de equipe e horários', 'Pagamento antecipado'],
+        link: 'https://lexonagendamento.vercel.app/', // Link externo
+        isExternal: true
       },
       {
-        title: 'Conteúdo criativo e campanhas',
+        title: 'Chatbots Inteligentes',
         description:
-          'Peças para redes, lançamentos e materiais de marketing pensados para parar o scroll e apoiar conversão.',
-        details: ['Direção criativa de campanha', 'Kits visuais para social media', 'Assets visuais para crescimento'],
+          'Atendimento automatizado 24h via WhatsApp e site. Responda clientes, qualifique leads e venda no piloto automático.',
+        details: ['Atendimento simultâneo', 'Integração com sistemas', 'Scripts focados em vendas'],
+        link: '/servicos/chatbots',
+        isExternal: false
+      },
+      {
+        title: 'Serviços de Branding',
+        description:
+          'Identidades visuais que dão voz, presença e valor percebido maior para o seu negócio em todos os pontos de contato.',
+        details: ['Logo e linguagem visual', 'Tipografia e sistema de cores', 'Manual de marca completo'],
+        link: '/servicos/branding',
+        isExternal: false
+      },
+      {
+        title: 'Desenvolvimento Personalizado',
+        description:
+          'Sites institucionais, landing pages e sistemas sob medida com aparência premium, performance e foco em conversão.',
+        details: ['Sites otimizados para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
+        link: '/servicos/desenvolvimento',
+        isExternal: false
       },
     ],
+    ctaText: 'Solicitar orçamento',
   },
   selectedWork: {
     label: 'Projetos Selecionados',
@@ -121,11 +150,21 @@ export const pt: TranslatorProps = {
   contactForm: {
     namePlaceholder: 'Qual o seu nome?',
     emailPlaceholder: 'Seu endereço de e-mail',
+    serviceLabel: 'Qual serviço você precisa?',
+    serviceWebsite: 'Website',
+    serviceBranding: 'Branding',
+    serviceMarketing: 'Marketing',
+    serviceOther: 'Outro',
     messagePlaceholder: 'Qual desafio do seu negócio posso resolver?',
     submit: 'Enviar mensagem',
     sending: 'Enviando...',
     success: 'Mensagem enviada com sucesso!',
     error: 'Ocorreu um erro. Tente novamente.',
+    trustFree: 'Orçamento gratuito',
+    trust24h: 'Resposta em 24h',
+    trustNoStrings: 'Sem compromisso',
+    orWhatsapp: 'ou converse direto',
+    whatsappLabel: 'Chamar no WhatsApp',
   },
   faq: {
     label: 'Detalhes',
@@ -150,6 +189,29 @@ export const pt: TranslatorProps = {
       {
         q: 'Você pega projetos internacionais?',
         a: 'Sim. Trabalho com clientes no Brasil e no exterior, com processos assíncronos e checkpoints claros. Fuso horário nunca foi obstáculo, resultado é o que importa.',
+      },
+    ],
+    ctaText: 'Dúvidas resolvidas? Vamos conversar',
+  },
+  testimonials: {
+    label: 'Depoimentos',
+    title: 'O que dizem sobre o trabalho.',
+    ctaText: 'Quer resultados assim?',
+    items: [
+      {
+        quote: 'O Alex entregou muito mais do que um site — entregou uma ferramenta de vendas. Nosso tráfego orgânico triplicou e a taxa de conversão subiu 47% no primeiro mês.',
+        name: 'Aline Gonçalves',
+        role: 'Advogada — Escritório Aline Gonçalves',
+      },
+      {
+        quote: 'Nosso site antigo era genérico e não transmitia confiança. Depois do rebranding e do novo site, começamos a fechar clientes maiores e a cobrar mais pelo nosso serviço.',
+        name: 'Rafael Martins',
+        role: 'CEO — Localiza Multas',
+      },
+      {
+        quote: 'Profissionalismo e visão estratégica. O Alex não só entende de design, ele entende de negócio. Cada decisão visual foi justificada com lógica de conversão.',
+        name: 'Camila Souza',
+        role: 'Diretora de Marketing — VIA Express',
       },
     ],
   },

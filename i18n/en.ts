@@ -11,40 +11,69 @@ export const en = {
     title2: 'decisions that convert',
     description:
       'Visual strategy, websites and identities that turn visitors into customers with premium design that positions your brand above the competition.',
-    ctaEyebrow: 'Real results',
-    ctaLabel: 'See the work',
+    ctaEyebrow: 'Next step',
+    ctaLabel: 'Request a quote',
+    ctaSecondaryLabel: 'See the work',
+    scrollText: 'Scroll',
+    whatsappTooltip: 'Chat with me',
   },
   about: {
     title:
       "Building websites and brands that don't just impress, they sell. Every decision is driven by one goal: growing your business.",
     description:
       "Design isn't decoration, it's the silent engine behind every sale. I combine premium aesthetics with conversion strategy to deliver projects that generate measurable results.",
+    ctaText: 'See my process',
+    availableText: 'Available',
   },
   services: {
-    label: 'Services',
-    title: 'What we build to move your brand forward.',
+    label: 'Services & Solutions',
+    title: 'What we build for your business.',
     description:
-      'A clearer offer before the case studies: each service is designed to improve perception, sharpen positioning and turn more visits into qualified conversations.',
+      'Technological and visual solutions developed to optimize processes, strengthen your brand and boost sales.',
     items: [
       {
-        title: 'Web design and development',
+        title: 'Tax Invoice System',
         description:
-          'Institutional websites, landing pages and custom experiences built to feel premium and perform well.',
-        details: ['Strategy-led structure', 'Responsive UI systems', 'Performance and SEO care'],
+          'Practical and secure invoice issuer, integrated with tax authorities to speed up your business billing.',
+        details: ['Simplified issuance', 'Secure cloud storage', 'Accounting integration'],
+        link: '/servicos/sistema-fiscal',
+        isExternal: false,
+        bgImage: '/projects/vitrine-masculina/hero.png'
       },
       {
-        title: 'Brand identity systems',
+        title: 'Lexon Scheduling',
         description:
-          'Visual identities that give your business a recognizable voice, stronger positioning and more perceived value.',
-        details: ['Logo and visual language', 'Typography and color systems', 'Brand consistency across touchpoints'],
+          'Complete online scheduling platform for clinics, salons and independent professionals. Reduce no-shows and organize your agenda.',
+        details: ['Automatic reminders (WhatsApp)', 'Team and schedule management', 'Advance payment'],
+        link: 'https://lexonagendamento.vercel.app/', // Link externo
+        isExternal: true
       },
       {
-        title: 'Creative content and campaigns',
+        title: 'Smart Chatbots',
         description:
-          'Social pieces, launch visuals and marketing assets made to stop the scroll and support conversion.',
-        details: ['Campaign art direction', 'Social media creative kits', 'Visual assets for growth'],
+          'Automated 24/7 service via WhatsApp and website. Answer customers, qualify leads and sell on autopilot.',
+        details: ['Simultaneous service', 'System integration', 'Sales-focused scripts'],
+        link: '/servicos/chatbots',
+        isExternal: false
+      },
+      {
+        title: 'Branding Services',
+        description:
+          'Visual identities that give voice, presence and higher perceived value for your business across all touchpoints.',
+        details: ['Logo and visual language', 'Typography and color system', 'Complete brand manual'],
+        link: '/servicos/branding',
+        isExternal: false
+      },
+      {
+        title: 'Custom Development',
+        description:
+          'Institutional websites, landing pages and custom systems with premium appearance, performance and conversion focus.',
+        details: ['SEO optimized websites', 'Custom web systems', 'Conversion focused interfaces'],
+        link: '/servicos/desenvolvimento',
+        isExternal: false
       },
     ],
+    ctaText: 'Request a quote',
   },
   selectedWork: {
     label: 'Selected Work',
@@ -119,11 +148,21 @@ export const en = {
   contactForm: {
     namePlaceholder: "What's your name?",
     emailPlaceholder: 'Your email address',
+    serviceLabel: 'What service do you need?',
+    serviceWebsite: 'Website',
+    serviceBranding: 'Branding',
+    serviceMarketing: 'Marketing',
+    serviceOther: 'Other',
     messagePlaceholder: 'What business challenge can I help you solve?',
     submit: 'Send Message',
     sending: 'Sending...',
     success: 'Message sent successfully!',
     error: 'An error occurred. Please try again.',
+    trustFree: 'Free quote',
+    trust24h: 'Response in 24h',
+    trustNoStrings: 'No strings attached',
+    orWhatsapp: 'or chat directly',
+    whatsappLabel: 'Chat on WhatsApp',
   },
   faq: {
     label: 'Details',
@@ -148,6 +187,29 @@ export const en = {
       {
         q: 'Do you take international projects?',
         a: 'Yes. I work with clients in Brazil and worldwide, with async processes and clear checkpoints. Time zones are never an obstacle, results are what matter.',
+      },
+    ],
+    ctaText: 'Questions resolved? Let\'s talk',
+  },
+  testimonials: {
+    label: 'Testimonials',
+    title: 'What clients say about the work.',
+    ctaText: 'Want results like these?',
+    items: [
+      {
+        quote: 'Alex delivered much more than a website — he delivered a sales tool. Our organic traffic tripled and conversion rate increased 47% in the first month.',
+        name: 'Aline Gonçalves',
+        role: 'Lawyer — Aline Gonçalves Office',
+      },
+      {
+        quote: 'Our old site was generic and didn\'t convey trust. After the rebranding and new website, we started closing bigger clients and charging more for our service.',
+        name: 'Rafael Martins',
+        role: 'CEO — Localiza Multas',
+      },
+      {
+        quote: 'Professionalism and strategic vision. Alex doesn\'t just understand design, he understands business. Every visual decision was backed by conversion logic.',
+        name: 'Camila Souza',
+        role: 'Marketing Director — VIA Express',
       },
     ],
   },

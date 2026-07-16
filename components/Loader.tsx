@@ -7,19 +7,6 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [counter, setCounter] = useState(0)
 
   useEffect(() => {
-    // Simulação de carregamento (ou você pode usar imagens carregadas)
-    gsap.timeline({
-      onComplete: () => {
-        // Animação de saída da tela preta
-        gsap.to(".loader-container", {
-          yPercent: -100,
-          duration: 1,
-          ease: "power4.inOut",
-          onComplete: onComplete // Avisa a Home que terminou
-        })
-      }
-    })
-
     // Contador elegante
     const timer = setInterval(() => {
       setCounter((prev) => {
@@ -32,7 +19,19 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     }, 20)
 
     return () => clearInterval(timer)
-  }, [onComplete])
+  }, [])
+
+  useEffect(() => {
+    if (counter === 100) {
+      // Animação de saída da tela preta
+      gsap.to(".loader-container", {
+        yPercent: -100,
+        duration: 1,
+        ease: "power4.inOut",
+        onComplete: onComplete // Avisa a Home que terminou
+      })
+    }
+  }, [counter, onComplete])
 
   return (
     <div className={`loader-container ${styles.loader}`}>

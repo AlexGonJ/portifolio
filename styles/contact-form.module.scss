@@ -151,3 +151,127 @@ textarea.input {
     transform: translateY(0);
   }
 }
+
+/* ── Service Selector ── */
+.serviceSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.serviceLabel {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  margin: 0;
+}
+
+.serviceChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.serviceChip {
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.serviceChipActive {
+  border-color: var(--color-gold) !important;
+  color: var(--color-gold) !important;
+  background: rgba(201, 168, 76, 0.12) !important;
+  box-shadow: 0 0 16px -4px rgba(201, 168, 76, 0.25);
+}
+
+/* ── Trust Row ── */
+.trustRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.01em;
+}
+
+.trustIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: rgba(46, 213, 115, 0.7);
+  flex-shrink: 0;
+}
+
+/* ── Divider ── */
+.dividerRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dividerText {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+/* ── WhatsApp Alternative ── */
+.whatsappAlt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  background: rgba(37, 211, 102, 0.08);
+  color: #25d366;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.35s ease;
+  align-self: flex-start;
+
+  &:hover {
+    background: rgba(37, 211, 102, 0.15);
+    border-color: rgba(37, 211, 102, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px -8px rgba(37, 211, 102, 0.25);
+  }
+}
+
+.whatsappIcon {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+}

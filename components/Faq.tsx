@@ -61,6 +61,15 @@ export default function Faq() {
             )
           })}
         </div>
+
+        <div className={styles.faqCta}>
+          <a href="#contato" className={styles.faqCtaLink}>
+            {t.faq.ctaText}
+            <svg viewBox="0 0 24 24" className={styles.faqCtaIcon}>
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { en, TranslatorProps } from './en'
 import { pt } from './pt'
 
@@ -19,15 +19,18 @@ const LanguageContext = createContext<LanguageContextProps>({
 })
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'en'
+  const [lang, setLang] = useState<Language>('en')
+  const [hasMounted, setHasMounted] = useState(false)
 
+  useEffect(() => {
+    setHasMounted(true)
     const saved = localStorage.getItem('site_lang') as Language | null
-    if (saved === 'pt' || saved === 'en') return saved
-
-    return navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en'
-  })
-  const hasMounted = typeof window !== 'undefined'
+    if (saved === 'pt' || saved === 'en') {
+      setLang(saved)
+    } else if (navigator.language.toLowerCase().startsWith('pt')) {
+      setLang('pt')
+    }
+  }, [])
 
   const toggleLanguage = () => {
     const nextLang = lang === 'en' ? 'pt' : 'en'
@@ -39,7 +42,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ lang, t, toggleLanguage }}>
-      <div suppressHydrationWarning style={{ opacity: hasMounted ? 1 : 0, transition: 'opacity 0.2s' }}>
+      <div style={{ opacity: hasMounted ? 1 : 0, transition: 'opacity 0.25s ease-out' }}>
         {children}
       </div>
     </LanguageContext.Provider>

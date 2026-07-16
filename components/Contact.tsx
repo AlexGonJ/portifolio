@@ -3,7 +3,6 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import ResultCards from './ResultCards'
 import ContactForm from './ContactForm'
 import styles from '../styles/contact.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -77,7 +76,6 @@ export default function Contact() {
           </div>
         </div>
 
-        <ResultCards />
         <ContactForm />
 
         <div className={styles.masonryWrapper}>

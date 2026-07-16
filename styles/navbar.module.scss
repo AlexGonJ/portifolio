@@ -18,14 +18,30 @@
     padding: 2.5vh 6vw; // Padding menor no mobile
   }
 
-  &.afterHero {
+  &.themeLight {
     .logo {
       opacity: 0;
       visibility: hidden;
     }
     
     .navRight {
-      mix-blend-mode: difference;
+      color: #1a1a1a;
+      
+      .burgerWrapper {
+        color: #1a1a1a;
+      }
+      
+      .burgerBtn {
+        color: #1a1a1a;
+        
+        .burgerLines div {
+          background-color: #1a1a1a;
+        }
+      }
+      
+      .langBtn {
+        color: #1a1a1a;
+      }
     }
   }
 }

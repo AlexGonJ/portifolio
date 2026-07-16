@@ -49,6 +49,14 @@ export default function Footer() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
+    const handleLayoutComplete = () => {
+      ScrollTrigger.refresh()
+    }
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('layoutComplete', handleLayoutComplete)
+    }
+
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia()
 
@@ -81,43 +89,6 @@ export default function Footer() {
           },
         })
       })
-
-      const reveal = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          once: true,
-        },
-      })
-
-      reveal
-        .from(titleRef.current, {
-          y: 56,
-          opacity: 0,
-          duration: 1.05,
-          ease: 'power4.out',
-        })
-        .from(
-          [copyRef.current, orbRef.current, socialsRef.current],
-          {
-            y: 28,
-            opacity: 0,
-            duration: 0.85,
-            stagger: 0.12,
-            ease: 'power3.out',
-          },
-          '-=0.62'
-        )
-        .from(
-          bottomRef.current,
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.75,
-            ease: 'power3.out',
-          },
-          '-=0.42'
-        )
 
       const orb = orbRef.current
       if (orb) {
@@ -156,7 +127,14 @@ export default function Footer() {
       return () => mm.revert()
     }, containerRef)
 
-    return () => ctx.revert()
+    ScrollTrigger.refresh()
+
+    return () => {
+      ctx.revert()
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('layoutComplete', handleLayoutComplete)
+      }
+    }
   }, [])
 
   return (

@@ -14,6 +14,7 @@ interface ScrollRevealProps {
   blurStrength?: number
   containerClassName?: string
   textClassName?: string
+  startOffset?: string
 }
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({
@@ -25,6 +26,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   blurStrength = 10,
   containerClassName = '',
   textClassName = '',
+  startOffset = 'top 85%',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -69,7 +71,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top 90%',
+            start: startOffset,
             toggleActions: 'play none none reverse',
           },
         }
@@ -92,7 +94,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top 85%',
+            start: startOffset,
             toggleActions: 'play none none none',
             once: true,
           },

@@ -5,13 +5,16 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import SelectedWork from '@/components/SelectedWork'
 import About from '@/components/About'
+import ResultCards from '@/components/ResultCards'
 import Services from '@/components/Services'
 import MotionShowcase from '@/components/MotionShowcase'
 import EditorialBreak from '@/components/EditorialBreak'
+import Testimonials from '@/components/Testimonials'
 import Contact from '@/components/Contact'
 import Faq from '@/components/Faq'
 import Loader from '@/components/Loader'
 import Footer from '@/components/Footer'
+import WhatsAppButton from '@/components/WhatsAppButton'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -23,9 +26,16 @@ export default function Home() {
 
         const { ScrollTrigger } = await import('gsap/ScrollTrigger')
         ScrollTrigger.refresh()
+
+        // Dispara evento customizado para outros componentes recalcularem suas posições
+        window.dispatchEvent(new Event('layoutComplete'))
       }
 
+      setTimeout(refreshScrollTrigger, 100)
       setTimeout(refreshScrollTrigger, 500)
+
+      window.addEventListener('load', refreshScrollTrigger)
+      return () => window.removeEventListener('load', refreshScrollTrigger)
     }
   }, [isLoading])
 
@@ -38,15 +48,18 @@ export default function Home() {
           <Navbar />
           <Hero start={!isLoading} />
           <About />
+          <ResultCards />
           <Services />
           <SelectedWork />
           <MotionShowcase />
           <EditorialBreak />
-          <Contact />
+          <Testimonials />
           <Faq />
+          <Contact />
         </main>
 
         <Footer />
+        <WhatsAppButton />
       </div>
     </>
   )

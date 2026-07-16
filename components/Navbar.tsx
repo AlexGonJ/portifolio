@@ -23,7 +23,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
     // 1. Troca os links pelo sanduíche (ainda na Hero)
     ScrollTrigger.create({
       start: "top top",
-      end: "+=400", 
+      end: "+=400",
       onUpdate: (self) => {
         setIsScrolled(self.progress > 0.9)
       }
@@ -40,63 +40,63 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
     }
   }, [isProjectPage])
 
- return (
-   <>
-    <nav 
-      ref={navRef} 
-      className={`${styles.nav} ${isPastHero ? styles.afterHero : ''} ${isProjectPage ? styles.projectNav : ''}`}
-    >
-      <span className={styles.logo}>Code by Alex</span>
-      
-      <div className={styles.navRight}>
-        {/* Lógica mantida: O CSS cuidará de esconder isso no mobile via @media */}
-        {!isScrolled && !isPastHero && (
-          <ul className={styles.menu} style={{ display: 'flex', alignItems: 'center' }}>
-            {pathname !== '/' && (
-              <li><Link href="/" className={styles.menuItem}>Home</Link></li>
-            )}
-            <li><Link href={pathname === '/' ? "#sobre" : "/#sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
-            <li><Link href={pathname === '/' ? "#projetos" : "/#projetos"} className={styles.menuItem}>{t.nav.projects}</Link></li>
-            <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
-            <li>
-              <button 
-                onClick={toggleLanguage} 
-                className={styles.langBtn}
-              >
-                <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
-              </button>
-            </li>
-          </ul>
-        )}
+  return (
+    <>
+      <nav
+        ref={navRef}
+        className={`${styles.nav} ${isPastHero ? styles.themeLight : ''} ${isProjectPage ? styles.projectNav : ''}`}
+      >
+        <span className={styles.logo}>Code by Alex</span>
 
-        {/* O Burger aparecerá se houver scroll OU se for mobile (via CSS) */}
-        <div 
-          className={styles.burgerWrapper}
-          style={{ 
-            display: (isScrolled || isPastHero) ? 'flex' : 'none' 
-          }}
-        >
-          <button 
-            onClick={toggleLanguage} 
-            className={`${styles.langBtn} ${styles.mobileLangBtn}`}
+        <div className={styles.navRight}>
+          {/* Lógica mantida: O CSS cuidará de esconder isso no mobile via @media */}
+          {!isScrolled && !isPastHero && (
+            <ul className={styles.menu} style={{ display: 'flex', alignItems: 'center' }}>
+              {pathname !== '/' && (
+                <li><Link href="/" className={styles.menuItem}>Home</Link></li>
+              )}
+              <li><Link href={pathname === '/' ? "#sobre" : "/#sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
+              <li><Link href={pathname === '/' ? "/work" : "/work"} className={styles.menuItem}>{t.nav.projects}</Link></li>
+              <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
+              <li>
+                <button
+                  onClick={toggleLanguage}
+                  className={styles.langBtn}
+                >
+                  <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
+                </button>
+              </li>
+            </ul>
+          )}
+
+          {/* O Burger aparecerá se houver scroll OU se for mobile (via CSS) */}
+          <div
+            className={styles.burgerWrapper}
+            style={{
+              display: (isScrolled || isPastHero) ? 'flex' : 'none'
+            }}
           >
-            <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
-          </button>
-          
-          <button 
-            className={`${styles.burgerBtn} ${isMenuOpen ? styles.isOpen : ''}`} 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span>{isMenuOpen ? 'Fechar' : t.nav.menu}</span>
-            <div className={styles.burgerLines}>
-              <div />
-              <div />
-            </div>
-          </button>
+            <button
+              onClick={toggleLanguage}
+              className={`${styles.langBtn} ${styles.mobileLangBtn}`}
+            >
+              <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
+            </button>
+
+            <button
+              className={`${styles.burgerBtn} ${isMenuOpen ? styles.isOpen : ''}`}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <span>{isMenuOpen ? 'Fechar' : t.nav.menu}</span>
+              <div className={styles.burgerLines}>
+                <div />
+                <div />
+              </div>
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
-    <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-   </>
+      </nav>
+      <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+    </>
   )
 }

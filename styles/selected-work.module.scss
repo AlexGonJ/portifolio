@@ -77,11 +77,11 @@
   @media (max-width: 1024px) {
     display: block;
     position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
+    width: 80px;
+    height: 56px;
+    flex-shrink: 0;
     overflow: hidden;
     border-radius: 4px;
-    margin-top: 1rem;
 
     :global(img) {
       width: 100%;
@@ -264,17 +264,18 @@
 // ─── Mobile responsive ───────────────────────────────────────────────────
 @media (max-width: 640px) {
   .selectedWork {
-    padding: clamp(3rem, 8vw, 5rem) 5vw;
+    padding: clamp(3rem, 8vw, 4rem) 5vw;
   }
 
   .itemContent {
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-wrap: nowrap;
+    gap: 1rem;
     padding: clamp(1rem, 2.5vw, 1.5rem) 0;
+    align-items: center;
   }
 
   .itemCenter h3 {
-    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
   }
 
   .itemMeta {
@@ -282,7 +283,8 @@
   }
 
   .mobileImage {
-    aspect-ratio: 16 / 10;
+    width: 64px;
+    height: 48px;
   }
 
   .buttonWrapper {
