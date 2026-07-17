@@ -34,13 +34,20 @@ export const pt: TranslatorProps = {
       'Soluções tecnológicas e visuais desenvolvidas para otimizar processos, fortalecer sua marca e impulsionar vendas.',
     items: [
       {
-        title: 'Sistema Fiscal de Emissão de Notas',
+        title: 'Desenvolvimento Personalizado',
         description:
-          'Emissor de notas fiscais prático e seguro, integrado com as secretarias da fazenda para agilizar o faturamento do seu negócio.',
-        details: ['Emissão simplificada', 'Armazenamento seguro em nuvem', 'Integração contábil'],
-        link: '/servicos/sistema-fiscal',
-        isExternal: false,
-        bgImage: '/projects/vitrine-masculina/hero.png' // Imagem de exemplo com baixa exposição
+          'Sites institucionais, landing pages e sistemas sob medida com aparência premium, performance e foco em conversão.',
+        details: ['Sites otimizados para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
+        link: '/servicos/desenvolvimento',
+        isExternal: false
+      },
+      {
+        title: 'Marketing & Imagem',
+        description:
+          'Soluções completas de design e audiovisual: criação de logos, branding, edição e gravação de vídeos, artes para Instagram e comunicação visual (placas, fachadas, camisas).',
+        details: ['Branding & Logotipos', 'Redes Sociais & Artes', 'Edição & Gravação de Vídeos', 'Placas, Fachadas & Camisas'],
+        link: '/servicos/marketing-imagem',
+        isExternal: false
       },
       {
         title: 'Lexon Agendamento',
@@ -51,27 +58,19 @@ export const pt: TranslatorProps = {
         isExternal: true
       },
       {
-        title: 'Chatbots Inteligentes',
+        title: 'Sistema Fiscal de Emissão de Notas',
+        description:
+          'Emissor de notas fiscais prático e seguro, integrado com as secretarias da fazenda para agilizar o faturamento do seu negócio.',
+        details: ['Emissão simplificada', 'Armazenamento seguro em nuvem', 'Integração contábil'],
+        link: '/servicos/sistema-fiscal',
+        isExternal: false
+      },
+      {
+        title: 'Automações & Chatbots Inteligentes',
         description:
           'Atendimento automatizado 24h via WhatsApp e site. Responda clientes, qualifique leads e venda no piloto automático.',
         details: ['Atendimento simultâneo', 'Integração com sistemas', 'Scripts focados em vendas'],
         link: '/servicos/chatbots',
-        isExternal: false
-      },
-      {
-        title: 'Serviços de Branding',
-        description:
-          'Identidades visuais que dão voz, presença e valor percebido maior para o seu negócio em todos os pontos de contato.',
-        details: ['Logo e linguagem visual', 'Tipografia e sistema de cores', 'Manual de marca completo'],
-        link: '/servicos/branding',
-        isExternal: false
-      },
-      {
-        title: 'Desenvolvimento Personalizado',
-        description:
-          'Sites institucionais, landing pages e sistemas sob medida com aparência premium, performance e foco em conversão.',
-        details: ['Sites otimizados para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
-        link: '/servicos/desenvolvimento',
         isExternal: false
       },
     ],
@@ -232,8 +231,7 @@ export const pt: TranslatorProps = {
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
-    { label: 'LinkedIn', url: '#' },
-    { label: 'Behance', url: '#' },
-    { label: 'WhatsApp', url: 'https://w.app/lexondigital' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
+    { label: 'WhatsApp', url: 'https://wa.me/5538999023012' },
   ],
 }

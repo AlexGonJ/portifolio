@@ -93,8 +93,8 @@ export default function ChatbotsPage() {
             {/* ── NEXT PROJECT ── */}
             <section className={styles.nextProject}>
               <span className={styles.nextLabel}>Outro Serviço</span>
-              <Link href="/servicos/branding" className={styles.nextLink}>
-                Serviços de Branding
+              <Link href="/servicos/marketing-imagem" className={styles.nextLink}>
+                Marketing & Imagem
               </Link>
             </section>
 

@@ -6,7 +6,7 @@ import SplitText from './SplitText'
 import styles from '../styles/hero.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const WHATSAPP_URL = 'https://wa.me/38999023012'
+const WHATSAPP_URL = 'https://wa.me/5538999023012'
 
 interface HeroProps {
   start: boolean
@@ -168,7 +168,7 @@ export default function Hero({ start }: HeroProps) {
             </span>
           </a>
 
-          <a href="#projetos" className={styles.ctaSecondary}>
+          <a href="/work" className={styles.ctaSecondary}>
             {t.hero.ctaSecondaryLabel}
             <svg viewBox="0 0 24 24" className={styles.ctaSecondaryIcon}>
               <path d="M7 17 17 7M8.5 7H17v8.5" />

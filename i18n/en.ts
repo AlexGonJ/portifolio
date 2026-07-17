@@ -32,13 +32,20 @@ export const en = {
       'Technological and visual solutions developed to optimize processes, strengthen your brand and boost sales.',
     items: [
       {
-        title: 'Tax Invoice System',
+        title: 'Custom Development',
         description:
-          'Practical and secure invoice issuer, integrated with tax authorities to speed up your business billing.',
-        details: ['Simplified issuance', 'Secure cloud storage', 'Accounting integration'],
-        link: '/servicos/sistema-fiscal',
-        isExternal: false,
-        bgImage: '/projects/vitrine-masculina/hero.png'
+          'Institutional websites, landing pages and custom systems with premium appearance, performance and conversion focus.',
+        details: ['SEO optimized websites', 'Custom web systems', 'Conversion focused interfaces'],
+        link: '/servicos/desenvolvimento',
+        isExternal: false
+      },
+      {
+        title: 'Marketing & Image',
+        description:
+          'Complete design and audiovisual solutions: logo creation, branding, video recording/editing, Instagram posts, and visual communication (signs, facades, t-shirts).',
+        details: ['Branding & Logos', 'Social Media & Banners', 'Video Recording & Editing', 'Signs, Facades & T-shirts'],
+        link: '/servicos/marketing-imagem',
+        isExternal: false
       },
       {
         title: 'Lexon Scheduling',
@@ -49,27 +56,19 @@ export const en = {
         isExternal: true
       },
       {
-        title: 'Smart Chatbots',
+        title: 'Tax Invoice System',
+        description:
+          'Practical and secure invoice issuer, integrated with tax authorities to speed up your business billing.',
+        details: ['Simplified issuance', 'Secure cloud storage', 'Accounting integration'],
+        link: '/servicos/sistema-fiscal',
+        isExternal: false
+      },
+      {
+        title: 'Automations & Smart Chatbots',
         description:
           'Automated 24/7 service via WhatsApp and website. Answer customers, qualify leads and sell on autopilot.',
         details: ['Simultaneous service', 'System integration', 'Sales-focused scripts'],
         link: '/servicos/chatbots',
-        isExternal: false
-      },
-      {
-        title: 'Branding Services',
-        description:
-          'Visual identities that give voice, presence and higher perceived value for your business across all touchpoints.',
-        details: ['Logo and visual language', 'Typography and color system', 'Complete brand manual'],
-        link: '/servicos/branding',
-        isExternal: false
-      },
-      {
-        title: 'Custom Development',
-        description:
-          'Institutional websites, landing pages and custom systems with premium appearance, performance and conversion focus.',
-        details: ['SEO optimized websites', 'Custom web systems', 'Conversion focused interfaces'],
-        link: '/servicos/desenvolvimento',
         isExternal: false
       },
     ],
@@ -230,9 +229,8 @@ export const en = {
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
-    { label: 'LinkedIn', url: '#' },
-    { label: 'Behance', url: '#' },
-    { label: 'WhatsApp', url: 'https://w.app/lexondigital' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
+    { label: 'WhatsApp', url: 'https://wa.me/5538999023012' },
   ],
 }
 

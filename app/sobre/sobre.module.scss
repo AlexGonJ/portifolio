@@ -1,0 +1,463 @@
+/* ==========================================================================
+   ABOUT PAGE — UNIFIED SNAKE TIMELINE
+   Grid Background, Continuous S-Curve Workflow, Glassmorphism
+   ========================================================================== */
+
+@use '../../styles/variables' as vars;
+
+.aboutPage {
+  position: relative;
+  min-height: 100vh;
+  background-color: #F8F7F4; /* Light off-white base */
+  color: vars.$text-primary;
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow: hidden; /* Hide horizontal overflow from grid/SVGs */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 5%;
+  position: relative;
+  z-index: 2;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-gold, #c9a84c);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   GLOBAL GRID (The unifying element)
+   ========================================================================== */
+.globalGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  
+  /* Fade out at the very bottom */
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+}
+
+
+/* ==========================================================================
+   1. HERO
+   ========================================================================== */
+.heroSection {
+  padding: 180px 0 100px;
+  position: relative;
+  z-index: 1;
+}
+
+.heroHeader {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: vars.$text-primary;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+
+  span {
+    font-style: italic;
+    color: var(--color-gold, #c9a84c);
+  }
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: vars.$text-secondary;
+  max-width: 600px;
+}
+
+
+/* ==========================================================================
+   2. S-CURVE WORKFLOW
+   ========================================================================== */
+.workflowSection {
+  padding: 80px 0 160px;
+  position: relative;
+  z-index: 1;
+}
+
+.workflowSnake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 40px 0;
+}
+
+/* Individual Node Container */
+.workflowNodeWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+}
+
+/* Alternating Layout */
+.nodeLeft {
+  flex-direction: row;
+  justify-content: flex-start;
+  
+  .nodeText {
+    padding-left: 4rem;
+  }
+}
+
+.nodeRight {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  
+  .nodeText {
+    padding-right: 4rem;
+    text-align: right;
+  }
+
+  .phaseHeader {
+    justify-content: flex-end;
+  }
+}
+
+/* The Circular Node */
+.nodeCircle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+
+  /* Subtle inner glow circle */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border-radius: 50%;
+    border: 1px dashed rgba(201, 168, 76, 0.3); /* Gold dashed inner ring */
+  }
+
+  @media (max-width: 768px) {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.iconInner {
+  width: 80px;
+  height: 80px;
+  color: vars.$text-primary;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Node Text Content */
+.nodeText {
+  flex: 1;
+  max-width: 400px;
+  z-index: 3;
+  
+  @media (max-width: 768px) {
+    padding: 0 !important;
+    text-align: center !important;
+    .phaseHeader { justify-content: center !important; }
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: vars.$text-primary;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: vars.$text-secondary;
+  }
+}
+
+.phaseHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.phaseLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.15em;
+}
+
+.durationBadge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: vars.$text-secondary;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+/* SVG Connectors */
+.connector {
+  position: absolute;
+  top: 110px; /* Half of circle height (220/2) */
+  width: calc(100% - 220px); /* Span the distance between nodes */
+  height: 220px; /* Height of the gap to next node */
+  z-index: 1;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* Hide complex SVG paths on mobile */
+  }
+}
+
+.connectLeft {
+  left: 110px; /* Start from center of left node */
+}
+
+.connectRight {
+  right: 110px; /* Start from center of right node */
+}
+
+
+/* ==========================================================================
+   3. DIRECTOR & ECOSYSTEM (Glassmorphism)
+   ========================================================================== */
+.agencySection {
+  padding: 60px 0 120px;
+  position: relative;
+  z-index: 1;
+}
+
+.directorCard {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 4rem;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.03);
+  margin-bottom: 6rem;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    padding: 2.5rem;
+    gap: 2.5rem;
+  }
+}
+
+.directorPhoto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  
+  .img {
+    object-fit: cover;
+  }
+}
+
+.directorInfo {
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: vars.$text-secondary;
+    margin-bottom: 1rem;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.areasGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.areaCard {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+    color: vars.$text-primary;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: vars.$text-secondary;
+  }
+}
+
+.areaIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: vars.$text-primary;
+  color: vars.$bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.5;
+  }
+}
+
+/* ==========================================================================
+   4. CTA
+   ========================================================================== */
+.ctaSection {
+  padding: 0 0 120px;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaBox {
+  background: vars.$text-primary;
+  color: vars.$bg;
+  border-radius: 30px;
+  padding: 6rem 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+  }
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-gold, #c9a84c);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 100px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(201, 168, 76, 0.3);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
+  }
+}

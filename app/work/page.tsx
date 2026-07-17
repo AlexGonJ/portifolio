@@ -17,7 +17,6 @@ const heroShowcase = [
   { src: '/projects/moda-home.png', alt: 'Moda Agency' },
   { src: '/projects/PlacaAline.png', alt: 'Dra. Aline Gonçalves' },
   { src: '/projects/via-bike/poster-stand.png', alt: 'Via Bike' },
-  { src: '/projects/sport.png', alt: 'Sport Campaign' },
 ]
 
 const allProjects = [
@@ -61,6 +60,7 @@ const allProjects = [
     image: '/projects/moda-home.png',
     href: '/work/moda-agency',
   },
+  /* Ocultando projetos sem páginas reais por enquanto
   {
     title: { en: 'Social Media Campaign', pt: 'Campanha de Mídia Social' },
     meta: { en: 'Visual Strategy & Content', pt: 'Estratégia Visual e Conteúdo' },
@@ -101,6 +101,7 @@ const allProjects = [
     image: '/projects/enge.png',
     href: '#',
   },
+  */
 ]
 
 export default function WorkPage() {

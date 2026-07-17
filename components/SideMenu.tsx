@@ -16,20 +16,20 @@ interface SideMenuProps {
 // O Backbone do Backdrop escuro da tela que restou dos 60%
 const backdropVariants: Variants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { duration: 0.5, ease: 'easeOut' as const } 
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: 'easeOut' as const }
   },
-  exit: { 
-    opacity: 0, 
-    transition: { duration: 0.5, ease: 'easeIn' as const, delay: 0.3 } 
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.5, ease: 'easeIn' as const, delay: 0.3 }
   }
 }
 
 // O Efeito curva sofisticado: começa esférico na lateral esquerda superior e inferior (border radius) e estica para placa plana. 
 const drawerVariants: Variants = {
-  hidden: { 
-    x: '100%', 
+  hidden: {
+    x: '100%',
     borderTopLeftRadius: '50vw',
     borderBottomLeftRadius: '50vw'
   },
@@ -72,7 +72,7 @@ const itemVariants: Variants = {
 }
 
 const getSocialIcon = (name: string) => {
-  switch(name.toLowerCase()) {
+  switch (name.toLowerCase()) {
     case 'linkedin':
       return <svg viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5Zm.22-3.56c0-1.08-.82-1.94-1.92-1.94s-1.93.86-1.93 1.94c0 1.06.82 1.93 1.9 1.93h.03c1.12 0 1.92-.87 1.92-1.93ZM20.44 13.08c0-3.5-1.86-5.13-4.35-5.13-2 0-2.9 1.1-3.4 1.88V8.5H9.31c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.92.27-.67.9-1.37 1.96-1.37 1.39 0 1.94 1.03 1.94 2.55V20H20v-6.92Z" /></svg>
     case 'instagram':
@@ -111,7 +111,7 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const navLinks = [
     ...(pathname !== '/' ? [{ label: 'Home', href: '/', index: -1 }] : []),
     { label: t.nav.about, href: pathname === '/' ? '#sobre' : '/#sobre', index: 0 },
-    { label: t.nav.projects, href: pathname === '/' ? '#projetos' : '/#projetos', index: 1 },
+    { label: t.nav.projects, href: pathname === '/' ? 'projetos' : '/work', index: 1 },
     { label: t.nav.contact, href: pathname === '/' ? '#contato' : '/#contato', index: 2 }
   ]
 
@@ -120,7 +120,7 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
       {isOpen && (
         <>
           {/* Backdrop Escuro (clique para fechar a tela) */}
-          <motion.div 
+          <motion.div
             className={styles.overlayBackdrop}
             variants={backdropVariants}
             initial="hidden"
@@ -130,14 +130,14 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
           />
 
           {/* O Menu 40vw Deslizante com Curva da Direita */}
-          <motion.div 
+          <motion.div
             className={styles.menuDrawer}
             variants={drawerVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <motion.div 
+            <motion.div
               className={styles.drawerContent}
               variants={contentVariants}
               initial="hidden"
@@ -156,10 +156,10 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                       transition={{ duration: 0.6, ease: 'easeInOut' }}
                       style={{ position: 'absolute', inset: 0 }}
                     >
-                      <Image 
-                         src={IMAGES[hoveredIndex]} 
-                         alt="Nav Preview"
-                         fill
+                      <Image
+                        src={IMAGES[hoveredIndex]}
+                        alt="Nav Preview"
+                        fill
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -171,7 +171,7 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                 <div className={styles.mainNav}>
                   {navLinks.map((link, i) => (
                     <Link key={link.index} href={link.href} passHref legacyBehavior>
-                      <motion.a 
+                      <motion.a
                         className={styles.navItem}
                         variants={itemVariants}
                         onClick={onClose}
@@ -190,10 +190,10 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                   </motion.p>
                   <div className={styles.socialNav}>
                     {t.socialLinks.map((social, idx) => (
-                      <motion.a 
-                        key={idx} 
-                        href={social.url} 
-                        target="_blank" 
+                      <motion.a
+                        key={idx}
+                        href={social.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className={styles.socialItem}
                         variants={itemVariants}

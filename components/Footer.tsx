@@ -9,7 +9,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 const socialLinks = [
   {
     label: 'LinkedIn',
-    href: 'www.linkedin.com/in/alexander-goncalvesdev',
+    href: 'https://www.linkedin.com/in/alexander-goncalvesdev/',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6.94 8.5H3.56V20h3.38V8.5Zm.22-3.56c0-1.08-.82-1.94-1.92-1.94s-1.93.86-1.93 1.94c0 1.06.82 1.93 1.9 1.93h.03c1.12 0 1.92-.87 1.92-1.93ZM20.44 13.08c0-3.5-1.86-5.13-4.35-5.13-2 0-2.9 1.1-3.4 1.88V8.5H9.31c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.92.27-.67.9-1.37 1.96-1.37 1.39 0 1.94 1.03 1.94 2.55V20H20v-6.92Z" />
@@ -22,15 +22,6 @@ const socialLinks = [
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7.8 3h8.4A4.8 4.8 0 0 1 21 7.8v8.4a4.8 4.8 0 0 1-4.8 4.8H7.8A4.8 4.8 0 0 1 3 16.2V7.8A4.8 4.8 0 0 1 7.8 3Zm0 1.8A3 3 0 0 0 4.8 7.8v8.4a3 3 0 0 0 3 3h8.4a3 3 0 0 0 3-3V7.8a3 3 0 0 0-3-3H7.8Zm8.85 1.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1ZM12 7.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 1.8A2.7 2.7 0 1 0 14.7 12 2.7 2.7 0 0 0 12 9.3Z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Behance',
-    href: '#',
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M9.8 11.03c1.16-.57 1.72-1.44 1.72-2.65 0-2.08-1.62-3.38-4.22-3.38H2V20h5.58c2.79 0 4.57-1.43 4.57-3.76 0-1.68-.83-2.76-2.35-3.21ZM4.66 7.14H7c1.18 0 1.84.47 1.84 1.38 0 .95-.66 1.4-1.84 1.4H4.66V7.14Zm2.56 10.72H4.66v-3.02h2.56c1.32 0 2.02.5 2.02 1.5 0 1.03-.7 1.52-2.02 1.52ZM16.07 6.37h4.93v1.45h-4.93V6.37Zm5.74 8.84c.05-.33.07-.67.07-1.02 0-2.9-1.7-4.79-4.45-4.79-2.82 0-4.7 2.12-4.7 5.26 0 3.1 1.87 5.16 4.79 5.16 2.23 0 3.8-1.12 4.22-3h-2.54c-.27.56-.9.88-1.68.88-1.2 0-1.98-.77-2.04-2.03h6.33v-.46Zm-6.28-1.33c.15-1.08.85-1.73 1.9-1.73 1.06 0 1.72.61 1.78 1.73h-3.68Z" />
       </svg>
     ),
   },
@@ -167,7 +158,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.actionColumn}>
-            <a ref={orbRef} href="https://wa.me/38999023012" target="_blank" rel="noreferrer" className={styles.orb}>
+            <a ref={orbRef} href="https://wa.me/5538999023012" target="_blank" rel="noreferrer" className={styles.orb}>
               <svg className={styles.orbTrack} viewBox="0 0 220 220" aria-hidden="true">
                 <defs>
                   <path
@@ -222,8 +213,8 @@ export default function Footer() {
           </div>
 
           <div className={styles.metaLinks}>
-            <a href="#projetos">{t.nav.projects}</a>
-            <a href="#sobre">{t.nav.about}</a>
+            <a href="/projetos">{t.nav.projects}</a>
+            <a href="/sobre">{t.nav.about}</a>
             <a href="#contato">{t.nav.contact}</a>
           </div>
         </div>
