@@ -1,0 +1,43 @@
+.star-border-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-color: transparent;
+}
+
+.border-gradient-bottom,
+.border-gradient-top {
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  z-index: 0;
+  animation-name: star-border-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.border-gradient-top {
+  animation-direction: reverse;
+  opacity: 0.9;
+}
+
+.inner-content {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+  border-radius: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes star-border-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

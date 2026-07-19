@@ -258,8 +258,17 @@
   }
 }
 
-.cardLink {
+.cardLinkWrapper {
   margin-top: 1.5rem;
+  width: max-content;
+  border-radius: 9999px;
+  display: inline-block;
+  /* Add a subtle static border/shadow so the button shape is visible on white background */
+  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.15);
+  background-color: #fbfbfb;
+}
+
+.cardLink {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -268,9 +277,13 @@
   color: #c9a84c;
   text-decoration: none;
   transition: opacity 0.3s ease;
+  padding: 0.6rem 1.25rem;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
 
   .item:hover & {
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 

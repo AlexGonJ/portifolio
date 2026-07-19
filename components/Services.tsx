@@ -6,6 +6,7 @@ import styles from '../styles/services.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import StarBorder from './StarBorder'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -141,12 +142,14 @@ export default function Services() {
                       <li key={detail}>{detail}</li>
                     ))}
                   </ul>
-                  <div className={styles.cardLink}>
-                    <span>Ver Detalhes</span>
-                    <svg viewBox="0 0 24 24" className={styles.arrowIcon}>
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </div>
+                  <StarBorder as="div" className={styles.cardLinkWrapper} color="yellow" speed="4s">
+                    <div className={styles.cardLink}>
+                      <span>Ver Detalhes</span>
+                      <svg viewBox="0 0 24 24" className={styles.arrowIcon}>
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </StarBorder>
                 </div>
               </>
             );
