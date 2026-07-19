@@ -106,7 +106,6 @@ export default function MotionShowcase() {
                       loop
                       muted
                       playsInline
-                      preload="auto"
                       className={styles.video}
                     />
                   ) : (
