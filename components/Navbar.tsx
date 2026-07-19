@@ -55,7 +55,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
               {pathname !== '/' && (
                 <li><Link href="/" className={styles.menuItem}>Home</Link></li>
               )}
-              <li><Link href={pathname === '/' ? "#sobre" : "/#sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
+              <li><Link href={pathname === '/' ? "sobre" : "/sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
               <li><Link href={pathname === '/' ? "/work" : "/work"} className={styles.menuItem}>{t.nav.projects}</Link></li>
               <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
               <li>

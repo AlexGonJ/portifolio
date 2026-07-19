@@ -199,13 +199,13 @@ export const pt: TranslatorProps = {
     items: [
       {
         quote: 'O Alex entregou muito mais do que um site — entregou uma ferramenta de vendas. Nosso tráfego orgânico triplicou e a taxa de conversão subiu 47% no primeiro mês.',
-        name: 'Aline Gonçalves',
-        role: 'Advogada — Escritório Aline Gonçalves',
+        name: 'Joanna Dias',
+        role: 'Advogada — Escritório Joanna Dias',
       },
       {
         quote: 'Nosso site antigo era genérico e não transmitia confiança. Depois do rebranding e do novo site, começamos a fechar clientes maiores e a cobrar mais pelo nosso serviço.',
         name: 'Rafael Martins',
-        role: 'CEO — Localiza Multas',
+        role: 'CEO — De Olho Multas',
       },
       {
         quote: 'Profissionalismo e visão estratégica. O Alex não só entende de design, ele entende de negócio. Cada decisão visual foi justificada com lógica de conversão.',

@@ -14,7 +14,7 @@ const slides = [
       'Projetos em stacks modernas, pensados para carregar bem, organizar melhor e converter com mais clareza.',
     primaryImage:
       'https://images.pexels.com/photos/17036353/pexels-photo-17036353.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    secondaryImage: '/illustrations/social.jpg',
+    secondaryImage: '/sites.mp4',
     accent: 'Interfaces, systems and performance',
     tint: 'rgba(170, 126, 66, 0.22)',
   },
@@ -25,8 +25,7 @@ const slides = [
     description:
       'Identidade, web design e imagens pensadas para a marca manter unidade e valor em cada ponto de contato.',
     primaryImage: '/illustrations/2h-media-NmSPbe0bDtc-unsplash.jpg',
-    secondaryImage:
-      'https://images.pexels.com/photos/27454529/pexels-photo-27454529.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    secondaryImage: '/illustrations/branding_mockup.png',
     accent: 'Identity, web and visuals',
     tint: 'rgba(94, 74, 62, 0.26)',
   },
@@ -38,7 +37,7 @@ const slides = [
       'Artes para Instagram, conteúdo audiovisual e direção de comunicação para transformar presença digital em movimento real.',
     primaryImage:
       'https://images.pexels.com/photos/7129665/pexels-photo-7129665.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    secondaryImage: '/lips.mp4',
+    secondaryImage: '/motion.mp4',
     accent: 'Content, campaigns and growth',
     tint: 'rgba(198, 161, 95, 0.2)',
   },
@@ -107,6 +106,7 @@ export default function MotionShowcase() {
                       loop
                       muted
                       playsInline
+                      preload="auto"
                       className={styles.video}
                     />
                   ) : (

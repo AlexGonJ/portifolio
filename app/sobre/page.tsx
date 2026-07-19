@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef, Fragment } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import gsap from 'gsap'
@@ -10,73 +10,140 @@ import Footer from '../../components/Footer'
 import Loader from '../../components/Loader'
 import styles from './sobre.module.scss'
 
+const processSteps = [
+  {
+    phase: 'FASE 01',
+    title: 'Discovery',
+    duration: '90 MIN',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+    ),
+    desc: 'Mergulho no modelo de negócios, análise de mercado e definição da arquitetura de informação focada em conversão.',
+  },
+  {
+    phase: 'FASE 02',
+    title: 'Demo',
+    duration: '2-5 DIAS',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+    ),
+    desc: 'Criação da identidade visual e protótipos interativos de alta fidelidade para validar a direção estética e funcional.',
+  },
+  {
+    phase: 'FASE 03',
+    title: 'Build',
+    duration: '1-3 SEM',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+    desc: 'Transformação do design em código. Performance impecável, SEO técnico avançado e animações fluidas.',
+  },
+  {
+    phase: 'FASE 04',
+    title: 'Validação',
+    duration: '30 DIAS',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 8v4l3 3" />
+      </svg>
+    ),
+    desc: 'Monitoramento dos primeiros acessos, ajustes finos de usabilidade e garantia de estabilidade total.',
+  },
+  {
+    phase: 'FASE 05',
+    title: 'Evolução',
+    duration: 'RECORRENTE',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+        <line x1="12" y1="2" x2="12" y2="12" />
+      </svg>
+    ),
+    desc: 'Análise de métricas reais, testes A/B e evolução contínua para maximizar o retorno sobre investimento.',
+  },
+]
+
+const teamAreas = [
+  {
+    title: 'Design & UX',
+    desc: 'Interfaces premium focadas em conversão, identidade visual e branding que posiciona.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Desenvolvimento',
+    desc: 'Front-end e back-end de alta performance com tecnologias modernas e arquitetura escalável.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Marketing Digital',
+    desc: 'Estratégias de tráfego, campanhas visuais e automações para escalar seus resultados.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="23 4 23 10 17 10" />
+        <polyline points="1 20 1 14 7 14" />
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Audiovisual',
+    desc: 'Produção de vídeos, reels e conteúdo visual que gera engajamento e fortalece a marca.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+        <line x1="7" y1="2" x2="7" y2="22" />
+        <line x1="17" y1="2" x2="17" y2="22" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <line x1="2" y1="7" x2="7" y2="7" />
+        <line x1="2" y1="17" x2="7" y2="17" />
+        <line x1="17" y1="7" x2="22" y2="7" />
+        <line x1="17" y1="17" x2="22" y2="17" />
+      </svg>
+    ),
+  },
+]
+
+const featuredProjects = [
+  {
+    src: '/projects/vitrine-masculina/hero.png',
+    label: 'Vitrine Masculina',
+    href: '/work/vitrine-masculina',
+  },
+  {
+    src: '/projects/via-bike/cap.jpg',
+    label: 'Via Bike',
+    href: '/work/via-bike',
+  },
+  {
+    src: '/projects/post-car1.png',
+    label: 'Localiza Multas',
+    href: '/work/localiza-multas',
+  },
+]
+
 export default function Sobre() {
   const [isLoading, setIsLoading] = useState(true)
   const mainRef = useRef<HTMLDivElement>(null)
-
-  const processSteps = [
-    {
-      phase: 'FASE 01',
-      title: 'Discovery',
-      duration: '90 MIN',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-      ),
-      desc: 'Mergulho no modelo de negócios, análise de mercado e definição da arquitetura de informação focada em conversão.',
-    },
-    {
-      phase: 'FASE 02',
-      title: 'Demo',
-      duration: '2-5 DIAS',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-      desc: 'Criação da identidade visual e protótipos interativos de alta fidelidade para validar a direção estética e funcional.',
-    },
-    {
-      phase: 'FASE 03',
-      title: 'Build',
-      duration: '1-3 SEM',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-        </svg>
-      ),
-      desc: 'Transformação do design em código. Performance impecável, SEO técnico avançado e animações fluidas para uma experiência imersiva.',
-    },
-    {
-      phase: 'FASE 04',
-      title: 'Validação',
-      duration: '30 DIAS',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 8v4l3 3" />
-        </svg>
-      ),
-      desc: 'O lançamento é acompanhado de perto. Monitoramos os primeiros acessos, realizamos ajustes finos e garantimos a estabilidade.',
-    },
-    {
-      phase: 'FASE 05',
-      title: 'Evolução',
-      duration: 'RECORRENTE',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-          <line x1="12" y1="2" x2="12" y2="12" />
-        </svg>
-      ),
-      desc: 'Análise de métricas reais de uso, testes A/B e evolução contínua do produto para maximizar o retorno sobre investimento (ROI).',
-    },
-  ]
 
   useEffect(() => {
     if (isLoading) return
@@ -84,49 +151,78 @@ export default function Sobre() {
     gsap.registerPlugin(ScrollTrigger)
 
     const ctx = gsap.context(() => {
-      /* ── Entry Animation ── */
+      /* ── Hero entrance ── */
       gsap.fromTo(
-        '.fade-up',
+        '.about-animate',
         { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out', delay: 0.2 }
+        { y: 0, opacity: 1, duration: 1, stagger: 0.08, ease: 'power3.out', delay: 0.15 }
       )
 
-      /* ── Workflow Nodes & Path Drawing ── */
-      const nodes = gsap.utils.toArray('.workflow-node')
-      nodes.forEach((node: any, i) => {
-        // Fade in the node
+      /* ── Scroll-triggered sections ── */
+      const sections = gsap.utils.toArray('.about-reveal')
+      sections.forEach((section: any) => {
         gsap.fromTo(
-          node,
-          { opacity: 0, scale: 0.8, y: 30 },
+          section,
+          { y: 40, opacity: 0 },
           {
-            opacity: 1, scale: 1, y: 0,
-            duration: 0.8, ease: 'back.out(1.2)',
+            y: 0, opacity: 1,
+            duration: 0.9,
+            ease: 'power3.out',
             scrollTrigger: {
-              trigger: node,
-              start: 'top 80%',
-            }
+              trigger: section,
+              start: 'top 82%',
+            },
           }
         )
-
-        // Animate the connecting line (SVG path) if it exists
-        const path = node.querySelector('.connection-path')
-        if (path) {
-          const length = path.getTotalLength()
-          gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
-          
-          gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: node,
-              start: 'top 60%',
-              end: 'bottom 20%',
-              scrub: 1,
-            }
-          })
-        }
       })
 
+      /* ── Process cards stagger ── */
+      gsap.fromTo(
+        '.process-card',
+        { y: 30, opacity: 0, scale: 0.95 },
+        {
+          y: 0, opacity: 1, scale: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.process-grid',
+            start: 'top 80%',
+          },
+        }
+      )
+
+      /* ── Team cards stagger ── */
+      gsap.fromTo(
+        '.team-card',
+        { y: 20, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.team-grid',
+            start: 'top 80%',
+          },
+        }
+      )
+
+      /* ── Project thumbnails ── */
+      gsap.fromTo(
+        '.project-thumb',
+        { y: 30, opacity: 0, scale: 0.96 },
+        {
+          y: 0, opacity: 1, scale: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.projects-gallery',
+            start: 'top 80%',
+          },
+        }
+      )
     }, mainRef)
 
     setTimeout(() => ScrollTrigger.refresh(), 600)
@@ -142,167 +238,248 @@ export default function Sobre() {
 
       <div className="smooth-wrapper" style={{ opacity: isLoading ? 0 : 1 }}>
         <main className={styles.aboutPage} ref={mainRef}>
-          {/* Continuous Grid Background */}
-          <div className={styles.globalGrid} />
-          
           <Navbar />
 
           {/* ══════════════════════════════════════════════════════════════
-              1. HERO
+              1. HERO — Dark Immersive
               ══════════════════════════════════════════════════════════════ */}
-          <section className={styles.heroSection}>
-            <div className={styles.container}>
-              <div className={`${styles.heroHeader} fade-up`}>
-                <span className={styles.tag}>Visão Geral</span>
-                <h1 className={styles.title}>
-                  Onde a Estratégia<br/>
-                  encontra a <span>Engenharia.</span>
+          <section className={styles.heroWrapper}>
+            <div className={styles.heroBackground}>
+              <Image
+                src="/heroi1.png"
+                alt="Lexon Digital — Alexander Gonçalves"
+                fill
+                priority
+                className={styles.heroBgImage}
+              />
+              <div className={styles.heroOverlay} />
+            </div>
+
+            <header className={styles.hero}>
+              <div className={`${styles.heroInner} about-animate`}>
+                <p className={styles.eyebrow}>Sobre Nós</p>
+                <h1 className={styles.heroTitle}>
+                  Lexon<br /><span>Digital</span>
                 </h1>
-                <p className={styles.subtitle}>
-                  Nós desenhamos e desenvolvemos experiências digitais que elevam marcas e impulsionam o crescimento. Um estúdio onde a comunicação é direta e a qualidade é absoluta.
+                <p className={styles.heroSubtitle}>
+                  Estratégia visual, tecnologia e design premium reunidos para transformar negócios. 
+                  Construímos marcas que vendem e experiências digitais que convertem.
                 </p>
               </div>
-            </div>
+
+              <div className={`${styles.meta} about-animate`}>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Fundação</span>
+                  <span className={styles.metaValue}>2022</span>
+                </div>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Local</span>
+                  <span className={styles.metaValue}>Brasil · Remoto</span>
+                </div>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Foco</span>
+                  <span className={styles.metaValue}>Design & Tecnologia</span>
+                </div>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Projetos</span>
+                  <span className={styles.metaValue}>60+</span>
+                </div>
+              </div>
+            </header>
           </section>
 
           {/* ══════════════════════════════════════════════════════════════
-              2. S-CURVE WORKFLOW
+              2. ABOUT THE AGENCY
               ══════════════════════════════════════════════════════════════ */}
-          <section className={styles.workflowSection}>
+          <section className={styles.agencyIntro}>
             <div className={styles.container}>
-              <div className={styles.workflowSnake}>
-                {processSteps.map((step, index) => {
-                  const isEven = index % 2 === 1
-                  
-                  return (
-                    <div 
-                      key={index} 
-                      className={`${styles.workflowNodeWrapper} workflow-node ${isEven ? styles.nodeRight : styles.nodeLeft}`}
-                    >
-                      {/* SVGs to connect nodes. Except for the last one */}
-                      {index < processSteps.length - 1 && (
-                        <div className={`${styles.connector} ${isEven ? styles.connectLeft : styles.connectRight}`}>
-                          <svg viewBox="0 0 100 200" preserveAspectRatio="none">
-                            {isEven ? (
-                              <path 
-                                className="connection-path" 
-                                d="M 100,0 C 100,100 0,100 0,200" 
-                                fill="none" 
-                                stroke="var(--color-gold)" 
-                                strokeWidth="2" 
-                                strokeDasharray="6,6"
-                              />
-                            ) : (
-                              <path 
-                                className="connection-path" 
-                                d="M 0,0 C 0,100 100,100 100,200" 
-                                fill="none" 
-                                stroke="var(--color-gold)" 
-                                strokeWidth="2" 
-                                strokeDasharray="6,6"
-                              />
-                            )}
-                          </svg>
-                        </div>
-                      )}
+              <div className={styles.agencyGrid}>
+                <div className={`${styles.agencyText} about-reveal`}>
+                  <span className={styles.tag}>A Agência</span>
+                  <h2>
+                    Design que <span>vende.</span><br />
+                    Tecnologia que <span>escala.</span>
+                  </h2>
+                  <p>
+                    A <strong>Lexon Digital</strong> nasceu de uma premissa simples: design bonito sem estratégia é desperdício. Cada projeto que entregamos começa com uma análise profunda do negócio do cliente — seu público, seus concorrentes, seus gargalos de conversão.
+                  </p>
+                  <p>
+                    Unimos estética premium com engenharia de alta performance para criar soluções que não apenas impressionam, mas geram resultado mensurável. Sites que rankeiam, marcas que justificam preços mais altos e sistemas que organizam operações inteiras.
+                  </p>
+                  <p>
+                    Nosso diferencial é a comunicação direta: sem gerentes de projeto bloqueando o caminho, você fala direto com quem cria e desenvolve.
+                  </p>
+                </div>
 
-                      <div className={styles.nodeCircle}>
-                        <div className={styles.iconInner}>
-                          {step.icon}
-                        </div>
-                      </div>
-
-                      <div className={styles.nodeText}>
-                        <div className={styles.phaseHeader}>
-                          <span className={styles.phaseLabel}>{step.phase}</span>
-                        </div>
-                        <h3>{step.title}</h3>
-                        <span className={styles.durationBadge}>{step.duration}</span>
-                        <p>{step.desc}</p>
-                      </div>
+                <div className={`${styles.agencyVisual} about-reveal`}>
+                  {[
+                    { label: 'Web Design', icon: (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                      </svg>
+                    )},
+                    { label: 'Branding', icon: (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                      </svg>
+                    )},
+                    { label: 'Sistemas', icon: (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                      </svg>
+                    )},
+                    { label: 'Marketing', icon: (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                        <polyline points="17 6 23 6 23 12" />
+                      </svg>
+                    )},
+                  ].map((item, i) => (
+                    <div key={i} className={styles.visualCard}>
+                      <div className={styles.visualCardIcon}>{item.icon}</div>
+                      <span className={styles.visualCardLabel}>{item.label}</span>
                     </div>
-                  )
-                })}
+                  ))}
+                </div>
               </div>
             </div>
           </section>
 
           {/* ══════════════════════════════════════════════════════════════
-              3. DIRECTOR & ECOSYSTEM (Glassmorphism over grid)
+              3. PROCESS
               ══════════════════════════════════════════════════════════════ */}
-          <section className={styles.agencySection}>
+          <section className={styles.processSection}>
             <div className={styles.container}>
-              
-              <div className={`${styles.directorCard} fade-up`}>
-                <div className={styles.directorPhoto}>
+              <div className={`${styles.sectionHeader} about-reveal`}>
+                <span className={styles.tag}>Nosso Processo</span>
+                <h2>Da estratégia ao resultado.</h2>
+                <p>
+                  Um método claro e estruturado para entregar projetos que geram impacto real no seu negócio.
+                </p>
+              </div>
+
+              <div className={`${styles.processGrid} process-grid`}>
+                {processSteps.map((step, index) => (
+                  <div key={index} className={`${styles.processCard} process-card`}>
+                    <span className={styles.processPhase}>{step.phase}</span>
+                    <div className={styles.processIcon}>{step.icon}</div>
+                    <h3>{step.title}</h3>
+                    <span className={styles.processDuration}>{step.duration}</span>
+                    <p>{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════════
+              4. FOUNDER CARD
+              ══════════════════════════════════════════════════════════════ */}
+          <section className={styles.founderSection}>
+            <div className={styles.container}>
+              <div className={`${styles.founderCard} about-reveal`}>
+                <div className={styles.founderPhoto}>
                   <Image
                     src="/heroi.png"
-                    alt="Alexander Gonçalves"
+                    alt="Alexander Gonçalves — Fundador e Diretor Criativo"
                     fill
                     priority
-                    className={styles.img}
+                    onLoad={() => ScrollTrigger.refresh()}
                   />
                 </div>
-                <div className={styles.directorInfo}>
-                  <span className={styles.tag}>O Diretor Criativo</span>
-                  <h2>A visão de um.<br/>A força de muitos.</h2>
+                <div className={styles.founderInfo}>
+                  <span className={styles.tag}>O Fundador</span>
+                  <h2>Alexander<br />Gonçalves</h2>
                   <p>
-                    Sou Alexander Gonçalves, Fundador e Diretor Criativo da Lexon Digital. 
-                    Eu coordeno a visão estratégica, o design premium e a arquitetura técnica, 
-                    orquestrando parceiros especialistas em cada área.
+                    Fundador e Diretor Criativo da Lexon Digital. Atuo na interseção entre design estratégico e engenharia de software, coordenando cada projeto desde a concepção visual até o código em produção.
                   </p>
                   <p>
-                    Sem gerentes de projeto bloqueando o caminho, você tem acesso direto 
-                    a quem realmente cria e desenvolve, com o peso de uma equipe de alta performance executando o trabalho.
+                    Minha abordagem combina visão de negócio com execução técnica: antes de abrir qualquer ferramenta de design, eu entendo o modelo de receita do cliente, seus gargalos de conversão e o posicionamento da concorrência.
                   </p>
+                  <span className={styles.founderRole}>Diretor Criativo & Full-Stack Developer</span>
                 </div>
               </div>
-
-              <div className={styles.areasGrid}>
-                <div className={`${styles.areaCard} fade-up`}>
-                  <div className={styles.areaIcon}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  </div>
-                  <h3>O Core</h3>
-                  <p>Design, branding e UX. Liderança criativa direta para garantir conversão e estética impecável.</p>
-                </div>
-
-                <div className={`${styles.areaCard} fade-up`}>
-                  <div className={styles.areaIcon}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
-                    </svg>
-                  </div>
-                  <h3>A Estrutura</h3>
-                  <p>Desenvolvimento e sistemas complexos, executados por parceiros focados em performance web.</p>
-                </div>
-
-                <div className={`${styles.areaCard} fade-up`}>
-                  <div className={styles.areaIcon}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <polyline points="23 4 23 10 17 10" />
-                      <polyline points="1 20 1 14 7 14" />
-                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                    </svg>
-                  </div>
-                  <h3>O Crescimento</h3>
-                  <p>Tráfego, automações e audiovisual, integrando tecnologias para escalar os resultados.</p>
-                </div>
-              </div>
-
             </div>
           </section>
 
           {/* ══════════════════════════════════════════════════════════════
-              4. CTA
+              5. ASSOCIATED TEAM
               ══════════════════════════════════════════════════════════════ */}
-          <section className={`${styles.ctaSection} fade-up`}>
+          <section className={styles.teamSection}>
+            <div className={styles.container}>
+              <div className={styles.teamInner}>
+                <div className={`${styles.teamHeader} about-reveal`}>
+                  <span className={styles.tag}>Equipe Associada</span>
+                  <h2>A força de muitos.<br />A qualidade de poucos.</h2>
+                  <p>
+                    Por trás de cada entrega existe uma rede de designers e programadores associados, 
+                    especialistas em suas áreas e prontos para atender com a mais alta qualidade. 
+                    Cada projeto recebe o time ideal para o desafio.
+                  </p>
+                </div>
+
+                <div className={`${styles.teamGrid} team-grid`}>
+                  {teamAreas.map((area, index) => (
+                    <div key={index} className={`${styles.teamCard} team-card`}>
+                      <div className={styles.teamCardIcon}>{area.icon}</div>
+                      <h3>{area.title}</h3>
+                      <p>{area.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════════
+              6. PROJECTS — See Our Work
+              ══════════════════════════════════════════════════════════════ */}
+          <section className={styles.projectsCta}>
+            <div className={styles.container}>
+              <div className={`${styles.projectsHeader} about-reveal`}>
+                <span className={styles.tag}>Portfólio</span>
+                <h2>Veja alguns dos nossos projetos.</h2>
+              </div>
+
+              <div className={`${styles.projectsGallery} projects-gallery`}>
+                {featuredProjects.map((project, index) => (
+                  <Link key={index} href={project.href} className={`${styles.projectThumb} project-thumb`}>
+                    <Image
+                      src={project.src}
+                      alt={project.label}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      onLoad={() => ScrollTrigger.refresh()}
+                    />
+                    <div className={styles.projectThumbOverlay}>
+                      <span className={styles.projectThumbLabel}>{project.label}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className={styles.projectsAction}>
+                <Link href="/work" className={styles.projectsBtn}>
+                  Ver todos os projetos
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════════
+              7. CTA FINAL
+              ══════════════════════════════════════════════════════════════ */}
+          <section className={`${styles.ctaSection} about-reveal`}>
             <div className={styles.container}>
               <div className={styles.ctaBox}>
-                <h2>Pronto para iniciar<br/>seu próximo projeto?</h2>
+                <h2>Pronto para iniciar<br />seu próximo projeto?</h2>
                 <Link href="/#contato" className={styles.ctaBtn}>
                   Vamos Conversar
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">

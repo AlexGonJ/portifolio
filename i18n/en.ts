@@ -197,13 +197,13 @@ export const en = {
     items: [
       {
         quote: 'Alex delivered much more than a website — he delivered a sales tool. Our organic traffic tripled and conversion rate increased 47% in the first month.',
-        name: 'Aline Gonçalves',
-        role: 'Lawyer — Aline Gonçalves Office',
+        name: 'Joanna Dias',
+        role: 'Lawyer — Joanna Dias Office',
       },
       {
         quote: 'Our old site was generic and didn\'t convey trust. After the rebranding and new website, we started closing bigger clients and charging more for our service.',
         name: 'Rafael Martins',
-        role: 'CEO — Localiza Multas',
+        role: 'CEO — De Olho Multas',
       },
       {
         quote: 'Professionalism and strategic vision. Alex doesn\'t just understand design, he understands business. Every visual decision was backed by conversion logic.',

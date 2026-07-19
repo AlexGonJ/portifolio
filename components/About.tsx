@@ -63,7 +63,7 @@ export default function About() {
             </div>
           </div>
 
-          <a href="#contato" className={styles.aboutCta}>
+          <a href="/sobre" className={styles.aboutCta}>
             {t.about.ctaText}
             <svg viewBox="0 0 24 24" className={styles.aboutCtaIcon}>
               <path d="M5 12h14M12 5l7 7-7 7" />
