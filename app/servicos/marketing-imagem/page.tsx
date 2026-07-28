@@ -22,6 +22,7 @@ interface ServiceItem {
   deliverablesPt: string[]
   deliverablesEn: string[]
   canHaveQty?: boolean
+  disabled?: boolean
 }
 
 const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
@@ -44,9 +45,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Full Visual Identity',
       descPt: 'Branding profissional com logo, paleta de cores, tipografia, manual da marca e mockups 3D.',
       descEn: 'Professional branding with logo, color palette, typography, brand manual, and 3D mockups.',
-      pricePt: '950',
-      priceEn: '250',
-      priceVal: 950,
+      pricePt: '1.200',
+      priceEn: '320',
+      priceVal: 1200,
       deliverablesPt: ['Manual de Identidade Visual', 'Tipografia & Paleta HSL', 'Aplicações em Papelaria/Banners', 'Mockups realistas de apresentação'],
       deliverablesEn: ['Visual Identity Manual', 'Typography & HSL Palette', 'Stationery/Banner designs', 'Realistic presentation mockups']
     },
@@ -56,11 +57,35 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Rebranding (Brand Redesign)',
       descPt: 'Modernização completa de marca existente para reposicionamento premium no mercado.',
       descEn: 'Complete modernization of an existing brand for premium market repositioning.',
-      pricePt: '800',
-      priceEn: '200',
-      priceVal: 800,
+      pricePt: '1.000',
+      priceEn: '270',
+      priceVal: 1000,
       deliverablesPt: ['Redesenho do logotipo', 'Atualização do ecossistema visual', 'Estratégia de reposicionamento', 'Guia de transição de marca'],
       deliverablesEn: ['Logo redesign', 'Visual ecosystem update', 'Repositioning strategy', 'Brand transition guide']
+    },
+    {
+      id: 'vetorizacao_logo',
+      namePt: 'Vetorização de Logos',
+      nameEn: 'Logo Vectorization',
+      descPt: 'Conversão de logotipos antigos ou em baixa resolução (JPG/PNG) em vetor profissional editável e infinitamente escalável.',
+      descEn: 'Conversion of low-res or old logos (JPG/PNG) into a professional, editable, and infinitely scalable vector.',
+      pricePt: '140',
+      priceEn: '35',
+      priceVal: 140,
+      deliverablesPt: ['Arquivos em SVG, EPS, PDF e AI', 'PNG em alta resolução com fundo transparente', 'Vetorização manual em alta precisão'],
+      deliverablesEn: ['SVG, EPS, PDF, and AI vector files', 'High-res PNG with transparent background', 'High-precision manual vectorization']
+    },
+    {
+      id: 'cartao_digital',
+      namePt: 'Criação de Cartão Digital Interativo',
+      nameEn: 'Interactive Digital Business Card',
+      descPt: 'Cartão de visitas virtual em PDF interativo com botões clicáveis para WhatsApp, redes sociais, localização e site.',
+      descEn: 'Virtual business card in interactive PDF with clickable buttons for WhatsApp, social media, map location, and site.',
+      pricePt: '150',
+      priceEn: '40',
+      priceVal: 150,
+      deliverablesPt: ['PDF Interativo com botões com link', 'Arquivo vCard para salvamento direto nos contatos', 'Layout moderno otimizado para celulares'],
+      deliverablesEn: ['Interactive PDF with link buttons', 'vCard file for direct smartphone save', 'Modern mobile-optimized layout']
     }
   ],
   social: [
@@ -114,6 +139,18 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       deliverablesPt: ['Artes de alta conversão', 'Design focado no Botão de Ação (CTA)', 'Testes A/B (diferentes chamadas)'],
       deliverablesEn: ['High-converting designs', 'Design focused on the Call to Action (CTA)', 'A/B testing layouts (different copy)'],
       canHaveQty: true
+    },
+    {
+      id: 'criacao_linktree',
+      namePt: 'Criação de Linktree / Biolink',
+      nameEn: 'Linktree / Biolink Creation',
+      descPt: 'Estruturação e design de página personalizada de links para a bio do Instagram e TikTok.',
+      descEn: 'Custom link page design and setup for Instagram and TikTok bio.',
+      pricePt: '200',
+      priceEn: '50',
+      priceVal: 200,
+      deliverablesPt: ['Layout personalizado com a identidade da marca', 'Configuração de até 8 botões de destaque', 'Integração com WhatsApp e redes sociais'],
+      deliverablesEn: ['Custom layout with brand visual identity', 'Setup of up to 8 highlighted buttons', 'WhatsApp and social media integration']
     }
   ],
   audiovisual: [
@@ -144,15 +181,28 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
     },
     {
       id: 'captacao_diaria',
-      namePt: 'Gravação e Direção de Vídeo',
-      nameEn: 'Video Shoot & Creative Direction',
-      descPt: 'Diária de gravação presencial ou assessoria remota guiada para captação profissional.',
-      descEn: 'Daily rate for on-site video shooting or guided remote support for professional capture.',
-      pricePt: '500',
-      priceEn: '130',
+      namePt: 'Gravação e Direção de Vídeo (até 4h)',
+      nameEn: 'Video Shoot & Creative Direction (up to 4h)',
+      descPt: 'Sessão de gravação presencial ou assessoria remota guiada para captação profissional (valor referente a até 4h).',
+      descEn: 'On-site video shooting or guided remote support for professional video capture (rate for up to 4h session).',
+      pricePt: '500 / 4h',
+      priceEn: '130 / 4h',
       priceVal: 500,
-      deliverablesPt: ['Até 4 horas de captação', 'Equipamento de câmera e iluminação profissional', 'Captação de áudio limpo', 'Direção de cena e poses'],
-      deliverablesEn: ['Up to 4 hours of shooting', 'Professional camera and lighting setup', 'Clean audio recording', 'Scene direction and posing']
+      deliverablesPt: ['Até 4 horas de captação presencial/remota', 'Equipamento de câmera e iluminação profissional', 'Captação de áudio limpo com microfone lapela', 'Direção de cena, postura e enquadramento'],
+      deliverablesEn: ['Up to 4 hours of video shoot session', 'Professional camera and lighting setup', 'Clean lapel mic audio recording', 'Scene, posture, and framing direction']
+    },
+    {
+      id: 'gravacao_video_bruto',
+      namePt: 'Gravação de Vídeo Bruto',
+      nameEn: 'Raw Video Recording',
+      descPt: 'Captação presencial de tomadas e cenas em vídeo sem edição para uso posterior da sua equipe.',
+      descEn: 'On-site raw video capture of unedited footage for your team to use later.',
+      pricePt: '350',
+      priceEn: '90',
+      priceVal: 350,
+      deliverablesPt: ['Captação em 4K / 60fps', 'Entrega de todos os arquivos brutos na nuvem', 'Iluminação básica inclusa', 'Disponível por sessão de 2h (quantidade customizável)'],
+      deliverablesEn: ['4K / 60fps video capture', 'Cloud delivery of all raw video files', 'Basic lighting included', 'Rate per 2h session (customizable quantity)'],
+      canHaveQty: true
     },
     {
       id: 'video_institucional',
@@ -164,7 +214,8 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       priceEn: '400',
       priceVal: 1500,
       deliverablesPt: ['Roteiro profissional', 'Locução profissional inclusa', 'Edição cinematográfica e trilha sonora licenciada', 'Formatos widescreen e vertical'],
-      deliverablesEn: ['Professional script', 'Professional voiceover included', 'Cinematic editing & licensed soundtrack', 'Widescreen and vertical formats']
+      deliverablesEn: ['Professional script', 'Professional voiceover included', 'Cinematic editing & licensed soundtrack', 'Widescreen and vertical formats'],
+      disabled: true
     }
   ],
   visual: [
@@ -215,6 +266,31 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       priceVal: 300,
       deliverablesPt: ['Layout de plotagem em tamanho real', 'Indicação de tipo de vinil (fosco/brilho/perfurado)', 'Mockup de simulação do veículo/vidro'],
       deliverablesEn: ['Real-size plotting layout', 'Indication of vinyl type (matte/gloss/perforated)', 'Simulation mockup of vehicle/glass']
+    },
+    {
+      id: 'cartao_fisico',
+      namePt: 'Criação de Cartão de Visitas Físico',
+      nameEn: 'Physical Business Card Design',
+      descPt: 'Design profissional frente e verso para cartão de visitas físico pronto para impressão gráfica.',
+      descEn: 'Professional front and back physical business card design ready for print.',
+      pricePt: '150',
+      priceEn: '40',
+      priceVal: 150,
+      deliverablesPt: ['Design frente e verso exclusivo', 'Arquivo vetorizado em alta definição (PDF/X-1a e AI)', 'Sangria e marcação de corte gráfica', 'Mockup 3D de apresentação'],
+      deliverablesEn: ['Exclusive front & back design', 'High-definition vector files (PDF/X-1a & AI)', 'Print bleed and crop mark setup', '3D presentation mockup']
+    },
+    {
+      id: 'banners_hd',
+      namePt: 'Criação de Banners em Alta Definição',
+      nameEn: 'High-Definition Banner Creation',
+      descPt: 'Design de banners em alta definição para sites, e-commerce, feiras ou impressão gráfica.',
+      descEn: 'High-definition banner design for websites, e-commerce, trade shows, or print graphics.',
+      pricePt: '120',
+      priceEn: '30',
+      priceVal: 120,
+      deliverablesPt: ['Arte em altíssima resolução (PNG, SVG, PDF)', 'Dimensões e proporções personalizadas', 'Layout otimizado para chamada de ação (CTA)'],
+      deliverablesEn: ['Ultra-high resolution graphic (PNG, SVG, PDF)', 'Custom dimensions and ratios', 'Layout optimized for Call to Action (CTA)'],
+      canHaveQty: true
     }
   ]
 }
@@ -255,7 +331,9 @@ export default function MarketingImagemPage() {
     const initial: typeof selections = {}
     Object.values(SERVICES_DATA).forEach((categoryItems) => {
       categoryItems.forEach((item) => {
-        initial[item.id] = { selected: false, qty: 1 }
+        if (!item.disabled) {
+          initial[item.id] = { selected: false, qty: 1 }
+        }
       })
     })
     setSelections(initial)
@@ -442,7 +520,7 @@ export default function MarketingImagemPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {SERVICES_DATA.branding.map((item) => (
+                    {SERVICES_DATA.branding.filter((item) => !item.disabled).map((item) => (
                       <tr key={item.id}>
                         <td>
                           <div className={styles.serviceName}>{lang === 'pt' ? item.namePt : item.nameEn}</div>
@@ -497,7 +575,7 @@ export default function MarketingImagemPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {SERVICES_DATA.social.map((item) => (
+                    {SERVICES_DATA.social.filter((item) => !item.disabled).map((item) => (
                       <tr key={item.id}>
                         <td>
                           <div className={styles.serviceName}>{lang === 'pt' ? item.namePt : item.nameEn}</div>
@@ -552,7 +630,7 @@ export default function MarketingImagemPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {SERVICES_DATA.audiovisual.map((item) => (
+                    {SERVICES_DATA.audiovisual.filter((item) => !item.disabled).map((item) => (
                       <tr key={item.id}>
                         <td>
                           <div className={styles.serviceName}>{lang === 'pt' ? item.namePt : item.nameEn}</div>
@@ -608,7 +686,7 @@ export default function MarketingImagemPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {SERVICES_DATA.visual.map((item) => (
+                    {SERVICES_DATA.visual.filter((item) => !item.disabled).map((item) => (
                       <tr key={item.id}>
                         <td>
                           <div className={styles.serviceName}>{lang === 'pt' ? item.namePt : item.nameEn}</div>
@@ -814,8 +892,9 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Branding & Logo' : 'Branding & Logo'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.branding.map((item) => {
+                      {SERVICES_DATA.branding.filter((item) => !item.disabled).map((item) => {
                         const isSel = selections[item.id]?.selected || false
+                        const qty = selections[item.id]?.qty || 1
                         return (
                           <div
                             key={item.id}
@@ -834,8 +913,17 @@ export default function MarketingImagemPage() {
                               </div>
                             </div>
                             <div className={styles.simItemRight}>
+                              {item.canHaveQty && (
+                                <div className={styles.quantityControls} onClick={(e) => e.stopPropagation()}>
+                                  <button onClick={() => handleQtyChange(item.id, -1)} disabled={qty <= 1}>
+                                    -
+                                  </button>
+                                  <span>{qty}</span>
+                                  <button onClick={() => handleQtyChange(item.id, 1)}>+</button>
+                                </div>
+                              )}
                               <div className={styles.simItemPrice}>
-                                {lang === 'pt' ? `R$ ${item.pricePt}` : `$${item.priceEn}`}
+                                {formatPrice(item.priceVal * qty)}
                               </div>
                             </div>
                           </div>
@@ -848,7 +936,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Redes Sociais & Design' : 'Social Media & Design'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.social.map((item) => {
+                      {SERVICES_DATA.social.filter((item) => !item.disabled).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
@@ -892,7 +980,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Produção Audiovisual' : 'Audiovisual Production'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.audiovisual.map((item) => {
+                      {SERVICES_DATA.audiovisual.filter((item) => !item.disabled).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
@@ -936,8 +1024,9 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Comunicação Visual & Impressos' : 'Visual Communication & Prints'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.visual.map((item) => {
+                      {SERVICES_DATA.visual.filter((item) => !item.disabled).map((item) => {
                         const isSel = selections[item.id]?.selected || false
+                        const qty = selections[item.id]?.qty || 1
                         return (
                           <div
                             key={item.id}
@@ -956,8 +1045,17 @@ export default function MarketingImagemPage() {
                               </div>
                             </div>
                             <div className={styles.simItemRight}>
+                              {item.canHaveQty && (
+                                <div className={styles.quantityControls} onClick={(e) => e.stopPropagation()}>
+                                  <button onClick={() => handleQtyChange(item.id, -1)} disabled={qty <= 1}>
+                                    -
+                                  </button>
+                                  <span>{qty}</span>
+                                  <button onClick={() => handleQtyChange(item.id, 1)}>+</button>
+                                </div>
+                              )}
                               <div className={styles.simItemPrice}>
-                                {lang === 'pt' ? `R$ ${item.pricePt}` : `$${item.priceEn}`}
+                                {formatPrice(item.priceVal * qty)}
                               </div>
                             </div>
                           </div>

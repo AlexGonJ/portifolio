@@ -21,11 +21,11 @@ export const pt: TranslatorProps = {
   },
   about: {
     title:
-      'Projeto sites e marcas que não apenas impressionam, eles vendem. Cada decisão é guiada por um objetivo: fazer o seu negócio crescer.',
+      'Criamos marcas, sites e ecossistemas digitais que impulsionam vendas e posicionam empresas como líderes do seu segmento.',
     description:
-      'Design não é decoração, é a engrenagem silenciosa por trás de cada venda. Combino estética premium com estratégia de conversão para entregar projetos que geram resultado mensurável.',
-    ctaText: 'Conheça meu processo',
-    availableText: 'Disponível',
+      'Design e tecnologia não são ornamentos, são a engrenagem estratégica por trás do crescimento da sua empresa. Nossa agência une posicionamento de marca, experiência de usuário e engenharia de alta performance para acelerar seus resultados.',
+    ctaText: 'Conheça nosso processo',
+    availableText: 'Estrutura de Agência',
   },
   services: {
     label: 'Serviços & Soluções',

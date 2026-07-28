@@ -132,6 +132,13 @@
   gap: 1rem;
   padding-top: clamp(0.4rem, 1vw, 0.75rem);
   pointer-events: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+  }
 }
 
 .cta {
@@ -198,6 +205,12 @@
     border-radius: inherit;
     border: 1px solid rgba(255, 255, 255, 0.04);
     pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+    width: 100%;
+    min-height: 4.5rem;
   }
 }
 
@@ -285,6 +298,7 @@
   text-decoration: none;
   padding: 0.6rem 0;
   transition: color 0.3s ease;
+  justify-content: center;
 
   &:hover {
     color: rgba(255, 255, 255, 1);

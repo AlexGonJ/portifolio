@@ -205,7 +205,7 @@ export default function Footer() {
 
         <div ref={bottomRef} className={styles.bottom}>
           <div className={styles.info}>
-            <span>&copy; 2026 Alex Design</span>
+            <span>&copy; 2026 Lexon Digital</span>
             <span>
               {t.footer.localTime} {new Date().getHours()}:
               {new Date().getMinutes().toString().padStart(2, '0')}

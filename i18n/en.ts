@@ -19,11 +19,11 @@ export const en = {
   },
   about: {
     title:
-      "Building websites and brands that don't just impress, they sell. Every decision is driven by one goal: growing your business.",
+      'We craft brands, websites, and digital ecosystems that drive sales and position companies as industry leaders.',
     description:
-      "Design isn't decoration, it's the silent engine behind every sale. I combine premium aesthetics with conversion strategy to deliver projects that generate measurable results.",
-    ctaText: 'See my process',
-    availableText: 'Available',
+      'Design and technology are not decorations—they are the strategic engine behind your company\'s growth. Our agency combines brand positioning, user experience, and high-performance engineering to accelerate your results.',
+    ctaText: 'Explore our process',
+    availableText: 'Agency Structure',
   },
   services: {
     label: 'Services & Solutions',

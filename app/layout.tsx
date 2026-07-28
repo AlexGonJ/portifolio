@@ -12,7 +12,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <CodeProtection />
           <CustomCursor/>
           {children}
         </Providers>

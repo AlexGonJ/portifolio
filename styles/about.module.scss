@@ -1,46 +1,35 @@
 @use './variables' as vars;
 
 .about {
-  padding: clamp(6rem, 15vw, 12rem) 8vw; // Padding dinâmico conforme a tela
+  padding: clamp(6rem, 15vw, 12rem) 8vw;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+  gap: 3rem;
   align-items: start;
 
   .titleWrapper {
-    grid-column: 1 / 9;
-    
-    @media (max-width: 1200px) {
-      grid-column: 1 / 10;
-    }
-    
-    @media (max-width: 900px) {
-      grid-column: 1 / -1; // Ocupa tudo no tablet
+    grid-column: 1 / 7;
+
+    @media (max-width: 1100px) {
+      grid-column: 1 / -1;
     }
   }
 
   .textWrapper {
-    grid-column: 10 / 13;
+    grid-column: 7 / 13;
     padding-top: 0.5rem;
 
-    @media (max-width: 900px) {
-      grid-column: 1 / 8; // No tablet, fica abaixo mas não ocupa tudo
-      padding-top: 2rem;
-    }
-
-    @media (max-width: 600px) {
-      grid-column: 1 / -1; // No celular ocupa tudo
-      padding-top: 1rem;
+    @media (max-width: 1100px) {
+      grid-column: 1 / -1;
+      padding-top: 1.5rem;
     }
   }
 
-  // Estilizando o ScrollReveal
+  /* Estilizando o ScrollReveal */
   .customH2 {
     margin: 0;
     :global(.scroll-reveal-text) {
-      // clamp(mínimo, escala_ideal, máximo)
       font-size: var(--step-3) !important;
-      font-weight: 400 !important;
       font-weight: 400 !important;
       line-height: 1.2 !important;
       letter-spacing: -0.02em;
@@ -62,146 +51,93 @@
   .aboutFooter {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .authorBadge {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-  }
-
-  .authorAvatar {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid rgba(201, 168, 76, 0.35);
-    flex-shrink: 0;
-    background: linear-gradient(135deg, #c9a84c 0%, #a07d30 100%);
-    box-shadow: 0 4px 12px rgba(201, 168, 76, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .avatarImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .avatarFallback {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: 0.04em;
-    line-height: 1;
-  }
-
-  .authorMeta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-
-  .authorName {
-    font-size: 0.88rem;
-    font-weight: 550;
-    color: var(--color-ink, #1c1c1c);
-    letter-spacing: -0.01em;
-  }
-
-  .authorTitle {
-    font-size: 0.75rem;
-    color: rgba(28, 28, 28, 0.5);
-    letter-spacing: 0.02em;
-  }
-
-  /* ── Availability Badge ── */
-  .availabilityBadge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.3rem 0.75rem 0.3rem 0.55rem;
-    background: rgba(34, 197, 94, 0.08);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    border-radius: 999px;
-    margin-left: 0.25rem;
-  }
-
-  .availabilityDot {
-    width: 0.45rem;
-    height: 0.45rem;
-    border-radius: 50%;
-    background: #22c55e;
-    flex-shrink: 0;
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 50%;
-      background: rgba(34, 197, 94, 0.35);
-      animation: pulse 2s ease-in-out infinite;
-    }
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.8); opacity: 0; }
-  }
-
-  .availabilityText {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    color: #16a34a;
-    text-transform: uppercase;
-    white-space: nowrap;
+    gap: 2rem;
+    margin-top: 3.5rem;
   }
 
   .aboutCta {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    color: rgba(28, 28, 28, 0.6);
-    font-size: 0.88rem;
-    font-weight: 450;
+    gap: 1.25rem;
+    color: #111317;
     text-decoration: none;
-    transition: color 0.3s ease;
     width: fit-content;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    .ctaText {
+      font-size: 1.35rem; /* Fonte maior conforme solicitado */
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #c9a84c;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    .ctaIconWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.15);
+      color: #c9a84c;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .aboutCtaIcon {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
     &:hover {
-      color: rgba(28, 28, 28, 0.92);
-
+      .ctaText::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      
+      .ctaIconWrapper {
+        background: #c9a84c;
+        color: #ffffff;
+        transform: translateX(8px);
+        box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
+      }
+      
       .aboutCtaIcon {
-        transform: translateX(4px);
+        transform: translateX(2px);
       }
     }
   }
-
-  .aboutCtaIcon {
-    width: 0.85rem;
-    height: 0.85rem;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
 }
 
-// Ajuste extra para telas muito pequenas
 @media (max-width: 600px) {
   .about {
     display: flex;
     flex-direction: column;
     gap: 2rem;
     padding: 4rem 6vw;
+  }
+  
+  .about .aboutCta .ctaText {
+    font-size: 1.15rem;
+  }
+  
+  .about .aboutCta .ctaIconWrapper {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }

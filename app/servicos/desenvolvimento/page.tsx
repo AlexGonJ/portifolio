@@ -121,7 +121,7 @@ export default function DesenvolvimentoPage() {
                   SEO (Otimização para Mecanismos de Busca) é estruturar o seu site para ser a melhor resposta no Google. Estar na primeira página significa tráfego qualificado e clientes diários sem pagar por anúncios a cada clique.
                 </p>
                 <p>
-                  O sistema de busca imobiliária da <strong>Hinelna & Rielyann</strong> foi projetado com SEO em mente. Desde a velocidade de carregamento até a estrutura de links internos para garantir o ranqueamento de cada imóvel listado.
+                  Nossos projetos web são construídos com uma arquitetura técnica avançada focada inteiramente em <strong>SEO e Performance</strong>. Desde a estrutura semântica ao tempo de carregamento rápido para garantir a melhor posição orgânica e máxima retenção.
                 </p>
               </div>
               <div className={styles.splitMedia}>
