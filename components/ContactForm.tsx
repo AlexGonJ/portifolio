@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import styles from '../styles/contact-form.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const WHATSAPP_URL = 'https://wa.me/5538999023012'
+const WHATSAPP_URL = '/whatsapp'
 
 const SERVICE_OPTIONS = [
   { id: 'website', labelKey: 'serviceWebsite' },

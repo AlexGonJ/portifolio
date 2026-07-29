@@ -428,7 +428,7 @@ export default function MarketingImagemPage() {
     }
 
     const encodedText = encodeURIComponent(message)
-    const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedText}`
+    const url = `/whatsapp?text=${encodedText}`
     window.open(url, '_blank')
   }
 
@@ -758,7 +758,7 @@ export default function MarketingImagemPage() {
                     </li>
                   </ul>
                   <a
-                    href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+                    href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
                         ? 'Olá Alex! Gostaria de saber mais sobre o Combo Start-up de R$ 1.300.'
                         : 'Hi Alex! I would like to know more about the Start-up Combo ($350).'
@@ -808,7 +808,7 @@ export default function MarketingImagemPage() {
                     </li>
                   </ul>
                   <a
-                    href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+                    href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
                         ? 'Olá Alex! Gostaria de assinar o Combo Creator de R$ 1.450/mês.'
                         : 'Hi Alex! I would like to subscribe to the Creator Combo ($390/month).'
@@ -856,7 +856,7 @@ export default function MarketingImagemPage() {
                     </li>
                   </ul>
                   <a
-                    href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+                    href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
                         ? 'Olá Alex! Gostaria de saber mais sobre o Combo Presença Física de R$ 2.900.'
                         : 'Hi Alex! I would like to know more about the Physical Brand Combo ($800).'

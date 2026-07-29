@@ -62,7 +62,7 @@ export default function SistemaFiscalPage() {
                     Faturamento rápido. Estoque automático. Emissão fiscal sem complicação.
                   </p>
                   <a
-                    href="https://wa.me/5538999023012?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Sistema%20Fiscal."
+                    href="/whatsapp?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Sistema%20Fiscal."
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.cta}
@@ -395,7 +395,7 @@ export default function SistemaFiscalPage() {
                   Solicite uma demonstração gratuita e veja como o sistema pode transformar a rotina do seu negócio em minutos.
                 </p>
                 <a
-                  href="https://wa.me/5538999023012?text=Ol%C3%A1!%20Gostaria%20de%20uma%20demonstra%C3%A7%C3%A3o%20do%20Sistema%20Fiscal."
+                  href="/whatsapp?text=Ol%C3%A1!%20Gostaria%20de%20uma%20demonstra%C3%A7%C3%A3o%20do%20Sistema%20Fiscal."
                   target="_blank"
                   rel="noopener noreferrer"
                   className={f.ctaButton}

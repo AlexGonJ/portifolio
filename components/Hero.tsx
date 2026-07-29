@@ -6,7 +6,7 @@ import SplitText from './SplitText'
 import styles from '../styles/hero.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const WHATSAPP_URL = 'https://wa.me/5538999023012'
+const WHATSAPP_URL = '/whatsapp'
 
 interface HeroProps {
   start: boolean

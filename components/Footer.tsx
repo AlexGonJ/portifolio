@@ -158,7 +158,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.actionColumn}>
-            <a ref={orbRef} href="https://wa.me/5538999023012" target="_blank" rel="noreferrer" className={styles.orb}>
+            <a ref={orbRef} href="/whatsapp" target="_blank" rel="noreferrer" className={styles.orb}>
               <svg className={styles.orbTrack} viewBox="0 0 220 220" aria-hidden="true">
                 <defs>
                   <path

@@ -232,6 +232,6 @@ export const pt: TranslatorProps = {
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
-    { label: 'WhatsApp', url: 'https://wa.me/5538999023012' },
+    { label: 'WhatsApp', url: '/whatsapp' },
   ],
 }
