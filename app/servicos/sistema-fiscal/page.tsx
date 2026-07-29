@@ -40,7 +40,7 @@ export default function SistemaFiscalPage() {
   return (
     <>
       <Script id="meta-pixel-fiscal" strategy="afterInteractive">
-        {\`
+        {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -53,7 +53,7 @@ export default function SistemaFiscalPage() {
           fbq('init', '921564783637852'); 
           fbq('track', 'PageView');
           fbq('trackCustom', 'ViewSistemaFiscal');
-        \`}
+        `}
       </Script>
 
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}

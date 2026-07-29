@@ -37,7 +37,7 @@ export default function DesenvolvimentoPage() {
   return (
     <>
       <Script id="meta-pixel-desenv" strategy="afterInteractive">
-        {\`
+        {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -50,7 +50,7 @@ export default function DesenvolvimentoPage() {
           fbq('init', '921564783637852'); 
           fbq('track', 'PageView');
           fbq('trackCustom', 'ViewDesenvolvimento');
-        \`}
+        `}
       </Script>
 
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}

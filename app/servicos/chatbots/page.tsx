@@ -39,7 +39,7 @@ export default function ChatbotsPage() {
   return (
     <>
       <Script id="meta-pixel-chatbots" strategy="afterInteractive">
-        {\`
+        {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -52,7 +52,7 @@ export default function ChatbotsPage() {
           fbq('init', '921564783637852'); 
           fbq('track', 'PageView');
           fbq('trackCustom', 'ViewChatbots');
-        \`}
+        `}
       </Script>
 
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}

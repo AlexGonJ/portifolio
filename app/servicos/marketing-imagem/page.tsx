@@ -436,7 +436,7 @@ export default function MarketingImagemPage() {
   return (
     <>
       <Script id="meta-pixel-marketing" strategy="afterInteractive">
-        {\`
+        {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -449,7 +449,7 @@ export default function MarketingImagemPage() {
           fbq('init', '921564783637852'); 
           fbq('track', 'PageView');
           fbq('trackCustom', 'ViewMarketingImagem');
-        \`}
+        `}
       </Script>
 
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
