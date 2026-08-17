@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import gsap from 'gsap'
 import styles from '../styles/contact-form.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
+import { trackPixelEvent } from '@/lib/pixel'
 
 const WHATSAPP_URL = '/whatsapp'
 
@@ -15,7 +18,8 @@ const SERVICE_OPTIONS = [
 ] as const
 
 export default function ContactForm() {
-  const { t } = useLanguage()
+  const router = useRouter()
+  const { t, lang } = useLanguage()
   const btnRef = useRef<HTMLButtonElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -49,9 +53,20 @@ export default function ContactForm() {
       }
 
       setStatus('success')
+      // Dispara evento de Lead no Meta Pixel se o consentimento tiver sido concedido
+      trackPixelEvent('Lead', {
+        content_name: selectedService || 'General Inquiry',
+        currency: 'BRL',
+      })
+
       if (formRef.current) {
         formRef.current.reset()
       }
+
+      // Redireciona para a página de contato recebido (rastreamento de conversão)
+      setTimeout(() => {
+        router.push('/contato-recebido')
+      }, 500)
     } catch (err) {
       console.error(err)
       setStatus('error')
@@ -206,6 +221,20 @@ export default function ContactForm() {
             {t.contactForm.trustNoStrings}
           </span>
         </div>
+
+        <p className={`${styles.privacyNotice} gsap-form-item`}>
+          {lang === 'pt' ? (
+            <>
+              Seus dados estão protegidos. Ao enviar, você concorda com nossa{' '}
+              <Link href="/politica-de-privacidade">Política de Privacidade</Link>.
+            </>
+          ) : (
+            <>
+              Your data is secure. By submitting, you agree to our{' '}
+              <Link href="/politica-de-privacidade">Privacy Policy</Link>.
+            </>
+          )}
+        </p>
 
         <div className={`${styles.dividerRow} gsap-form-item`}>
           <span className={styles.dividerLine} />

@@ -228,10 +228,37 @@ export const pt: TranslatorProps = {
     orbLabel: 'Fale comigo',
     orbMeta: 'Resposta em até 24h',
     localTime: 'Hora local',
+    privacyPolicy: 'Política de Privacidade',
+    cookieSettings: 'Preferências de Cookies',
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
     { label: 'WhatsApp', url: '/whatsapp' },
   ],
+  cookieConsent: {
+    title: 'Valorizamos sua privacidade',
+    description:
+      'Utilizamos cookies essenciais para o funcionamento do site e, com seu consentimento, cookies de marketing e análise (como o Pixel da Meta) para personalizar sua experiência e mensurar anúncios, em conformidade com a LGPD.',
+    acceptAll: 'Aceitar Todos',
+    rejectNonEssential: 'Rejeitar Opcionais',
+    customize: 'Personalizar',
+    savePreferences: 'Salvar Preferências',
+    privacyLinkText: 'Saiba mais na nossa Política de Privacidade',
+    preferencesTitle: 'Central de Preferências de Cookies',
+    preferencesDesc:
+      'Gerencie suas escolhas de privacidade. Scripts e pixels de terceiros (Pixel da Meta) permanecem desativados até que você forneça seu consentimento.',
+    essentialTitle: 'Estritamente Necessários',
+    essentialDesc:
+      'Indispensáveis para a navegação, segurança, integridade e armazenamento das suas preferências. Não podem ser desativados.',
+    analyticsTitle: 'Análise & Desempenho',
+    analyticsDesc:
+      'Ajudam a entender como os visitantes navegam no site para aprimorarmos a experiência de uso de forma anônima.',
+    marketingTitle: 'Marketing & Pixels de Terceiros (Meta)',
+    marketingDesc:
+      'Ativa o Pixel da Meta (Facebook/Instagram) para mensurar conversões de campanhas, registrar interações (como cliques para o WhatsApp) e exibir anúncios personalizados.',
+    alwaysActive: 'Sempre Ativo',
+    close: 'Fechar',
+  },
 }
+

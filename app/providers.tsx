@@ -2,6 +2,9 @@
 
 import { ReactNode, useEffect } from 'react'
 import { LanguageProvider } from '../i18n/LanguageContext'
+import { CookieConsentProvider } from '../components/CookieConsent/CookieConsentContext'
+import CookieBanner from '../components/CookieConsent/CookieBanner'
+import MetaPixelTracker from '../components/MetaPixelTracker'
 
 export default function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -20,5 +23,14 @@ export default function Providers({ children }: { children: ReactNode }) {
     init()
   }, [])
 
-  return <LanguageProvider>{children}</LanguageProvider>
+  return (
+    <LanguageProvider>
+      <CookieConsentProvider>
+        <MetaPixelTracker />
+        {children}
+        <CookieBanner />
+      </CookieConsentProvider>
+    </LanguageProvider>
+  )
 }
+

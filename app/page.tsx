@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Script from 'next/script'
+import { usePixelCustomEvent } from '@/hooks/usePixelCustomEvent'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import SelectedWork from '@/components/SelectedWork'
@@ -19,6 +19,9 @@ import WhatsAppButton from '@/components/WhatsAppButton'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
+
+  // Dispara evento customizado no Meta Pixel somente quando consentimento for concedido
+  usePixelCustomEvent('HomeView')
 
   useEffect(() => {
     if (!isLoading) {
@@ -42,28 +45,7 @@ export default function Home() {
 
   return (
     <>
-      {/* 
-        ========================================================================
-        CÓDIGO DO PIXEL DA META (FACEBOOK) - HOMEPAGE
-        ========================================================================
-      */}
-      <Script id="meta-pixel-home" strategy="afterInteractive">
-        {`
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          
-          fbq('init', '921564783637852'); 
-          fbq('track', 'PageView');
-          fbq('trackCustom', 'HomeView'); // Evento para visitas na Homepage
-        `}
-      </Script>
-      {/* ======================================================================== */}
+
 
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 

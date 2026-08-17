@@ -275,3 +275,21 @@ textarea.input {
   height: 1.2rem;
   fill: currentColor;
 }
+
+.privacyNotice {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.4;
+  margin-top: -1.5rem;
+
+  a {
+    color: rgba(201, 168, 76, 0.9);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #e5c368;
+    }
+  }
+}

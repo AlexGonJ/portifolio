@@ -226,12 +226,39 @@ export const en = {
     orbLabel: 'Talk to me',
     orbMeta: 'Response within 24h',
     localTime: 'Local Time',
+    privacyPolicy: 'Privacy Policy',
+    cookieSettings: 'Cookie Preferences',
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
     { label: 'WhatsApp', url: '/whatsapp' },
   ],
+  cookieConsent: {
+    title: 'We value your privacy',
+    description:
+      'We use essential cookies to ensure the website functions properly, and with your consent, marketing and analytics cookies (such as Meta Pixel) to improve your experience and measure campaigns in compliance with LGPD and GDPR.',
+    acceptAll: 'Accept All',
+    rejectNonEssential: 'Reject Optional',
+    customize: 'Customize',
+    savePreferences: 'Save Preferences',
+    privacyLinkText: 'Learn more in our Privacy Policy',
+    preferencesTitle: 'Cookie Preferences Center',
+    preferencesDesc:
+      'Manage your cookie choices. Third-party scripts and marketing pixels (Meta Pixel) will remain blocked until you give explicit consent.',
+    essentialTitle: 'Strictly Necessary',
+    essentialDesc:
+      'Required for core site features, security, and storing your privacy preferences. Cannot be disabled.',
+    analyticsTitle: 'Analytics & Performance',
+    analyticsDesc:
+      'Helps us understand how visitors interact with the site so we can continuously improve user experience.',
+    marketingTitle: 'Marketing & Third-Party Pixels (Meta)',
+    marketingDesc:
+      'Activates the Meta (Facebook) Pixel to measure campaign conversions, track interactions (such as WhatsApp clicks), and provide relevant advertising.',
+    alwaysActive: 'Always Active',
+    close: 'Close',
+  },
 }
 
 export type TranslatorProps = typeof en
+

@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from '../styles/footer.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useCookieConsent } from './CookieConsent/CookieConsentContext'
 
 const socialLinks = [
   {
@@ -29,6 +31,7 @@ const socialLinks = [
 
 export default function Footer() {
   const { t } = useLanguage()
+  const { openPreferences } = useCookieConsent()
   const containerRef = useRef<HTMLDivElement | null>(null)
   const innerContentRef = useRef<HTMLDivElement | null>(null)
   const orbRef = useRef<HTMLAnchorElement | null>(null)
@@ -216,6 +219,10 @@ export default function Footer() {
             <a href="/projetos">{t.nav.projects}</a>
             <a href="/sobre">{t.nav.about}</a>
             <a href="#contato">{t.nav.contact}</a>
+            <Link href="/politica-de-privacidade">{t.footer.privacyPolicy}</Link>
+            <button type="button" onClick={openPreferences}>
+              {t.footer.cookieSettings}
+            </button>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Script from 'next/script'
+import { usePixelCustomEvent } from '@/hooks/usePixelCustomEvent'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '@/components/Navbar'
@@ -302,6 +302,8 @@ export default function MarketingImagemPage() {
   const [isLoading, setIsLoading] = useState(true)
   const { t, lang } = useLanguage()
 
+  usePixelCustomEvent('ViewMarketingImagem')
+
   // State for the simulator
   const [selections, setSelections] = useState<{ [id: string]: { selected: boolean; qty: number } }>({})
   const [showNoticeModal, setShowNoticeModal] = useState(false)
@@ -435,23 +437,6 @@ export default function MarketingImagemPage() {
 
   return (
     <>
-      <Script id="meta-pixel-marketing" strategy="afterInteractive">
-        {`
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          
-          fbq('init', '921564783637852'); 
-          fbq('track', 'PageView');
-          fbq('trackCustom', 'ViewMarketingImagem');
-        `}
-      </Script>
-
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
       <div className="smooth-wrapper" style={{ opacity: isLoading ? 0 : 1 }}>
