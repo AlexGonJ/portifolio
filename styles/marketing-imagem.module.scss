@@ -5,7 +5,6 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
-
 /* ── HERO ── */
 .heroWrapper {
   position: relative;
@@ -254,6 +253,27 @@
   font-weight: 700;
   color: #c9a84c;
   font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+.unavailableRow {
+  opacity: 0.58;
+  background-color: rgba(110, 110, 115, 0.06);
+
+  &:hover {
+    background-color: rgba(110, 110, 115, 0.1) !important;
+  }
+}
+
+.unavailableBadge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(110, 110, 115, 0.35);
+  border-radius: 999px;
+  color: #6e6e73;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
   white-space: nowrap;
 }
 
@@ -973,4 +993,3 @@
     transform-origin: left;
   }
 }
-

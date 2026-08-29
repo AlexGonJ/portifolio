@@ -24,6 +24,7 @@ interface ServiceItem {
   deliverablesEn: string[]
   canHaveQty?: boolean
   disabled?: boolean
+  temporarilyUnavailable?: boolean
 }
 
 const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
@@ -34,9 +35,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Standalone Logo',
       descPt: 'Criação de logotipo principal, variações e submarca em alta definição.',
       descEn: 'Creation of the primary logo, variations, and sub-marks in high definition.',
-      pricePt: '350',
-      priceEn: '100',
-      priceVal: 350,
+      pricePt: '750',
+      priceEn: '150',
+      priceVal: 750,
       deliverablesPt: ['Logo principal e secundária', 'Formatos PNG, SVG e EPS', 'Versões monocromáticas'],
       deliverablesEn: ['Primary and secondary logo', 'PNG, SVG, and EPS formats', 'Monochromatic versions']
     },
@@ -46,9 +47,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Full Visual Identity',
       descPt: 'Branding profissional com logo, paleta de cores, tipografia, manual da marca e mockups 3D.',
       descEn: 'Professional branding with logo, color palette, typography, brand manual, and 3D mockups.',
-      pricePt: '1.200',
-      priceEn: '320',
-      priceVal: 1200,
+      pricePt: '2.400',
+      priceEn: '480',
+      priceVal: 2400,
       deliverablesPt: ['Manual de Identidade Visual', 'Tipografia & Paleta HSL', 'Aplicações em Papelaria/Banners', 'Mockups realistas de apresentação'],
       deliverablesEn: ['Visual Identity Manual', 'Typography & HSL Palette', 'Stationery/Banner designs', 'Realistic presentation mockups']
     },
@@ -58,23 +59,35 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Rebranding (Brand Redesign)',
       descPt: 'Modernização completa de marca existente para reposicionamento premium no mercado.',
       descEn: 'Complete modernization of an existing brand for premium market repositioning.',
-      pricePt: '1.000',
-      priceEn: '270',
-      priceVal: 1000,
+      pricePt: '2.000',
+      priceEn: '400',
+      priceVal: 2000,
       deliverablesPt: ['Redesenho do logotipo', 'Atualização do ecossistema visual', 'Estratégia de reposicionamento', 'Guia de transição de marca'],
       deliverablesEn: ['Logo redesign', 'Visual ecosystem update', 'Repositioning strategy', 'Brand transition guide']
     },
     {
-      id: 'vetorizacao_logo',
-      namePt: 'Vetorização de Logos',
-      nameEn: 'Logo Vectorization',
-      descPt: 'Conversão de logotipos antigos ou em baixa resolução (JPG/PNG) em vetor profissional editável e infinitamente escalável.',
-      descEn: 'Conversion of low-res or old logos (JPG/PNG) into a professional, editable, and infinitely scalable vector.',
-      pricePt: '140',
-      priceEn: '35',
-      priceVal: 140,
+      id: 'vetorizacao_simples',
+      namePt: 'Vetorização Simples',
+      nameEn: 'Simple Vectorization',
+      descPt: 'Conversão de logos limpos, com poucos elementos e cores sólidas, para vetor profissional editável.',
+      descEn: 'Conversion of clean logos with few elements and solid colors into an editable professional vector.',
+      pricePt: '250',
+      priceEn: '50',
+      priceVal: 250,
       deliverablesPt: ['Arquivos em SVG, EPS, PDF e AI', 'PNG em alta resolução com fundo transparente', 'Vetorização manual em alta precisão'],
       deliverablesEn: ['SVG, EPS, PDF, and AI vector files', 'High-res PNG with transparent background', 'High-precision manual vectorization']
+    },
+    {
+      id: 'vetorizacao_complexa',
+      namePt: 'Vetorização Complexa',
+      nameEn: 'Complex Vectorization',
+      descPt: 'Reconstrução manual de imagens com muitos elementos, detalhes, sombras, degradês ou baixa qualidade de origem.',
+      descEn: 'Manual reconstruction of images with many elements, details, shadows, gradients, or low-quality source files.',
+      pricePt: '550',
+      priceEn: '110',
+      priceVal: 550,
+      deliverablesPt: ['Arquivos em SVG, EPS, PDF e AI', 'PNG em alta resolução com fundo transparente', 'Reconstrução manual em alta precisão'],
+      deliverablesEn: ['SVG, EPS, PDF, and AI vector files', 'High-res PNG with transparent background', 'High-precision manual reconstruction']
     },
     {
       id: 'cartao_digital',
@@ -82,9 +95,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Interactive Digital Business Card',
       descPt: 'Cartão de visitas virtual em PDF interativo com botões clicáveis para WhatsApp, redes sociais, localização e site.',
       descEn: 'Virtual business card in interactive PDF with clickable buttons for WhatsApp, social media, map location, and site.',
-      pricePt: '150',
+      pricePt: '200',
       priceEn: '40',
-      priceVal: 150,
+      priceVal: 200,
       deliverablesPt: ['PDF Interativo com botões com link', 'Arquivo vCard para salvamento direto nos contatos', 'Layout moderno otimizado para celulares'],
       deliverablesEn: ['Interactive PDF with link buttons', 'vCard file for direct smartphone save', 'Modern mobile-optimized layout']
     }
@@ -96,9 +109,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Single Art Post (Feed/Story)',
       descPt: 'Arte customizada para Instagram em alta definição.',
       descEn: 'Custom art post for Instagram in high definition.',
-      pricePt: '60',
-      priceEn: '15',
-      priceVal: 60,
+      pricePt: '90 a R$ 100',
+      priceEn: '20',
+      priceVal: 90,
       deliverablesPt: ['Design da arte', 'Copywriting/Legenda básica', 'Formatação para Feed ou Story'],
       deliverablesEn: ['Art design', 'Basic copywriting/caption', 'Format optimized for Feed or Story'],
       canHaveQty: true
@@ -109,9 +122,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Pack of 10 Instagram Arts',
       descPt: 'Pacote com 10 artes harmônicas com identidade visual alinhada e foco em conversão.',
       descEn: 'Pack of 10 harmonious art posts with aligned visual identity and focus on conversion.',
-      pricePt: '500',
-      priceEn: '130',
-      priceVal: 500,
+      pricePt: '800',
+      priceEn: '160',
+      priceVal: 800,
       deliverablesPt: ['10 designs exclusivos', 'Legendas otimizadas para engajamento', 'Sugestões de hashtags estratégicas', 'Grade de agendamento inclusa'],
       deliverablesEn: ['10 exclusive designs', 'Captions optimized for engagement', 'Strategic hashtag suggestions', 'Scheduling grid included'],
       canHaveQty: true
@@ -122,9 +135,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Editable Templates (Canva)',
       descPt: 'Kit de templates profissionais no Canva para que você mesmo crie suas postagens rapidamente.',
       descEn: 'Kit of professional Canva templates so you can easily create your posts on your own.',
-      pricePt: '350',
-      priceEn: '90',
-      priceVal: 350,
+      pricePt: '650',
+      priceEn: '130',
+      priceVal: 650,
       deliverablesPt: ['8 a 12 templates no Canva', 'Organização de fontes e cores do kit', 'Vídeo rápido de instrução/tutoriais'],
       deliverablesEn: ['8 to 12 templates in Canva', 'Setup of brand fonts & colors in the kit', 'Quick instruction video/tutorials']
     },
@@ -134,9 +147,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Paid Traffic Creatives (Ads)',
       descPt: 'Artes em formato estático ou carrossel com gatilhos mentais fortes para campanhas no Facebook/Google Ads.',
       descEn: 'Arts in static or carousel format with strong triggers for Facebook/Google Ads campaigns.',
-      pricePt: '80',
-      priceEn: '20',
-      priceVal: 80,
+      pricePt: '150',
+      priceEn: '30',
+      priceVal: 150,
       deliverablesPt: ['Artes de alta conversão', 'Design focado no Botão de Ação (CTA)', 'Testes A/B (diferentes chamadas)'],
       deliverablesEn: ['High-converting designs', 'Design focused on the Call to Action (CTA)', 'A/B testing layouts (different copy)'],
       canHaveQty: true
@@ -147,9 +160,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Linktree / Biolink Creation',
       descPt: 'Estruturação e design de página personalizada de links para a bio do Instagram e TikTok.',
       descEn: 'Custom link page design and setup for Instagram and TikTok bio.',
-      pricePt: '200',
-      priceEn: '50',
-      priceVal: 200,
+      pricePt: '400',
+      priceEn: '80',
+      priceVal: 400,
       deliverablesPt: ['Layout personalizado com a identidade da marca', 'Configuração de até 8 botões de destaque', 'Integração com WhatsApp e redes sociais'],
       deliverablesEn: ['Custom layout with brand visual identity', 'Setup of up to 8 highlighted buttons', 'WhatsApp and social media integration']
     }
@@ -161,9 +174,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Reels/TikTok/Shorts Video Editing',
       descPt: 'Edição dinâmica (até 1 min) com cortes, legendas animadas, efeitos de som e trilha.',
       descEn: 'Dynamic video editing (up to 1 min) with cuts, animated subtitles, sound effects, and music.',
-      pricePt: '120',
-      priceEn: '30',
-      priceVal: 120,
+      pricePt: '180',
+      priceEn: '36',
+      priceVal: 180,
       deliverablesPt: ['Edição e cortes profissionais', 'Legendas automáticas dinâmicas', 'Efeitos sonoros e sonoplastia', 'Color grading básico'],
       deliverablesEn: ['Professional editing and cuts', 'Dynamic auto-subtitles', 'Sound effects & mixing', 'Basic color grading'],
       canHaveQty: true
@@ -174,9 +187,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Monthly Video Pack (10 Reels)',
       descPt: 'Edição de 10 vídeos curtos por mês. Você grava e nós transformamos em vídeos profissionais.',
       descEn: 'Editing of 10 short videos per month. You record them, and we turn them professional.',
-      pricePt: '900',
-      priceEn: '225',
-      priceVal: 900,
+      pricePt: '1.500',
+      priceEn: '300',
+      priceVal: 1500,
       deliverablesPt: ['10 Edições completas', 'Roteirização e ideias de conteúdo', 'Legendas dinâmicas em todos', 'Prazo de entrega agendado'],
       deliverablesEn: ['10 Full edits', 'Scriptwriting and content concepts', 'Dynamic subtitles on all videos', 'Scheduled delivery dates']
     },
@@ -190,7 +203,8 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       priceEn: '130 / 4h',
       priceVal: 500,
       deliverablesPt: ['Até 4 horas de captação presencial/remota', 'Equipamento de câmera e iluminação profissional', 'Captação de áudio limpo com microfone lapela', 'Direção de cena, postura e enquadramento'],
-      deliverablesEn: ['Up to 4 hours of video shoot session', 'Professional camera and lighting setup', 'Clean lapel mic audio recording', 'Scene, posture, and framing direction']
+      deliverablesEn: ['Up to 4 hours of video shoot session', 'Professional camera and lighting setup', 'Clean lapel mic audio recording', 'Scene, posture, and framing direction'],
+      temporarilyUnavailable: true
     },
     {
       id: 'gravacao_video_bruto',
@@ -203,7 +217,8 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       priceVal: 350,
       deliverablesPt: ['Captação em 4K / 60fps', 'Entrega de todos os arquivos brutos na nuvem', 'Iluminação básica inclusa', 'Disponível por sessão de 2h (quantidade customizável)'],
       deliverablesEn: ['4K / 60fps video capture', 'Cloud delivery of all raw video files', 'Basic lighting included', 'Rate per 2h session (customizable quantity)'],
-      canHaveQty: true
+      canHaveQty: true,
+      temporarilyUnavailable: true
     },
     {
       id: 'video_institucional',
@@ -216,7 +231,7 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       priceVal: 1500,
       deliverablesPt: ['Roteiro profissional', 'Locução profissional inclusa', 'Edição cinematográfica e trilha sonora licenciada', 'Formatos widescreen e vertical'],
       deliverablesEn: ['Professional script', 'Professional voiceover included', 'Cinematic editing & licensed soundtrack', 'Widescreen and vertical formats'],
-      disabled: true
+      temporarilyUnavailable: true
     }
   ],
   visual: [
@@ -226,9 +241,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: '3D Storefront/Facade Layout',
       descPt: 'Design realista em 3D da fachada da sua empresa física para visualização prévia.',
       descEn: 'Realistic 3D design of your physical storefront for previewing before build.',
-      pricePt: '500',
-      priceEn: '130',
-      priceVal: 500,
+      pricePt: '1.200',
+      priceEn: '240',
+      priceVal: 1200,
       deliverablesPt: ['Imagens renderizadas em 3D de alta qualidade', 'Medidas estimadas e especificações', 'Arquivo vetorizado para a serralheria/luminoso'],
       deliverablesEn: ['High-quality rendered 3D images', 'Estimated measurements and specifications', 'Vector files for signage/hardware shop']
     },
@@ -238,9 +253,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Signage & Board Design',
       descPt: 'Criação de arte em grandes formatos para outdoors, painéis internos ou placas luminosas.',
       descEn: 'Design of large formats for billboards, indoor panels, or light boards.',
-      pricePt: '250',
-      priceEn: '70',
-      priceVal: 250,
+      pricePt: '500',
+      priceEn: '100',
+      priceVal: 500,
       deliverablesPt: ['Vetor em escala real (PDF/Corel/Illustrator)', 'Simulação digital no local', 'Gabarito de furação se necessário'],
       deliverablesEn: ['Full-scale vector file (PDF/Corel/Illustrator)', 'Digital mockups in place', 'Drilling templates if needed']
     },
@@ -250,23 +265,11 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'T-shirt & Uniform Design',
       descPt: 'Design de estampas, uniformes corporativos ou camisetas promocionais.',
       descEn: 'Design of prints, corporate uniforms, or promotional t-shirts.',
-      pricePt: '180',
-      priceEn: '50',
-      priceVal: 180,
+      pricePt: '350',
+      priceEn: '70',
+      priceVal: 350,
       deliverablesPt: ['Ficha técnica de tecidos e estampas', 'Vetor final para estamparia (silkscreen/sublimação)', 'Mockups de visualização em modelos'],
       deliverablesEn: ['Technical sheet of fabrics and printing method', 'Final vector for screenprinting/sublimation', 'Visualization mockups on models']
-    },
-    {
-      id: 'adesivo_vitrine',
-      namePt: 'Adesivagem de Vitrines & Envelopamento',
-      nameEn: 'Window Decals & Vehicle Wraps',
-      descPt: 'Design completo de adesivos decorativos, vitrines temáticas ou envelopamento de frotas.',
-      descEn: 'Full design of decorative stickers, themed storefront glass, or vehicle wrapping.',
-      pricePt: '300',
-      priceEn: '80',
-      priceVal: 300,
-      deliverablesPt: ['Layout de plotagem em tamanho real', 'Indicação de tipo de vinil (fosco/brilho/perfurado)', 'Mockup de simulação do veículo/vidro'],
-      deliverablesEn: ['Real-size plotting layout', 'Indication of vinyl type (matte/gloss/perforated)', 'Simulation mockup of vehicle/glass']
     },
     {
       id: 'cartao_fisico',
@@ -274,9 +277,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'Physical Business Card Design',
       descPt: 'Design profissional frente e verso para cartão de visitas físico pronto para impressão gráfica.',
       descEn: 'Professional front and back physical business card design ready for print.',
-      pricePt: '150',
+      pricePt: '220',
       priceEn: '40',
-      priceVal: 150,
+      priceVal: 220,
       deliverablesPt: ['Design frente e verso exclusivo', 'Arquivo vetorizado em alta definição (PDF/X-1a e AI)', 'Sangria e marcação de corte gráfica', 'Mockup 3D de apresentação'],
       deliverablesEn: ['Exclusive front & back design', 'High-definition vector files (PDF/X-1a & AI)', 'Print bleed and crop mark setup', '3D presentation mockup']
     },
@@ -286,9 +289,9 @@ const SERVICES_DATA: { [category: string]: ServiceItem[] } = {
       nameEn: 'High-Definition Banner Creation',
       descPt: 'Design de banners em alta definição para sites, e-commerce, feiras ou impressão gráfica.',
       descEn: 'High-definition banner design for websites, e-commerce, trade shows, or print graphics.',
-      pricePt: '120',
-      priceEn: '30',
-      priceVal: 120,
+      pricePt: '250',
+      priceEn: '50',
+      priceVal: 250,
       deliverablesPt: ['Arte em altíssima resolução (PNG, SVG, PDF)', 'Dimensões e proporções personalizadas', 'Layout otimizado para chamada de ação (CTA)'],
       deliverablesEn: ['Ultra-high resolution graphic (PNG, SVG, PDF)', 'Custom dimensions and ratios', 'Layout optimized for Call to Action (CTA)'],
       canHaveQty: true
@@ -334,7 +337,7 @@ export default function MarketingImagemPage() {
     const initial: typeof selections = {}
     Object.values(SERVICES_DATA).forEach((categoryItems) => {
       categoryItems.forEach((item) => {
-        if (!item.disabled) {
+        if (!item.disabled && !item.temporarilyUnavailable) {
           initial[item.id] = { selected: false, qty: 1 }
         }
       })
@@ -634,16 +637,22 @@ export default function MarketingImagemPage() {
                   </thead>
                   <tbody>
                     {SERVICES_DATA.audiovisual.filter((item) => !item.disabled).map((item) => (
-                      <tr key={item.id}>
+                      <tr key={item.id} className={item.temporarilyUnavailable ? styles.unavailableRow : undefined}>
                         <td>
                           <div className={styles.serviceName}>{lang === 'pt' ? item.namePt : item.nameEn}</div>
                           <div className={styles.serviceDesc}>{lang === 'pt' ? item.descPt : item.descEn}</div>
                         </td>
                         <td>
-                          <div className={styles.servicePrice}>
-                            <span className={styles.priceStarting}>{lang === 'pt' ? 'A partir de' : 'From'}</span>
-                            {lang === 'pt' ? `R$ ${item.pricePt}` : `$${item.priceEn}`}
-                          </div>
+                          {item.temporarilyUnavailable ? (
+                            <span className={styles.unavailableBadge}>
+                              {lang === 'pt' ? 'Temporariamente indisponível' : 'Temporarily unavailable'}
+                            </span>
+                          ) : (
+                            <div className={styles.servicePrice}>
+                              <span className={styles.priceStarting}>{lang === 'pt' ? 'A partir de' : 'From'}</span>
+                              {lang === 'pt' ? `R$ ${item.pricePt}` : `$${item.priceEn}`}
+                            </div>
+                          )}
                         </td>
                         <td className={styles.serviceDeliverable}>
                           <ul>
@@ -742,18 +751,18 @@ export default function MarketingImagemPage() {
                   </div>
                   <div className={styles.packPrice}>
                     <div className={styles.amount}>
-                      {lang === 'pt' ? 'R$ 1.300' : '$350'}
+                      {lang === 'pt' ? 'R$ 1.190' : '$240'}
                     </div>
                     <div className={styles.period}>{lang === 'pt' ? 'Pagamento único' : 'Single payment'}</div>
                   </div>
                   <ul className={styles.packFeatures}>
                     <li>
                       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
-                      {lang === 'pt' ? 'Identidade Visual Completa' : 'Full Visual Identity Manual'}
+                      {lang === 'pt' ? 'Logotipo Profissional' : 'Professional Logo'}
                     </li>
                     <li>
                       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
-                      {lang === 'pt' ? 'Identidade do Feed (Templates Canva)' : 'Feed Identity (Canva templates)'}
+                      {lang === 'pt' ? 'Cartão Digital Interativo' : 'Interactive Digital Card'}
                     </li>
                     <li>
                       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
@@ -763,8 +772,8 @@ export default function MarketingImagemPage() {
                   <a
                     href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
-                        ? 'Olá Alex! Gostaria de saber mais sobre o Combo Start-up de R$ 1.300.'
-                        : 'Hi Alex! I would like to know more about the Start-up Combo ($350).'
+                        ? 'Olá Alex! Gostaria de saber mais sobre o Combo Start-up de R$ 1.190.'
+                        : 'Hi Alex! I would like to know more about the Start-up Combo ($240).'
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -787,7 +796,7 @@ export default function MarketingImagemPage() {
                   </div>
                   <div className={styles.packPrice}>
                     <div className={styles.amount}>
-                      {lang === 'pt' ? 'R$ 1.450' : '$390'}
+                      {lang === 'pt' ? 'R$ 1.890' : '$380'}
                       <span>{lang === 'pt' ? '/mês' : '/mo'}</span>
                     </div>
                     <div className={styles.period}>{lang === 'pt' ? 'Assinatura Mensal' : 'Monthly Subscription'}</div>
@@ -803,7 +812,7 @@ export default function MarketingImagemPage() {
                     </li>
                     <li>
                       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
-                      {lang === 'pt' ? '6 Banners/Artes de Tráfego ou Reels Cover' : '6 Ads Graphics or Reels Covers'}
+                      {lang === 'pt' ? '4 Criativos de Tráfego ou Capas de Reels' : '4 Ad Creatives or Reels Covers'}
                     </li>
                     <li>
                       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
@@ -813,8 +822,8 @@ export default function MarketingImagemPage() {
                   <a
                     href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
-                        ? 'Olá Alex! Gostaria de assinar o Combo Creator de R$ 1.450/mês.'
-                        : 'Hi Alex! I would like to subscribe to the Creator Combo ($390/month).'
+                        ? 'Olá Alex! Gostaria de assinar o Combo Creator de R$ 1.890/mês.'
+                        : 'Hi Alex! I would like to subscribe to the Creator Combo ($380/month).'
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -836,7 +845,7 @@ export default function MarketingImagemPage() {
                   </div>
                   <div className={styles.packPrice}>
                     <div className={styles.amount}>
-                      {lang === 'pt' ? 'R$ 2.900' : '$800'}
+                      {lang === 'pt' ? 'R$ 4.100' : '$820'}
                     </div>
                     <div className={styles.period}>{lang === 'pt' ? 'Pagamento único' : 'Single payment'}</div>
                   </div>
@@ -861,8 +870,8 @@ export default function MarketingImagemPage() {
                   <a
                     href={`/whatsapp?text=${encodeURIComponent(
                       lang === 'pt'
-                        ? 'Olá Alex! Gostaria de saber mais sobre o Combo Presença Física de R$ 2.900.'
-                        : 'Hi Alex! I would like to know more about the Physical Brand Combo ($800).'
+                        ? 'Olá Alex! Gostaria de saber mais sobre o Combo Presença Física de R$ 4.100.'
+                        : 'Hi Alex! I would like to know more about the Physical Brand Combo ($820).'
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -895,7 +904,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Branding & Logo' : 'Branding & Logo'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.branding.filter((item) => !item.disabled).map((item) => {
+                      {SERVICES_DATA.branding.filter((item) => !item.disabled && !item.temporarilyUnavailable).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
@@ -939,7 +948,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Redes Sociais & Design' : 'Social Media & Design'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.social.filter((item) => !item.disabled).map((item) => {
+                      {SERVICES_DATA.social.filter((item) => !item.disabled && !item.temporarilyUnavailable).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
@@ -983,7 +992,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Produção Audiovisual' : 'Audiovisual Production'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.audiovisual.filter((item) => !item.disabled).map((item) => {
+                      {SERVICES_DATA.audiovisual.filter((item) => !item.disabled && !item.temporarilyUnavailable).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
@@ -1027,7 +1036,7 @@ export default function MarketingImagemPage() {
                   <div className={styles.simGroup}>
                     <h4>{lang === 'pt' ? 'Comunicação Visual & Impressos' : 'Visual Communication & Prints'}</h4>
                     <div className={styles.simItemsList}>
-                      {SERVICES_DATA.visual.filter((item) => !item.disabled).map((item) => {
+                      {SERVICES_DATA.visual.filter((item) => !item.disabled && !item.temporarilyUnavailable).map((item) => {
                         const isSel = selections[item.id]?.selected || false
                         const qty = selections[item.id]?.qty || 1
                         return (
