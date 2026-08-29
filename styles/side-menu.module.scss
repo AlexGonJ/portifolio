@@ -24,7 +24,8 @@
   display: flex;
   flex-direction: column;
   box-shadow: -10px 0 50px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media (max-width: 900px) {
     width: 85vw;
@@ -98,6 +99,72 @@
   flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 4rem;
+}
+
+.servicesNavContainer {
+  width: 100%;
+  margin: -1.5rem 0 2.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.servicesLabel {
+  margin-bottom: 0.85rem;
+  color: rgba(213, 183, 105, 0.92);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.servicesNav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.serviceItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.65rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.55rem;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.76rem;
+  line-height: 1.25;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  span {
+    color: #d5b769;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(213, 183, 105, 0.5);
+    background: rgba(213, 183, 105, 0.12);
+    color: #fffdf7;
+    outline: none;
+  }
+}
+
+.allServicesLink {
+  display: inline-flex;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  color: #d5b769;
+  font-size: 0.82rem;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: #ffffff;
+    outline: none;
+  }
 }
 
 .navItem {

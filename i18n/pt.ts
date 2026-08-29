@@ -3,6 +3,7 @@ import { TranslatorProps } from './en'
 export const pt: TranslatorProps = {
   nav: {
     about: 'Sobre',
+    services: 'Serviços',
     projects: 'Projetos',
     contact: 'Contato',
     menu: 'Menu',
@@ -261,4 +262,3 @@ export const pt: TranslatorProps = {
     close: 'Fechar',
   },
 }
-

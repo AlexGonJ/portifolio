@@ -93,7 +93,7 @@ const IMAGES = [
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const pathname = usePathname()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [hoveredIndex] = useState(0)
 
   useEffect(() => {
@@ -181,6 +181,39 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                       </motion.a>
                     </Link>
                   ))}
+                </div>
+
+                <div className={styles.servicesNavContainer}>
+                  <motion.p className={styles.servicesLabel} variants={itemVariants}>
+                    {t.nav.services}
+                  </motion.p>
+                  <div className={styles.servicesNav}>
+                    {t.services.items.map((service) => {
+                      const item = service as typeof service & { isExternal: boolean; link: string }
+                      const content = <>{item.title}<span aria-hidden="true">↗</span></>
+
+                      return item.isExternal ? (
+                        <motion.a
+                          key={item.title}
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.serviceItem}
+                          variants={itemVariants}
+                          onClick={onClose}
+                        >
+                          {content}
+                        </motion.a>
+                      ) : (
+                        <Link key={item.title} href={item.link} className={styles.serviceItem} onClick={onClose}>
+                          {content}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                  <Link href={pathname === '/' ? '#servicos' : '/#servicos'} className={styles.allServicesLink} onClick={onClose}>
+                    {lang === 'pt' ? 'Ver todos os serviços' : 'See all services'} <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
 
                 {/* Social Networks Native List */}

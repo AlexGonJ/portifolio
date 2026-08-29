@@ -85,7 +85,7 @@ export default function Services() {
   }
 
   return (
-    <section ref={sectionRef} className={styles.services} aria-labelledby="services-title">
+    <section id="servicos" ref={sectionRef} className={styles.services} aria-labelledby="services-title">
       <div className={styles.intro}>
         <p className={styles.label}>{t.services.label}</p>
         <div className={styles.headingBlock}>

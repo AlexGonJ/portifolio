@@ -56,6 +56,26 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
                 <li><Link href="/" className={styles.menuItem}>Home</Link></li>
               )}
               <li><Link href={pathname === '/' ? "sobre" : "/sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
+              <li className={styles.servicesMenu}>
+                <Link href={pathname === '/' ? "#servicos" : "/#servicos"} className={styles.menuItem}>
+                  {t.nav.services}
+                </Link>
+                <div className={styles.servicesDropdown}>
+                  <span className={styles.servicesDropdownLabel}>{t.nav.services}</span>
+                  {t.services.items.map((service) => {
+                    const item = service as typeof service & { isExternal: boolean; link: string }
+                    return item.isExternal ? (
+                      <a key={item.title} href={item.link} target="_blank" rel="noopener noreferrer" className={styles.serviceDropdownLink}>
+                        {item.title}<span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      <Link key={item.title} href={item.link} className={styles.serviceDropdownLink}>
+                        {item.title}<span aria-hidden="true">↗</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </li>
               <li><Link href={pathname === '/' ? "/work" : "/work"} className={styles.menuItem}>{t.nav.projects}</Link></li>
               <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
               <li>

@@ -1,6 +1,7 @@
 export const en = {
   nav: {
     about: 'About',
+    services: 'Services',
     projects: 'Projects',
     contact: 'Contact',
     menu: 'Menu',
@@ -261,4 +262,3 @@ export const en = {
 }
 
 export type TranslatorProps = typeof en
-
