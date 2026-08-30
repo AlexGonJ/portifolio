@@ -104,11 +104,13 @@
   position: relative;
 
   &:hover .servicesDropdown,
-  &:focus-within .servicesDropdown {
+  &:focus-within .servicesDropdown,
+  &.servicesMenuOpen .servicesDropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
+    transition-delay: 0s;
   }
 }
 
@@ -129,7 +131,18 @@
   visibility: hidden;
   pointer-events: none;
   transform: translateY(-0.5rem);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.45s;
+
+  // Preenche o espaço visual entre o link e o dropdown para o cursor
+  // atravessar sem sair da área interativa do menu.
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 1rem;
+  }
 }
 
 .servicesDropdownLabel {

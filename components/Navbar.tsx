@@ -15,7 +15,37 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
   const [isScrolled, setIsScrolled] = useState(false) // Lista -> Sanduiche
   const [isPastHero, setIsPastHero] = useState(false) // Saiu da Hero
   const [isMenuOpen, setIsMenuOpen] = useState(false) // Estado do Menu Lateral
+  const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false)
   const navRef = useRef(null)
+  const servicesCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const openServicesMenu = () => {
+    if (servicesCloseTimerRef.current) {
+      clearTimeout(servicesCloseTimerRef.current)
+      servicesCloseTimerRef.current = null
+    }
+
+    setIsServicesMenuOpen(true)
+  }
+
+  const scheduleServicesMenuClose = () => {
+    if (servicesCloseTimerRef.current) {
+      clearTimeout(servicesCloseTimerRef.current)
+    }
+
+    servicesCloseTimerRef.current = setTimeout(() => {
+      setIsServicesMenuOpen(false)
+      servicesCloseTimerRef.current = null
+    }, 450)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (servicesCloseTimerRef.current) {
+        clearTimeout(servicesCloseTimerRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -56,7 +86,13 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
                 <li><Link href="/" className={styles.menuItem}>Home</Link></li>
               )}
               <li><Link href={pathname === '/' ? "sobre" : "/sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
-              <li className={styles.servicesMenu}>
+              <li
+                className={`${styles.servicesMenu} ${isServicesMenuOpen ? styles.servicesMenuOpen : ''}`}
+                onMouseEnter={openServicesMenu}
+                onMouseLeave={scheduleServicesMenuClose}
+                onFocus={openServicesMenu}
+                onBlur={scheduleServicesMenuClose}
+              >
                 <Link href={pathname === '/' ? "#servicos" : "/#servicos"} className={styles.menuItem}>
                   {t.nav.services}
                 </Link>
