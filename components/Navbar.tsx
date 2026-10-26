@@ -113,6 +113,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
                 </div>
               </li>
               <li><Link href={pathname === '/' ? "/work" : "/work"} className={styles.menuItem}>{t.nav.projects}</Link></li>
+              <li><Link href="/products" className={styles.menuItem}>{lang === 'pt' ? 'Produtos' : 'Products'}</Link></li>
               <li><Link href={pathname === '/' ? "#contato" : "/#contato"} className={styles.menuItem}>{t.nav.contact}</Link></li>
               <li>
                 <button

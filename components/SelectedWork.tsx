@@ -190,7 +190,7 @@ export default function SelectedWork() {
 
   return (
     <section id="projetos" ref={sectionRef} className={styles.selectedWork}>
-      <p className={styles.sectionLabel}>{t.selectedWork.label}</p>
+      <h2 className={styles.sectionLabel}>{t.selectedWork.label}</h2>
 
       <ul className={styles.list}>
         {projects.map((project, i) => (

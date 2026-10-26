@@ -18,6 +18,8 @@ export default function Services() {
   const sectionRef = useRef<HTMLElement>(null)
   const gridContainerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  const cursorRef = useRef<HTMLDivElement>(null)
+
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768)
@@ -57,6 +59,47 @@ export default function Services() {
 
     return () => ctx.revert()
   }, [isMobile])
+
+  // Custom cursor logic for service cards
+  useEffect(() => {
+    if (isMobile) return
+
+    const cursor = cursorRef.current
+    const section = sectionRef.current
+    if (!cursor || !section) return
+
+    gsap.set(cursor, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 })
+
+    let mouseX = 0, mouseY = 0
+    let rafId: number
+
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX
+      mouseY = e.clientY
+    }
+    window.addEventListener('mousemove', onMove)
+
+    const tick = () => {
+      gsap.set(cursor, { x: mouseX, y: mouseY })
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      cancelAnimationFrame(rafId)
+    }
+  }, [isMobile])
+
+  const handleMouseEnter = () => {
+    if (isMobile || !cursorRef.current) return
+    gsap.to(cursorRef.current, { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out' })
+  }
+
+  const handleMouseLeave = () => {
+    if (isMobile || !cursorRef.current) return
+    gsap.to(cursorRef.current, { opacity: 0, scale: 0.5, duration: 0.3, ease: 'power3.in' })
+  }
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)
@@ -161,6 +204,10 @@ export default function Services() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.item}
+                data-service-item
+                style={{ cursor: 'none' }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 {cardContent}
               </a>
@@ -169,6 +216,10 @@ export default function Services() {
                 key={service.title}
                 href={link}
                 className={styles.item}
+                data-service-item
+                style={{ cursor: 'none' }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 {cardContent}
               </Link>
@@ -185,6 +236,17 @@ export default function Services() {
           </svg>
         </a>
       </div>
+
+      {!isMobile && (
+        <div ref={cursorRef} className={styles.serviceCursor} aria-hidden="true">
+          <div className={styles.serviceCursorInner}>
+            <svg viewBox="0 0 24 24" className={styles.cursorArrow} fill="none" stroke="currentColor">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className={styles.cursorText}>Ver Mais</span>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

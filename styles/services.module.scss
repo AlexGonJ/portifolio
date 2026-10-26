@@ -272,27 +272,35 @@
   width: max-content;
   border-radius: 9999px;
   display: inline-block;
-  /* Add a subtle static border/shadow so the button shape is visible on white background */
-  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.15);
-  background-color: #fbfbfb;
 }
 
 .cardLink {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #c9a84c;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
   text-decoration: none;
-  transition: opacity 0.3s ease;
-  padding: 0.6rem 1.25rem;
-  background-color: #ffffff;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #dcc170 0%, #c9a84c 100%);
   border-radius: 9999px;
-  border: 1px solid rgba(201, 168, 76, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(201, 168, 76, 0.25),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
   .item:hover & {
-    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+      0 8px 24px rgba(201, 168, 76, 0.35),
+      0 2px 4px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #e4cd88 0%, #d4b55b 100%);
   }
 }
 
@@ -378,5 +386,77 @@
 
   .servicesCtaLink:hover & {
     transform: translate3d(3px, -3px, 0);
+  }
+}
+
+/* ── Cursor VIEW para Serviços ── */
+.serviceCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.serviceCursorInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 168, 76, 0.3); /* Borda sutil dourada */
+  color: #fff;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.4), 
+    inset 0 0 30px rgba(201, 168, 76, 0.15); /* Brilho interno dourado */
+  
+  /* Animação de pulsação (Ripple) super premium */
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.6);
+    z-index: -1;
+    animation: cursorRipple 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+  
+  &::after {
+    animation-delay: 1.25s;
+  }
+}
+
+.cursorText {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+}
+
+.cursorArrow {
+  width: 28px;
+  height: 28px;
+  color: #c9a84c; /* Ícone dourado combinando com o tema */
+  stroke-width: 2;
+  transition: transform 0.3s ease;
+}
+
+@keyframes cursorRipple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
   }
 }

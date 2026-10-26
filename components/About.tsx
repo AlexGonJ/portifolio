@@ -8,6 +8,7 @@ export default function About() {
 
   return (
     <section id="sobre" className={styles.about}>
+      <h2 className="sr-only">Sobre a Lexon Digital • Posicionamento Estratégico</h2>
       {/* Lado Esquerdo: Título com ScrollReveal */}
       <div className={styles.titleWrapper}>
         <ScrollReveal
