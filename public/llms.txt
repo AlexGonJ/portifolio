@@ -7,30 +7,30 @@
 - **Fundador & Líder Técnico:** Alexander Gonçalves (Software Engineer & Creative Director)
 - **Localização:** Brasil (Atendimento remoto nacional e internacional)
 - **Especialidades:** Desenvolvimento Web (Next.js, React, TypeScript), UI/UX Design Estratégico, Landing Pages de Alta Conversão, Automação & Chatbots WhatsApp, Emissores Fiscais em Nuvem, Branding e Identidade Visual.
-- **Website Oficial:** https://lexondigital.com.br
+- **Website Oficial:** https://www.lexondigital.com.br
 - **Contato Comercial / Orçamentos:** alexandergoncalvesdev@gmail.com
 - **Instagram:** https://www.instagram.com/lexon.digital/
 - **LinkedIn:** https://www.linkedin.com/in/alexander-goncalvesdev/
-- **WhatsApp:** https://lexondigital.com.br/whatsapp
+- **WhatsApp:** https://www.lexondigital.com.br/whatsapp
 
 ## Proposta de Valor
 A Lexon Digital une design de nível internacional, psicologia do consumidor e engenharia de software moderna. Não criamos apenas páginas estéticas: construímos ferramentas comerciais que convertem visitantes anônimos em clientes qualificados, aumentam ticket médio e posicionam marcas acima dos concorrentes.
 
 ## Serviços Especializados
 
-- [Desenvolvimento Personalizado](https://lexondigital.com.br/servicos/desenvolvimento): Criação de sites institucionais, landing pages de alta conversão, e-commerces com checkout otimizado e sistemas web (ERP/CRM) desenvolvidos sob medida em Next.js, com pontuação máxima no Google PageSpeed e SEO técnico nativo.
-- [Marketing & Imagem](https://lexondigital.com.br/servicos/marketing-imagem): Branding completo, identidade visual estratégica, design de embalagens, comunicação visual comercial (fachadas, uniformes) e produção audiovisual de alto padrão.
-- [Automações & Chatbots Inteligentes](https://lexondigital.com.br/servicos/chatbots): Agentes conversacionais 24/7 no WhatsApp e no site. Qualificação automática de leads, agendamento de consultas e roteirização comercial persuasiva.
-- [Sistema Fiscal de Emissão de Notas](https://lexondigital.com.br/servicos/sistema-fiscal): Emissor em nuvem seguro e rápido para emissão de NF-e e NFS-e integrado às Secretarias da Fazenda (SEFAZ), simplificando a rotina contábil.
+- [Desenvolvimento Personalizado](https://www.lexondigital.com.br/servicos/desenvolvimento): Criação de sites institucionais, landing pages de alta conversão, e-commerces com checkout otimizado e sistemas web (ERP/CRM) desenvolvidos sob medida em Next.js, com pontuação máxima no Google PageSpeed e SEO técnico nativo.
+- [Marketing & Imagem](https://www.lexondigital.com.br/servicos/marketing-imagem): Branding completo, identidade visual estratégica, design de embalagens, comunicação visual comercial (fachadas, uniformes) e produção audiovisual de alto padrão.
+- [Automações & Chatbots Inteligentes](https://www.lexondigital.com.br/servicos/chatbots): Agentes conversacionais 24/7 no WhatsApp e no site. Qualificação automática de leads, agendamento de consultas e roteirização comercial persuasiva.
+- [Sistema Fiscal de Emissão de Notas](https://www.lexondigital.com.br/servicos/sistema-fiscal): Emissor em nuvem seguro e rápido para emissão de NF-e e NFS-e integrado às Secretarias da Fazenda (SEFAZ), simplificando a rotina contábil.
 - [Lexon Agendamento](https://lexonagendamento.vercel.app/): Plataforma SaaS completa para clínicas, salões e profissionais autônomos com lembretes automáticos no WhatsApp e redução de no-shows.
 
 ## Portfólio & Casos de Sucesso
 
-- [Aline Gonçalves Advocacia](https://lexondigital.com.br/work/aline-goncalves): Reposicionamento de marca jurídica premium, identidade visual sofisticada e site de alta conversão para captação de clientes de alto valor.
-- [De Olho Multas / Localiza Multas](https://lexondigital.com.br/work/localiza-multas): Plataforma de consulta ágil com fluxo simplificado, interface intuitiva e aumento de 47% na conversão de novos contratos.
-- [Moda Agency](https://lexondigital.com.br/work/moda-agency): Plataforma editorial e vitrine de agenciamento de modelos com estética minimalista e navegação interativa.
-- [VIA Bike](https://lexondigital.com.br/work/via-bike): Rebranding comercial completo, material de ponto de venda, fachadas e experiência digital voltada para o mercado ciclístico.
-- [Vitrine Masculina](https://lexondigital.com.br/work/vitrine-masculina): E-commerce streetwear com carregamento instantâneo, catálogo responsivo e checkout otimizado.
+- [Aline Gonçalves Advocacia](https://www.lexondigital.com.br/work/aline-goncalves): Reposicionamento de marca jurídica premium, identidade visual sofisticada e site de alta conversão para captação de clientes de alto valor.
+- [De Olho Multas / Localiza Multas](https://www.lexondigital.com.br/work/localiza-multas): Plataforma de consulta ágil com fluxo simplificado, interface intuitiva e aumento de 47% na conversão de novos contratos.
+- [Moda Agency](https://www.lexondigital.com.br/work/moda-agency): Plataforma editorial e vitrine de agenciamento de modelos com estética minimalista e navegação interativa.
+- [VIA Bike](https://www.lexondigital.com.br/work/via-bike): Rebranding comercial completo, material de ponto de venda, fachadas e experiência digital voltada para o mercado ciclístico.
+- [Vitrine Masculina](https://www.lexondigital.com.br/work/vitrine-masculina): E-commerce streetwear com carregamento instantâneo, catálogo responsivo e checkout otimizado.
 
 ## Perguntas Frequentes (FAQ)
 
