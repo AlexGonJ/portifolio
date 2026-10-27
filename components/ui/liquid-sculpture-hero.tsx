@@ -909,10 +909,11 @@ class LiquidEngine {
       if (!this.started || !this.waveActive) {
         this.draw()
         this.firstFrame()
-        this.raf = requestAnimationFrame(this.frame)
+        this.stop()
         return
       }
-      this.introT = Math.min(1, this.introT + Math.min(rawMs, 100) / INTRO_DURATION_MS)
+      const introDuration = this.lowPower ? 1400 : INTRO_DURATION_MS
+      this.introT = Math.min(1, this.introT + Math.min(rawMs, 100) / introDuration)
     }
 
     if (this.isOutro) {
@@ -931,7 +932,7 @@ class LiquidEngine {
     const interacting = this.presence > 0.001 || this.burst > 0
     // settle is counted in simulated frames, so slow devices never snap mid-return
     this.settle = interacting || scrolling ? 0 : this.settle + dt
-    const maxIdle = ambientOn ? 360 : SETTLE_FRAMES
+    const maxIdle = this.lowPower ? 40 : (ambientOn ? 240 : SETTLE_FRAMES)
     const active = interacting || this.settle < maxIdle || this.introT < 1 || scrolling
 
     if (!active) {
@@ -1696,10 +1697,12 @@ export default function SculptureHero(props: SculptureHeroProps) {
       root.dataset.revealed = "1"
     }, 250)
 
-    // 2. Trigger particle wave slightly before the text emergence finishes (1500ms)
+    // 2. Trigger particle wave slightly before the text emergence finishes
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768
+    const waveDelay = isMobile ? 350 : 1000
     const waveTimeout = setTimeout(() => {
       engineRef.current?.startParticleWave()
-    }, 1500)
+    }, waveDelay)
 
     return () => {
       clearTimeout(revealTimeout)

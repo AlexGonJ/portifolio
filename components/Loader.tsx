@@ -52,7 +52,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       onComplete: () => {
         gsap.to(loaderRef.current, {
           yPercent: -100,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power4.inOut',
           onComplete,
         })
@@ -63,28 +63,28 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     tl.to(animOrder, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
-      stagger: 0.12,
+      duration: 0.35,
+      stagger: 0.08,
       ease: 'power3.out',
     })
 
     // Wordmark
-    tl.to(wordmarkRef.current, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+    tl.to(wordmarkRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, '-=0.15')
 
     // Brilho rápido nas peças
     tl.to(pieces, {
       filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.7))',
-      duration: 0.35,
+      duration: 0.25,
       ease: 'power2.inOut',
-      stagger: 0.06,
+      stagger: 0.04,
     })
     tl.to(pieces, {
       filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.15))',
-      duration: 0.3,
+      duration: 0.2,
       ease: 'power2.inOut',
     })
 
-    tl.to({}, { duration: 0.3 })
+    tl.to({}, { duration: 0.15 })
 
     return () => { tl.kill() }
   }, [onComplete])

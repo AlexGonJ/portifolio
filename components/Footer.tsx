@@ -143,6 +143,7 @@ export default function Footer() {
                 <SplitText
                   key={line}
                   tag="span"
+                  role="text"
                   text={line}
                   className={`${styles.titleLine} ${idx === 1 ? styles.titleOffset : ''}`}
                   effect="rise"

@@ -33,6 +33,7 @@ export interface SplitTextProps {
   hoverEffect?: 'none' | 'lift' | 'wave';
   color?: string;
   accentColor?: string;
+  role?: string;
   onLetterAnimationComplete?: () => void;
 }
 
@@ -118,6 +119,7 @@ const SplitText = ({
   hoverEffect = 'none',
   color,
   accentColor,
+  role,
   onLetterAnimationComplete
 }: SplitTextProps) => {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -368,6 +370,10 @@ const SplitText = ({
         }
       });
 
+      if (el.hasAttribute('aria-label') && tag === 'span') {
+        el.setAttribute('role', 'text');
+      }
+
       setReady(true);
 
       let isCurrentlyInView = false;
@@ -469,11 +475,13 @@ const SplitText = ({
   );
 
   const Tag = tag || 'p';
+  const resolvedRole = role || (Tag === 'span' ? 'text' : undefined);
 
   return (
     <Tag
       key={text}
       ref={ref}
+      role={resolvedRole}
       className={`split-parent inline-block whitespace-normal overflow-visible ${trigger === 'click' ? 'cursor-pointer' : ''} ${className}`}
       style={{
         textAlign,
