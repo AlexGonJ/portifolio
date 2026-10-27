@@ -30,26 +30,6 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   const piece4Ref  = useRef<SVGPathElement>(null)
 
   useEffect(() => {
-    const isBot = typeof navigator !== 'undefined' && (
-      /bot|googlebot|crawler|spider|robot|crawling|lighthouse|headlesschrome/i.test(navigator.userAgent) ||
-      (navigator as any).webdriver === true
-    )
-
-    if (isBot) {
-      if (loaderRef.current) loaderRef.current.style.display = 'none'
-      onComplete()
-      return
-    }
-
-    try {
-      if (typeof window !== 'undefined' && sessionStorage.getItem('lexon_loader_seen')) {
-        if (loaderRef.current) loaderRef.current.style.display = 'none'
-        onComplete()
-        return
-      }
-      sessionStorage.setItem('lexon_loader_seen', '1')
-    } catch {}
-
     const pieces = [
       piece1Ref.current,
       piece2Ref.current,
@@ -72,7 +52,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       onComplete: () => {
         gsap.to(loaderRef.current, {
           yPercent: -100,
-          duration: 0.75,
+          duration: 0.8,
           ease: 'power4.inOut',
           onComplete,
         })
@@ -83,28 +63,28 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     tl.to(animOrder, {
       opacity: 1,
       y: 0,
-      duration: 0.45,
-      stagger: 0.1,
+      duration: 0.5,
+      stagger: 0.12,
       ease: 'power3.out',
     })
 
     // Wordmark
-    tl.to(wordmarkRef.current, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.2')
+    tl.to(wordmarkRef.current, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
 
     // Brilho rápido nas peças
     tl.to(pieces, {
       filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.7))',
-      duration: 0.3,
+      duration: 0.35,
       ease: 'power2.inOut',
-      stagger: 0.05,
+      stagger: 0.06,
     })
     tl.to(pieces, {
       filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.15))',
-      duration: 0.25,
+      duration: 0.3,
       ease: 'power2.inOut',
     })
 
-    tl.to({}, { duration: 0.25 })
+    tl.to({}, { duration: 0.3 })
 
     return () => { tl.kill() }
   }, [onComplete])

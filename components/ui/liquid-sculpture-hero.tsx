@@ -931,22 +931,15 @@ class LiquidEngine {
     const interacting = this.presence > 0.001 || this.burst > 0
     // settle is counted in simulated frames, so slow devices never snap mid-return
     this.settle = interacting || scrolling ? 0 : this.settle + dt
-    const active = interacting || this.settle < SETTLE_FRAMES || this.introT < 1 || scrolling
+    const maxIdle = ambientOn ? 360 : SETTLE_FRAMES
+    const active = interacting || this.settle < maxIdle || this.introT < 1 || scrolling
 
     if (!active) {
       if (this.flowDirty) this.clearFlow()
       if (this.stateDirty) this.clearState()
-      if (!ambientOn || (this.isOutro && this.outroT >= 0.998)) {
-        this.draw()
-        this.firstFrame()
-        this.stop()
-        return
-      }
-      this.raf = requestAnimationFrame(this.frame)
-      if (this.skip++ % 2) return
-      this.time += (dt * 2 * o.speed) / 60
       this.draw()
       this.firstFrame()
+      this.stop()
       return
     }
     this.raf = requestAnimationFrame(this.frame)
@@ -1815,12 +1808,10 @@ export default function SculptureHero(props: SculptureHeroProps) {
     const root = rootRef.current
     const stage = stageRef.current
     if (!root || !stage) return
-    const isBot = typeof navigator !== "undefined" && (
-      /bot|googlebot|crawler|spider|robot|crawling|lighthouse|headlesschrome/i.test(navigator.userAgent) ||
-      (navigator as any).webdriver === true
-    )
-
-    let canvas: HTMLCanvasElement | null = null
+    // a fresh canvas per engine: a released WebGL context can never be reused
+    const canvas = document.createElement("canvas")
+    canvas.className = "sh-canvas"
+    stage.appendChild(canvas)
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
     const coarse = window.matchMedia("(hover: none), (pointer: coarse)")
     setIsTouch(coarse.matches)
@@ -1828,20 +1819,11 @@ export default function SculptureHero(props: SculptureHeroProps) {
     const fail = () => {
       root.dataset.gl = "off"
     }
-
-    if (isBot) {
+    try {
+      engine = new LiquidEngine(canvas, optsRef.current(mq.matches), startRef.current, fail)
+      engineRef.current = engine
+    } catch {
       fail()
-    } else {
-      // a fresh canvas per engine: a released WebGL context can never be reused
-      canvas = document.createElement("canvas")
-      canvas.className = "sh-canvas"
-      stage.appendChild(canvas)
-      try {
-        engine = new LiquidEngine(canvas, optsRef.current(mq.matches), startRef.current, fail)
-        engineRef.current = engine
-      } catch {
-        fail()
-      }
     }
 
     const ro = new ResizeObserver(() => relayout())
@@ -1907,7 +1889,7 @@ export default function SculptureHero(props: SculptureHeroProps) {
       root.removeEventListener("pointerleave", onLeave)
       engine?.destroy()
       engineRef.current = null
-      canvas?.remove()
+      canvas.remove()
       delete root.dataset.gl
     }
   }, [relayout])
