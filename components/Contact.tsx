@@ -39,7 +39,7 @@ export default function Contact() {
       <div className={styles.carouselBackdrop} aria-hidden="true">
         <DiagonalMarqueeCarousel
           animated={true}
-          baseSpeed={85}
+          baseSpeed={35}
           angle={-20}
           className="absolute -inset-16 h-[calc(100%+8rem)] max-h-none w-[calc(100%+8rem)] max-w-none"
         />

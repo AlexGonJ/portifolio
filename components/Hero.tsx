@@ -34,6 +34,7 @@ export default function Hero({ start = true, mobileSculptureScale }: HeroProps) 
       hint={t.hero.hint}
       hintTouch={t.hero.hintTouch}
       backdropText="LEXON"
+      background="#E0DAD0"
       theme="light"
       themeToggle={true}
       intro={true}

@@ -40,7 +40,7 @@ const Card = ({ card, className }: { card: CardItem; className?: string }) => {
   return (
     <div
       className={cn(
-        "group relative h-[140px] w-[210px] sm:h-[220px] sm:w-[330px] md:h-[280px] md:w-[420px] shrink-0 cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 shadow-2xl transition-all duration-300",
+        "group relative h-[150px] w-[225px] sm:h-[240px] sm:w-[360px] md:h-[340px] md:w-[510px] lg:h-[400px] lg:w-[600px] shrink-0 cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 shadow-2xl transition-all duration-300",
         className,
       )}
       style={{ backgroundColor: "#14171d" }}
@@ -142,17 +142,15 @@ export default function DiagonalMarqueeCarousel({
         }
         .animate-marquee-left {
           animation: marquee-left var(--speed) linear infinite !important;
+          animation-duration: var(--speed) !important;
+          animation-iteration-count: infinite !important;
           will-change: transform;
         }
         .animate-marquee-right {
           animation: marquee-right var(--speed) linear infinite !important;
+          animation-duration: var(--speed) !important;
+          animation-iteration-count: infinite !important;
           will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-marquee-left,
-          .animate-marquee-right {
-            animation: none !important;
-          }
         }
       `,
         }}
@@ -188,27 +186,6 @@ export default function DiagonalMarqueeCarousel({
           cards={rowCardsReverse}
           speed={baseSpeed + 12}
           direction={alternateDirections ? 1 : -1}
-          cardClassName={cardClassName}
-        />
-        {/* Linha 5 */}
-        <MarqueeRow
-          cards={rowCards}
-          speed={baseSpeed + 6}
-          direction={-1}
-          cardClassName={cardClassName}
-        />
-        {/* Linha 6 */}
-        <MarqueeRow
-          cards={rowCardsReverse}
-          speed={baseSpeed + 14}
-          direction={alternateDirections ? 1 : -1}
-          cardClassName={cardClassName}
-        />
-        {/* Linha 7 */}
-        <MarqueeRow
-          cards={rowCards}
-          speed={baseSpeed + 10}
-          direction={-1}
           cardClassName={cardClassName}
         />
       </div>

@@ -493,6 +493,7 @@ class LiquidEngine {
   private outroT = 0
   private outroProgress = 0
   private waveActive = false
+  private initialWaveTriggered = false
   private started = true
   private raf = 0
   private running = false
@@ -636,7 +637,12 @@ class LiquidEngine {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
     this.buildParticles(img)
     this.ready = true
-    if (this.opts.intro) this.startIntro()
+    if (this.opts.intro) {
+      this.startIntro()
+      if (this.initialWaveTriggered) {
+        this.startParticleWave()
+      }
+    }
     this.wake()
   }
 
@@ -760,6 +766,7 @@ class LiquidEngine {
 
   /** Triggered when the backdrop typing animation completes (or by timeout) */
   startParticleWave() {
+    this.initialWaveTriggered = true
     if (this.waveActive) return
     this.waveActive = true
     this.introT = 0
@@ -1362,29 +1369,46 @@ const CSS = `
 .sh-backdrop .sh-emerge-text{
   display:inline-block;
   opacity:0.12;
-  filter:blur(8px);
   transform:scale(0.975);
   transition:opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1), filter 2.2s ease, transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
-  background:linear-gradient(172deg, #D8CFC2 0%, #B5A894 30%, #E6DFD4 52%, #9E907B 74%, #74685A 100%);
+  background:linear-gradient(172deg, #D5CBBF 0%, #BAAE9D 25%, #E4DDD2 50%, #A89C8A 75%, #827664 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-  filter:drop-shadow(0 6px 22px rgba(70, 58, 44, 0.16))}
+  filter:blur(8px)
+    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.12))
+    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.08))}
 .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-text{
   opacity:1;
-  filter:blur(0px) drop-shadow(0 6px 22px rgba(70, 58, 44, 0.16));
+  filter:blur(0px)
+    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.18))
+    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.12))
+    drop-shadow(6px 18px 36px rgba(40, 32, 22, 0.07));
   transform:scale(1)}
 .sh-backdrop .sh-emerge-svg{
   height:0.92em;
   width:auto;
   max-width:92vw;
   display:block;
+  overflow:visible;
   opacity:0.12;
-  filter:blur(8px) drop-shadow(0 6px 22px rgba(70, 58, 44, 0.16));
+  filter:blur(8px)
+    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.12))
+    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.08));
   transform:scale(0.975);
   transition:opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1), filter 2.2s ease, transform 2.2s cubic-bezier(0.16, 1, 0.3, 1)}
 .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-svg{
   opacity:1;
-  filter:blur(0px) drop-shadow(0 6px 22px rgba(70, 58, 44, 0.16));
+  filter:blur(0px)
+    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.18))
+    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.12))
+    drop-shadow(6px 18px 36px rgba(40, 32, 22, 0.07));
   transform:scale(1)}
+[data-hero-theme="dark"] .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-svg,
+[data-hero-theme="dark"] .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-text{
+  filter:blur(0px)
+    drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.50))
+    drop-shadow(3px 8px 18px rgba(0, 0, 0, 0.35))
+    drop-shadow(6px 18px 36px rgba(0, 0, 0, 0.20));
+}
 .sh-letter-o{opacity:0;pointer-events:none;transition:opacity 1s cubic-bezier(0.16, 1, 0.3, 1)}
 .sh-root[data-scrolled="1"] .sh-letter-o{opacity:1}
 .sh-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;
@@ -1900,6 +1924,8 @@ export default function SculptureHero(props: SculptureHeroProps) {
             root.dataset.gl = "on"
             delete root.dataset.swap
           }
+          const rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          engine.setOptions(optsRef.current(rm))
           engine.setImage(image)
           relayout()
         } catch {
@@ -1971,23 +1997,65 @@ export default function SculptureHero(props: SculptureHeroProps) {
               style={{ color: "var(--sh-fg)" }}
             >
               <defs>
-                {/* Champagne / satin-metal palette sampled from the sculpture */}
+                {/* Champagne / silk palette - sampled directly from the 3D liquid sculpture */}
                 <linearGradient id="sh-bd-gradient" x1="0" y1="0" x2="0.18" y2="1">
-                  <stop offset="0%" stopColor="#D8CFC2" />
-                  <stop offset="30%" stopColor="#B5A894" />
-                  <stop offset="52%" stopColor="#E6DFD4" />
-                  <stop offset="74%" stopColor="#9E907B" />
-                  <stop offset="100%" stopColor="#74685A" />
+                  <stop offset="0%" stopColor="#D5CBBF" />
+                  <stop offset="25%" stopColor="#BAAE9D" />
+                  <stop offset="50%" stopColor="#E4DDD2" />
+                  <stop offset="75%" stopColor="#A89C8A" />
+                  <stop offset="100%" stopColor="#827664" />
+                </linearGradient>
+                {/* 3D Specular bevel rim highlight (soft, subtle chamfer reflection) */}
+                <linearGradient id="sh-bd-rim" x1="0" y1="0" x2="0.25" y2="1">
+                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.4" />
+                  <stop offset="35%" stopColor="#EFE8DE" stopOpacity="0.2" />
+                  <stop offset="75%" stopColor="#C4B7A5" stopOpacity="0.05" />
+                  <stop offset="100%" stopColor="#7A6D5C" stopOpacity="0" />
                 </linearGradient>
               </defs>
+
+              {/* Subtle 3D Extrusion Bevel: delicate micro-depth in warm champagne shadow */}
+              {/* Step 1: soft transition edge */}
+              <g transform="translate(0.35, 0.7)" aria-hidden="true">
+                <path d="M0 0H38V162H120V200H0V0Z" fill="#7D7262" />
+                <path d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z" fill="#7D7262" />
+                <path d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z" fill="#7D7262" />
+                <path className="sh-letter-o" fillRule="evenodd" clipRule="evenodd" d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z" fill="#7D7262" />
+                <path d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z" fill="#7D7262" />
+              </g>
+              {/* Step 2: subtle depth baseline */}
+              <g transform="translate(0.7, 1.4)" aria-hidden="true">
+                <path d="M0 0H38V162H120V200H0V0Z" fill="#5F5547" />
+                <path d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z" fill="#5F5547" />
+                <path d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z" fill="#5F5547" />
+                <path className="sh-letter-o" fillRule="evenodd" clipRule="evenodd" d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z" fill="#5F5547" />
+                <path d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z" fill="#5F5547" />
+              </g>
+
+              {/* Front Face with specular bevel rim highlight */}
               {/* L: 100% retas, cantos em ângulo reto */}
-              <path d="M0 0H38V162H120V200H0V0Z" fill="url(#sh-bd-gradient)" />
+              <path
+                d="M0 0H38V162H120V200H0V0Z"
+                fill="url(#sh-bd-gradient)"
+                stroke="url(#sh-bd-rim)"
+                strokeWidth="0.5"
+                style={{ paintOrder: "stroke fill" }}
+              />
               {/* E: 100% retas, hastes superior e inferior perfeitamente simétricas */}
-              <path d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z" fill="url(#sh-bd-gradient)" />
+              <path
+                d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z"
+                fill="url(#sh-bd-gradient)"
+                stroke="url(#sh-bd-rim)"
+                strokeWidth="0.5"
+                style={{ paintOrder: "stroke fill" }}
+              />
               {/* X: 100% retas diagonais com simetria quadrupla e espessura uniforme */}
               <path
                 d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z"
                 fill="url(#sh-bd-gradient)"
+                stroke="url(#sh-bd-rim)"
+                strokeWidth="0.5"
+                style={{ paintOrder: "stroke fill" }}
               />
               {/* O: arredondamento suave e simetria geométrica perfeita */}
               <path
@@ -1996,11 +2064,17 @@ export default function SculptureHero(props: SculptureHeroProps) {
                 clipRule="evenodd"
                 d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z"
                 fill="url(#sh-bd-gradient)"
+                stroke="url(#sh-bd-rim)"
+                strokeWidth="0.5"
+                style={{ paintOrder: "stroke fill" }}
               />
               {/* N: proporções perfeitas com diagonal robusta e hastes simétricas */}
               <path
                 d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z"
                 fill="url(#sh-bd-gradient)"
+                stroke="url(#sh-bd-rim)"
+                strokeWidth="0.5"
+                style={{ paintOrder: "stroke fill" }}
               />
             </svg>
           ) : (
