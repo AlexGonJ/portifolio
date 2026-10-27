@@ -1,277 +1,275 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import Image from 'next/image'
-import styles from '../styles/selected-work.module.scss'
-import { useLanguage } from '../i18n/LanguageContext'
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
+import { HaloReel, type HaloReelItem } from '@/components/ui/halo-reel'
+import { useLanguage } from '@/i18n/LanguageContext'
 
-const projects = [
+const PORTFOLIO_CARDS: HaloReelItem[] = [
   {
-    title: 'Web Platform Experience',
-    meta: '2025 — Dev/ Next.js/ Cybersecurity',
-    image: '/projects/post-car1.png',
+    src: '/projects/vitrine-masculina/hero.png',
+    alt: 'Vitrine Masculina - E-commerce Full-Stack',
+    title: 'Vitrine Masculina',
+    category: 'Ecommerce',
+    role: 'E-commerce Full-Stack',
+    year: '2026',
+    description: 'Plataforma e-commerce completa com checkout integrado, catálogo dinâmico e performance extrema.',
+    href: '/work/vitrine-masculina',
+    tags: ['Medusa v2', 'Next.js', 'Checkout'],
+  },
+  {
+    src: '/projects/post-car1.png',
+    alt: 'Localiza Multas - Plataforma Web & ERP',
+    title: 'Localiza Multas',
+    category: 'Web Platform & ERP',
+    role: 'Sistemas & ERP',
+    year: '2025',
+    description: 'Sistema institucional e ERP automatizado para gestão de infrações com alta disponibilidade.',
     href: '/work/localiza-multas',
+    tags: ['Next.js', 'ERP', 'SEO'],
   },
   {
-    title: 'Brand Identity System',
-    meta: '2024 — Branding',
-    image: '/projects/PlacaAline.png',
-    href: '/work/aline-goncalves',
-  },
-  {
-    title: 'Minimal Web Platform',
-    meta: '2024 — Web Design',
-    image: '/projects/moda-home.png',
+    src: '/projects/moda-home.png',
+    alt: 'Moda Agency - Plataforma Editorial & GSAP',
+    title: 'Moda Agency',
+    category: 'Web Editorial & GSAP',
+    role: 'Editorial & Motion',
+    year: '2024',
+    description: 'Experiência web editorial refinada com animações fluidas, tipografia moderna e design minimalista.',
     href: '/work/moda-agency',
+    tags: ['GSAP', 'Next.js', 'Editorial'],
+  },
+  {
+    src: '/projects/PlacaAline.png',
+    alt: 'Aline Gonçalves - Branding & Identidade Visual',
+    title: 'Aline Gonçalves',
+    category: 'Branding & Identidade',
+    role: 'Identidade de Marca',
+    year: '2024',
+    description: 'Posicionamento e sistema completo de identidade visual de luxo para arquitetura e interiores.',
+    href: '/work/aline-goncalves',
+    tags: ['Branding', 'Design', 'Print'],
+  },
+  {
+    src: '/projects/via-bike/poster-stand.png',
+    alt: 'Via Bike - Direção Criativa & Marketing',
+    title: 'Via Bike',
+    category: 'Marketing Visual & Direção',
+    role: 'Comunicação Visual',
+    year: '2024',
+    description: 'Direção de arte, identidade e marketing visual para presença omnicanal de alto impacto.',
+    href: '/work/via-bike',
+    tags: ['Branding', 'Campanhas', 'Visual'],
+  },
+  {
+    src: '/projects/vitrine-masculina/product.png',
+    alt: 'Vitrine Masculina - Vitrine de Produtos & Checkout',
+    title: 'Vitrine Masculina',
+    category: 'Ecommerce',
+    role: 'Experiência de Compra',
+    year: '2026',
+    description: 'Fluxo de compra frictionless, carrinho dinâmico e interface ultra responsiva.',
+    href: '/work/vitrine-masculina',
+    tags: ['E-commerce', 'Checkout', 'UI/UX'],
+  },
+  {
+    src: '/projects/localiza.png',
+    alt: 'Localiza Multas - Dashboard & Automação',
+    title: 'Localiza Multas',
+    category: 'Web Platform & ERP',
+    role: 'Plataforma Digital',
+    year: '2025',
+    description: 'Módulos analíticos e painéis de consulta integrados a bancos de dados em tempo real.',
+    href: '/work/localiza-multas',
+    tags: ['ERP', 'Performance', 'Dashboard'],
+  },
+  {
+    src: '/projects/moda-hero.jpg',
+    alt: 'Moda Agency - Direção Tipográfica',
+    title: 'Moda Agency',
+    category: 'Web Editorial & GSAP',
+    role: 'Composição Visual',
+    year: '2024',
+    description: 'Composição tipográfica arrojada, navegação imersiva e transições sem interrupções.',
+    href: '/work/moda-agency',
+    tags: ['Design System', 'GSAP', 'Animações'],
+  },
+  {
+    src: '/projects/bag.png',
+    alt: 'Aline Gonçalves - Aplicações de Marca',
+    title: 'Aline Gonçalves',
+    category: 'Branding & Identidade',
+    role: 'Aplicações de Marca',
+    year: '2024',
+    description: 'Identidade aplicada em materiais corporativos e embalagens premium.',
+    href: '/work/aline-goncalves',
+    tags: ['Branding', 'Papelaria', 'Embalagens'],
+  },
+  {
+    src: '/projects/via-bike/cap.jpg',
+    alt: 'Via Bike - Materiais Promocionais',
+    title: 'Via Bike',
+    category: 'Marketing Visual & Direção',
+    role: 'Material Promocional',
+    year: '2024',
+    description: 'Brindes, vestuário institucional e material promocional para clientes.',
+    href: '/work/via-bike',
+    tags: ['Merch', 'Marketing', 'Identidade'],
   },
 ]
 
-import { useRouter } from 'next/navigation'
-
 export default function SelectedWork() {
   const router = useRouter()
-  const { t } = useLanguage()
-  const sectionRef   = useRef<HTMLElement>(null)
-  const previewRef   = useRef<HTMLDivElement>(null)
-  const cursorRef    = useRef<HTMLDivElement>(null)
-  const imgARef      = useRef<HTMLImageElement>(null)
-  const imgBRef      = useRef<HTMLImageElement>(null)
-  const activeSlot   = useRef<'a' | 'b'>('a')
-  const currentIndex = useRef<number>(-1)
-  const lastY        = useRef<number>(0)
-  const isVisible    = useRef<boolean>(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [activeProject, setActiveProject] = useState<number>(-1)
+  const { t, lang } = useLanguage()
+  const [currentProject, setCurrentProject] = useState<HaloReelItem>(PORTFOLIO_CARDS[0])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 1024)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  const btnRef = useRef<HTMLAnchorElement>(null)
-
-  useEffect(() => {
-    const btn = btnRef.current
-    if (!btn) return
-
-    const strength = 0.25
-
-    const move = (e: MouseEvent) => {
-      const rect = btn.getBoundingClientRect()
-      const x = e.clientX - rect.left - rect.width / 2
-      const y = e.clientY - rect.top - rect.height / 2
-      gsap.to(btn, { x: x * strength, y: y * strength, duration: 0.4, ease: 'power3.out' })
-      gsap.to(btn.querySelector('span'), { x: x * strength * 0.4, y: y * strength * 0.4, duration: 0.4 })
-    }
-
-    const leave = () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' })
-      gsap.to(btn.querySelector('span'), { x: 0, y: 0, duration: 0.6 })
-    }
-
-    btn.addEventListener('mousemove', move)
-    btn.addEventListener('mouseleave', leave)
-    return () => {
-      btn.removeEventListener('mousemove', move)
-      btn.removeEventListener('mouseleave', leave)
-    }
-  }, [])
-
-  // ─── Função central para esconder preview ───────────────────────────────
-  const hidePreview = (preview: HTMLDivElement | null, cursor: HTMLDivElement | null) => {
-    if (currentIndex.current === -1) return
-    gsap.to([preview, cursor], { opacity: 0, scale: 0.92, duration: 0.28, ease: 'power3.in' })
-    currentIndex.current = -1
-    activeSlot.current = 'a'
-    setActiveProject(-1)
-  }
-
-  useEffect(() => {
-    if (isMobile) return
-
-    const preview = previewRef.current
-    const cursor  = cursorRef.current
-    const imgA    = imgARef.current
-    const imgB    = imgBRef.current
-    const section = sectionRef.current
-    if (!preview || !cursor || !imgA || !imgB || !section) return
-
-    gsap.set(preview, { opacity: 0, scale: 0.92, xPercent: -50, yPercent: -50 })
-    gsap.set(cursor,  { opacity: 0, xPercent: -50, yPercent: -50 })
-    gsap.set(imgB,    { yPercent: 0, opacity: 0 })
-
-    let mouseX = 0, mouseY = 0
-    let px = 0, py = 0, rafId: number
-
-    const onMove = (e: MouseEvent) => {
-      lastY.current = mouseY
-      mouseX = e.clientX
-      mouseY = e.clientY
-    }
-    window.addEventListener('mousemove', onMove)
-
-    const tick = () => {
-      px += (mouseX - px) * 0.09
-      py += (mouseY - py) * 0.09
-      gsap.set(preview, { x: px, y: py })
-      gsap.set(cursor,  { x: mouseX, y: mouseY })
-      rafId = requestAnimationFrame(tick)
-    }
-    rafId = requestAnimationFrame(tick)
-
-    // ── Esconde quando o mouse sair da seção ────────────────────────────
-    const onSectionLeave = () => hidePreview(preview, cursor)
-    section.addEventListener('mouseleave', onSectionLeave)
-
-    const items = section.querySelectorAll('[data-project-item]') ?? []
-    const offs: (() => void)[] = []
-
-    items.forEach((item, index) => {
-      const enter = () => {
-        const src = item.getAttribute('data-image') ?? ''
-        const isFirst = currentIndex.current === -1
-
-        setActiveProject(index)
-
-        if (isFirst) {
-          imgA.src = src
-          gsap.set(imgA, { yPercent: 0, opacity: 1 })
-          gsap.to(preview, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' })
-          gsap.to(cursor,  { opacity: 1, duration: 0.3, ease: 'power3.out' })
-        } else {
-          const goingDown = index > currentIndex.current
-          const incoming  = activeSlot.current === 'a' ? imgB : imgA
-          const outgoing  = activeSlot.current === 'a' ? imgA : imgB
-
-          incoming.src = src
-          gsap.set(incoming, { yPercent: goingDown ? 100 : -100, opacity: 1, zIndex: 2 })
-          gsap.set(outgoing, { zIndex: 1 })
-          gsap.to(incoming,  { yPercent: 0, duration: 0.55, ease: 'power3.out' })
-          gsap.to(outgoing,  { yPercent: goingDown ? -40 : 40, opacity: 0, duration: 0.45, ease: 'power3.in' })
-          activeSlot.current = activeSlot.current === 'a' ? 'b' : 'a'
-        }
-
-        currentIndex.current = index
-      }
-
-      item.addEventListener('mouseenter', enter)
-      offs.push(() => item.removeEventListener('mouseenter', enter))
-    })
-
-    // ── IntersectionObserver: esconde se a seção sair da viewport ────────
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible.current = entry.isIntersecting
-        if (!entry.isIntersecting) hidePreview(preview, cursor)
-      },
-      { threshold: 0 }
-    )
-    observer.observe(section)
-
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      section.removeEventListener('mouseleave', onSectionLeave)
-      cancelAnimationFrame(rafId)
-      observer.disconnect()
-      offs.forEach(fn => fn())
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile])
-
-  const handleGlow = (e: React.MouseEvent<HTMLAnchorElement>): void => {
-    const btn = e.currentTarget
-    const rect = btn.getBoundingClientRect()
-    btn.style.setProperty('--glow-x', `${e.clientX - rect.left}px`)
-    btn.style.setProperty('--glow-y', `${e.clientY - rect.top}px`)
-  }
+  const isEn = lang === 'en'
+  const sectionTitle = isEn ? 'Selected Works' : 'Projetos Selecionados'
+  const exploreCaseText = isEn ? 'View Case Study' : 'Ver Estudo de Caso'
+  const allProjectsText = isEn ? 'View all projects' : 'Ver todos os projetos'
+  const dragHintText = isEn ? 'Drag to rotate • Click card to open' : 'Arraste para girar • Clique no card para abrir'
 
   return (
-    <section id="projetos" ref={sectionRef} className={styles.selectedWork}>
-      <h2 className={styles.sectionLabel}>{t.selectedWork.label}</h2>
+    <section id="work" className="relative w-full bg-white overflow-hidden py-14 sm:py-20 lg:py-24">
+      <HaloReel
+        items={PORTFOLIO_CARDS}
+        aria-label={sectionTitle}
+        cardWidth={140}
+        cardHeight={195}
+        minScale={0.34}
+        maxScale={1.34}
+        depthExponent={2.8}
+        radiusXRatio={0.42}
+        centerXRatio={0.02}
+        radiusYRatio={0.36}
+        holdDuration={1800}
+        stepDuration={800}
+        spread={1.25}
+        className="h-[600px] sm:h-[660px] lg:h-[720px] w-full"
+        onCardClick={(item) => {
+          if (item.href) router.push(item.href)
+        }}
+        onActiveIndexChange={(idx) => {
+          setCurrentIndex(idx)
+          setCurrentProject(PORTFOLIO_CARDS[idx])
+        }}
+        centerLabel={(activeItem, activeIdx) => {
+          const item = activeItem || currentProject
+          const currentNum = String((activeIdx ?? currentIndex) + 1).padStart(2, '0')
+          const totalNum = String(PORTFOLIO_CARDS.length).padStart(2, '0')
 
-      <ul className={styles.list}>
-        {projects.map((project, i) => (
-          <li
-            key={i}
-            className={`${styles.item} ${activeProject === i ? styles.itemActive : ''}`}
-            data-project-item
-            data-image={project.image}
-            onClick={() => {
-              if (project.href && project.href !== '#') {
-                router.push(project.href)
-              }
-            }}
-            style={{ cursor: project.href !== '#' ? 'none' : 'default' }}
-          >
-            <div className={styles.itemContent}>
-              <span className={styles.itemNum}>{String(i + 1).padStart(2, '0')}</span>
-              {isMobile && (
-                <div className={styles.mobileImage}>
-                  <Image src={project.image} alt={project.title} fill sizes="(max-width: 1024px) 100px, 100vw" />
+          return (
+            <div className="h-full flex flex-col justify-between py-6 sm:py-10 pr-6 sm:pr-12 lg:pr-24 pointer-events-none select-none">
+              {/* Top: Selected Works (Mova esse selected work que esta escrito para cima) */}
+              <div className="flex items-center justify-between pointer-events-auto">
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neutral-900 opacity-60"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-neutral-900"></span>
+                  </span>
+                  <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] text-neutral-800">
+                    {sectionTitle}
+                  </h2>
                 </div>
-              )}
-              <div className={styles.itemCenter}>
-                <h3>{t.selectedWork.projects[i].title}</h3>
-                <span className={styles.itemMeta}>{t.selectedWork.projects[i].meta}</span>
+
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-mono font-medium border border-neutral-200">
+                  <span>{currentNum}</span>
+                  <span className="text-neutral-300">/</span>
+                  <span className="text-neutral-400">{totalNum}</span>
+                </div>
               </div>
-              <span className={styles.itemArrow}>↗</span>
+
+              {/* Middle: Nome do projeto e o que ele é (por exemplo "Ecommerce") */}
+              <div className="my-auto pointer-events-auto flex flex-col items-start gap-4 max-w-xl">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={item.title + (item.category ?? '') + currentNum}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -14 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col items-start gap-3"
+                  >
+                    {/* O que ele é (ex: "Ecommerce") */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {item.category && (
+                        <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#0b0b0d] text-white shadow-sm">
+                          {item.category}
+                        </span>
+                      )}
+                      {item.year && (
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-neutral-500 bg-neutral-100 border border-neutral-200">
+                          {item.year}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Nome do projeto */}
+                    <h3 className="text-4xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-[#0b0b0d] leading-[1.06]">
+                      {item.title}
+                    </h3>
+
+                    {/* Descrição e detalhes */}
+                    {item.description && (
+                      <p className="text-sm sm:text-base text-neutral-600 leading-relaxed max-w-lg mt-1">
+                        {item.description}
+                      </p>
+                    )}
+
+                    {/* Botão de Ação / Link para o case */}
+                    {item.href && (
+                      <div className="pt-3 flex items-center gap-5">
+                        <Link
+                          href={item.href}
+                          className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg group"
+                        >
+                          <span>{exploreCaseText}</span>
+                          <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
+                            ↗
+                          </span>
+                        </Link>
+
+                        <Link
+                          href="/work"
+                          className="text-xs sm:text-sm text-neutral-500 hover:text-neutral-900 transition-colors font-medium underline underline-offset-4"
+                        >
+                          {allProjectsText}
+                        </Link>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Bottom: Instrução sutil e barra de progresso dos projetos */}
+              <div className="flex items-center justify-between text-xs text-neutral-400 border-t border-neutral-100 pt-4 pointer-events-auto">
+                <span className="hidden sm:inline font-medium text-neutral-500">
+                  {dragHintText}
+                </span>
+                <span className="sm:hidden font-medium text-neutral-500">
+                  {isEn ? 'Swipe or tap card' : 'Arraste ou toque'}
+                </span>
+
+                <div className="flex items-center gap-1.5">
+                  {PORTFOLIO_CARDS.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        (activeIdx ?? currentIndex) === i
+                          ? 'w-6 bg-neutral-900'
+                          : 'w-1.5 bg-neutral-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </li>
-        ))}
-      </ul>
-
-      <div className={styles.buttonWrapper}>
-        <a
-          ref={btnRef}
-          href="/work"
-          className={styles.moreWorkBtn}
-          onMouseMove={handleGlow}
-          onClick={(e) => { e.preventDefault(); router.push('/work'); }}
-        ><div className={styles.borderGlow}></div>
-          <span>{t.selectedWork.moreWork}</span>
-        </a>
-      </div>
-
-      {!isMobile && (
-        <>
-          <div ref={previewRef} className={styles.preview} aria-hidden="true">
-            {/* Barra superior com info do projeto ativo */}
-            <div className={styles.previewHeader}>
-              <span className={styles.previewTag}>
-                {activeProject >= 0 ? String(activeProject + 1).padStart(2, '0') : '—'}
-              </span>
-              <span className={styles.previewDot} />
-              <span className={styles.previewCategory}>
-                {activeProject >= 0 ? projects[activeProject].meta.split('—')[1]?.trim() : 'Project'}
-              </span>
-            </div>
-
-            {/* Imagens */}
-            <div className={styles.previewImgWrap}>
-              <img ref={imgARef} className={styles.previewImg} alt="" />
-              <img ref={imgBRef} className={styles.previewImg} alt="" />
-            </div>
-
-            {/* Rodapé com título */}
-            <div className={styles.previewFooter}>
-              <span className={styles.previewFooterLabel}>
-                {activeProject >= 0 ? projects[activeProject].title : ''}
-              </span>
-              <span className={styles.previewViewTag}>View →</span>
-            </div>
-
-            {/* Brilho de canto */}
-            <div className={styles.previewGlow} />
-          </div>
-
-          <div ref={cursorRef} className={styles.viewCursor} aria-hidden="true">
-            <span className={styles.viewCursorInner}>{t.selectedWork.view}</span>
-          </div>
-        </>
-      )}
+          )
+        }}
+      />
     </section>
   )
 }

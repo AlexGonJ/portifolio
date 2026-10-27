@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sistema Fiscal de Emissão de Notas em Nuvem • Lexon Digital',
+  title: 'Sistema Fiscal de Emissão de Notas',
   description:
     'Emissor prático, ágil e seguro de notas fiscais integrado com as Secretarias da Fazenda (SEFAZ). Emissão de NF-e e NFS-e sem complicações para sua empresa.',
   keywords: [

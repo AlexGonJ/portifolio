@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Política de Privacidade e Proteção de Dados • Lexon Digital',
+  title: 'Política de Privacidade e LGPD',
   description:
     'Política de privacidade e proteção de dados da Lexon Digital em total conformidade com a LGPD (Lei Geral de Proteção de Dados) e GDPR.',
   alternates: {

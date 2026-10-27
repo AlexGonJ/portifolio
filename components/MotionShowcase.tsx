@@ -1,137 +1,240 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import styles from '../styles/motion-showcase.module.scss'
-import { useLanguage } from '../i18n/LanguageContext'
-import ScrollStack, { ScrollStackItem } from './ScrollStack'
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from '@/styles/motion-showcase.module.scss';
+import { useLanguage } from '@/i18n/LanguageContext';
 
-const slides = [
-  {
-    id: '01',
-    eyebrow: 'Webdesign and development',
-    title: 'Sites e sistemas com design claro e construção inteligente.',
-    description:
-      'Projetos em stacks modernas, pensados para carregar bem, organizar melhor e converter com mais clareza.',
-    primaryImage:
-      'https://images.pexels.com/photos/17036353/pexels-photo-17036353.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    secondaryImage: '/sites.mp4',
-    accent: 'Interfaces, systems and performance',
-    tint: 'rgba(170, 126, 66, 0.22)',
-  },
-  {
-    id: '02',
-    eyebrow: 'Branding',
-    title: 'Marcas com direção visual, consistência e presença.',
-    description:
-      'Identidade, web design e imagens pensadas para a marca manter unidade e valor em cada ponto de contato.',
-    primaryImage: '/illustrations/2h-media-NmSPbe0bDtc-unsplash.jpg',
-    secondaryImage: '/illustrations/branding_mockup.png',
-    accent: 'Identity, web and visuals',
-    tint: 'rgba(94, 74, 62, 0.26)',
-  },
-  {
-    id: '03',
-    eyebrow: 'Digital marketing',
-    title: 'Conteúdo e campanhas para atrair, posicionar e gerar resultado.',
-    description:
-      'Artes para Instagram, conteúdo audiovisual e direção de comunicação para transformar presença digital em movimento real.',
-    primaryImage:
-      'https://images.pexels.com/photos/7129665/pexels-photo-7129665.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    secondaryImage: '/motion.mp4',
-    accent: 'Content, campaigns and growth',
-    tint: 'rgba(198, 161, 95, 0.2)',
-  },
-]
+const SLIDE_CASE_MEDIA: string[][] = [
+  // 01 — Webdesign, Sistemas & E-commerce
+  ['/projects/post-car1.png', '/projects/vitrine-masculina/hero.png'],
+  // 02 — Branding & Identidade Visual
+  ['/projects/PlacaAline.png', '/projects/via-bike/cap.jpg'],
+  // 03 — Direção Criativa & Marketing Visual
+  ['/projects/moda-home.png', '/projects/via-bike/poster-stand.png'],
+];
 
 export default function MotionShowcase() {
-  const { t } = useLanguage()
+  const { t } = useLanguage();
+  const slides = t.motionShowcase.slides;
 
-  const activeSlides = slides.map((slide, i) => ({
-    ...slide,
-    eyebrow: t.motionShowcase.slides[i].eyebrow,
-    title: t.motionShowcase.slides[i].title,
-    description: t.motionShowcase.slides[i].description,
-    accent: t.motionShowcase.slides[i].accent,
-  }))
+  const trackRef = useRef<HTMLElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [selectedCases, setSelectedCases] = useState<number[]>([0, 0, 0]);
+  const [cursorVisible, setCursorVisible] = useState(false);
+
+  // Native sticky stage: only reads scroll position, never moves elements by JS (zero jitter)
+  useEffect(() => {
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const track = trackRef.current;
+      if (!track) return;
+
+      const rect = track.getBoundingClientRect();
+      const distance = rect.height - window.innerHeight;
+      if (distance <= 0) return;
+
+      const progress = Math.max(0, Math.min(1, -rect.top / distance));
+
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleY(${progress})`;
+      }
+
+      const next = Math.min(slides.length - 1, Math.floor(progress * slides.length * 0.9999));
+      setActiveSlide((prev) => (prev !== next ? next : prev));
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [slides.length]);
+
+  const scrollToSlide = (index: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const rect = track.getBoundingClientRect();
+    const top = window.scrollY + rect.top;
+    const distance = rect.height - window.innerHeight;
+
+    window.scrollTo({
+      top: top + distance * ((index + 0.35) / slides.length),
+      behavior: 'smooth',
+    });
+  };
+
+  const selectCase = (slideIdx: number, caseIdx: number) => {
+    setSelectedCases((prev) => {
+      if (prev[slideIdx] === caseIdx) return prev;
+      const next = [...prev];
+      next[slideIdx] = caseIdx;
+      return next;
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cursorRef.current) return;
+    cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+  };
 
   return (
-    <section className={styles.showcase}>
-      <div className={styles.header}>
-        <p className={styles.kicker}>{t.motionShowcase.kicker}</p>
-        <div className={styles.meta}>
-          <span>{t.motionShowcase.meta1}</span>
-          <span>{t.motionShowcase.meta2}</span>
+    <section
+      id="projetos"
+      ref={trackRef}
+      className={styles.showcaseTrack}
+      aria-label={t.motionShowcase.kicker}
+    >
+      <div className={styles.stickyViewport} onMouseMove={handleMouseMove}>
+        {/* Custom "VER" cursor */}
+        <div
+          ref={cursorRef}
+          className={`${styles.customCursor} ${cursorVisible ? styles.cursorActive : ''}`}
+          aria-hidden="true"
+        >
+          <span>{t.motionShowcase.viewCursor}</span>
         </div>
-      </div>
 
-      <ScrollStack
-        className={styles.stack}
-        itemDistance={200}
-        itemScale={0.04}
-        itemStackDistance={34}
-        stackPosition="6%"
-        scaleEndPosition="2%"
-        baseScale={0.9}
-        blurAmount={0.8}
-        useWindowScroll
-      >
-        {activeSlides.map((slide, index) => (
-          <ScrollStackItem
-            key={slide.id}
-            itemClassName={styles.showcaseCard}
-          >
-            <article
-              className={styles.slide}
-              style={{
-                ['--card-index' as string]: index,
-                ['--layer-tint' as string]: slide.tint,
-              }}
+        {/* Side progress rail (01 / 02 / 03) */}
+        <aside className={styles.sideRail} aria-label="Pilares">
+          {slides.map((slide, idx) => (
+            <button
+              key={slide.id}
+              type="button"
+              onClick={() => scrollToSlide(idx)}
+              className={`${styles.railStep} ${idx === activeSlide ? styles.railStepActive : ''}`}
+              aria-label={`${slide.id} — ${slide.eyebrow}`}
             >
-              <div className={styles.visual}>
-                <div className={`${styles.imageWrap} ${styles.primaryWrap}`}>
-                  <Image
-                    src={slide.primaryImage}
-                    alt={slide.title}
-                    fill
-                    sizes="(max-width: 960px) 100vw, 60vw"
-                    priority={index === 0}
-                  />
-                </div>
+              <span className={styles.railIndex}>{slide.id}</span>
+              <span className={styles.railTick} />
+            </button>
+          ))}
+          <div className={styles.railProgressTrack} aria-hidden="true">
+            <div ref={progressRef} className={styles.railProgressFill} />
+          </div>
+        </aside>
 
-                <div className={`${styles.imageWrap} ${styles.secondaryWrap}`}>
-                  {slide.secondaryImage.match(/\.(mp4|webm|ogg)$/) ? (
-                    <video
-                      src={slide.secondaryImage}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className={styles.video}
-                    />
-                  ) : (
-                    <Image
-                      src={slide.secondaryImage}
-                      alt=""
-                      fill
-                      sizes="(max-width: 960px) 70vw, 28vw"
-                    />
+        {/* Fullscreen acts */}
+        {slides.map((slide, slideIdx) => {
+          const isActive = slideIdx === activeSlide;
+          const isPast = slideIdx < activeSlide;
+          const isReversed = slideIdx % 2 === 1;
+          const activeCaseIdx = selectedCases[slideIdx] ?? 0;
+          const currentCase = slide.cases[activeCaseIdx] || slide.cases[0];
+
+          return (
+            <article
+              key={slide.id}
+              className={[
+                styles.actScene,
+                isActive ? styles.actActive : isPast ? styles.actPast : styles.actFuture,
+                isReversed ? styles.actReversed : '',
+              ].join(' ')}
+              aria-hidden={!isActive}
+            >
+              {/* Full-bleed image with feathered transparency mask that reveals gradually */}
+              <Link
+                href={currentCase.href}
+                className={styles.sceneMedia}
+                tabIndex={isActive ? 0 : -1}
+                onMouseEnter={() => setCursorVisible(true)}
+                onMouseLeave={() => setCursorVisible(false)}
+                aria-label={`${currentCase.title} — ${t.motionShowcase.viewCase}`}
+              >
+                <div className={styles.mediaMask}>
+                  {slide.cases.map((project, cIdx) => (
+                    <div
+                      key={project.title}
+                      className={`${styles.imageLayer} ${
+                        cIdx === activeCaseIdx ? styles.imageLayerActive : ''
+                      }`}
+                    >
+                      <Image
+                        src={SLIDE_CASE_MEDIA[slideIdx]?.[cIdx] ?? SLIDE_CASE_MEDIA[0][0]}
+                        alt={project.title}
+                        fill
+                        priority={slideIdx === 0 && cIdx === 0}
+                        sizes="100vw"
+                        className={styles.showcaseImage}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.mediaShade} aria-hidden="true" />
+              </Link>
+
+              {/* Editorial content */}
+              <div className={styles.sceneContent}>
+                <div className={styles.editorialCol}>
+                  <div className={styles.actHeader}>
+                    <span className={styles.actNumber}>{slide.id}</span>
+                    <span className={styles.actEyebrow}>{slide.eyebrow}</span>
+                  </div>
+
+                  <h2 className={styles.actTitle}>{slide.title}</h2>
+                  <p className={styles.actDescription}>{slide.description}</p>
+
+                  <div className={styles.projectList} role="list">
+                    {slide.cases.map((project, cIdx) => (
+                      <Link
+                        key={project.title}
+                        href={project.href}
+                        role="listitem"
+                        tabIndex={isActive ? 0 : -1}
+                        className={`${styles.projectRow} ${
+                          cIdx === activeCaseIdx ? styles.projectRowActive : ''
+                        }`}
+                        onMouseEnter={() => selectCase(slideIdx, cIdx)}
+                        onFocus={() => selectCase(slideIdx, cIdx)}
+                      >
+                        <span className={styles.projectIndex}>0{cIdx + 1}</span>
+                        <span className={styles.projectName}>{project.title}</span>
+                        <span className={styles.projectArrow} aria-hidden="true">
+                          ↗
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+
+                  {slideIdx === slides.length - 1 && (
+                    <Link
+                      href="/work"
+                      className={styles.archiveLink}
+                      tabIndex={isActive ? 0 : -1}
+                    >
+                      <span>{t.motionShowcase.moreWork}</span>
+                      <span aria-hidden="true">↗</span>
+                    </Link>
                   )}
                 </div>
-              </div>
 
-              <div className={styles.copy}>
-                <span className={styles.index}>{slide.id}</span>
-                <p className={styles.eyebrow}>{slide.eyebrow}</p>
-                <h2>{slide.title}</h2>
-                <p className={styles.description}>{slide.description}</p>
-                <span className={styles.accent}>{slide.accent}</span>
+                {/* Minimal caption anchored to the image side */}
+                <div className={styles.visualCaption} key={currentCase.title}>
+                  <span className={styles.captionTitle}>{currentCase.title}</span>
+                  <span className={styles.captionRole}>
+                    {currentCase.role} — {currentCase.year}
+                  </span>
+                </div>
               </div>
             </article>
-          </ScrollStackItem>
-        ))}
-      </ScrollStack>
-
-      <p className={styles.bottomNote}>{t.motionShowcase.bottomNote}</p>
+          );
+        })}
+      </div>
     </section>
-  )
+  );
 }

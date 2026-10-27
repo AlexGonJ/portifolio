@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 .marketingPage {
   min-height: 100vh;
   color: #1a1a1a;
@@ -458,32 +460,19 @@
 }
 
 .packCta {
-  display: block;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-
-  &:hover {
-    background: #ffffff;
-    color: #111317;
-  }
+  @include vars.btn-outline-dark;
+  display: flex;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  font-size: 0.95rem;
+  border-radius: vars.$btn-radius;
+  justify-content: center;
 
   &.featuredCta {
-    background: #c9a84c;
-    color: #111317;
-    border: none;
-
-    &:hover {
-      background: #ffffff;
-      color: #111317;
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
-    }
+    @include vars.btn-primary-gold;
+    border-radius: vars.$btn-radius;
+    padding: 0.95rem 1.5rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -771,21 +760,12 @@
 }
 
 .whatsappSendBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  background: #25d366;
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  padding: 1.1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
+  @include vars.btn-whatsapp;
   width: 100%;
-  transition: all 0.3s ease;
-  text-decoration: none;
+  border-radius: vars.$btn-radius;
+  padding: 1.1rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
 
   svg {
     width: 22px;
@@ -793,16 +773,12 @@
     fill: currentColor;
   }
 
-  &:hover:not(:disabled) {
-    background: #20ba5a;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25);
-  }
-
   &:disabled {
     background: rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.3);
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 }
 
@@ -912,40 +888,19 @@
 }
 
 .modalConfirmBtn {
-  background: #c9a84c;
-  color: #111317;
-  border: none;
-  border-radius: 12px;
-  padding: 1rem;
+  @include vars.btn-primary-gold;
+  border-radius: vars.$btn-radius;
+  padding: 1rem 1.5rem;
   font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
   width: 100%;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: #e5c363;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(201, 168, 76, 0.25);
-  }
 }
 
 .modalCancelBtn {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 1rem;
+  @include vars.btn-outline-light;
+  border-radius: vars.$btn-radius;
+  padding: 1rem 1.5rem;
   font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
   width: 100%;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-  }
 }
 
 /* ── NEXT PROJECT ────────────────────────────────────────────────────────── */

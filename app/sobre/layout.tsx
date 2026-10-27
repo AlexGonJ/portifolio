@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sobre a Lexon Digital & Alexander Gonçalves • Nossa História e Método',
+  title: 'Sobre & Metodologia',
   description:
     'Conheça a Lexon Digital e Alexander Gonçalves. Engenharia de software e design estratégico unindo tecnologia de ponta, performance e posicionamento de marca para empresas.',
   alternates: {

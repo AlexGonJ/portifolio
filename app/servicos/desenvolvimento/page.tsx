@@ -63,8 +63,11 @@ export default function DesenvolvimentoPage() {
                   <p className={styles.subtitle}>
                     Sistemas ERP, CRMs, E-commerces e Apps. Não vendemos código, vendemos ferramentas que reduzem custos, aumentam a produtividade da sua equipe e multiplicam faturamento.
                   </p>
-                  <a href="/#contato" className={styles.cta} style={{ color: '#1a1a1a', background: '#c9a84c', width: 'fit-content' }}>
+                  <a href="/#contato" className={styles.cta}>
                     Solicitar Orçamento
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 17 17 7M8.5 7H17v8.5" />
+                    </svg>
                   </a>
                 </div>
               </header>
@@ -91,7 +94,7 @@ export default function DesenvolvimentoPage() {
             </section>
 
             {/* ── E-COMMERCE & APPS ── */}
-            <section className={`${styles.splitSection} ${styles.splitReverse} project-animate`}>
+            <section id="ecommerce" className={`${styles.splitSection} ${styles.splitReverse} project-animate`}>
               <div className={styles.splitText}>
                 <span className={styles.sectionTag}>Vendas em Escala</span>
                 <h2>E-commerces Premium<br />e Aplicativos</h2>

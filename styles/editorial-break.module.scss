@@ -2,8 +2,8 @@
   padding: clamp(4.5rem, 9vw, 8rem) 0;
   overflow: clip;
   background:
-    linear-gradient(180deg, #ebe0d0 0%, #f5eee4 56%, #faf7f2 100%);
-  color: #1e1a16;
+    linear-gradient(180deg, #efeff2 0%, #f5f5f7 56%, #fafafa 100%);
+  color: var(--color-ink, #0d0d0d);
 }
 
 .label,
@@ -15,7 +15,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(30, 26, 22, 0.38);
+  color: rgba(13, 13, 13, 0.42);
   margin-bottom: 1.6rem;
 }
 
@@ -31,10 +31,10 @@
   font-weight: 500;
 
   span {
-    color: rgba(30, 26, 22, 0.12);
+    color: rgba(13, 13, 13, 0.12);
 
     &:nth-child(2) {
-      color: #1e1a16;
+      color: var(--color-ink, #0d0d0d);
     }
   }
 }
@@ -49,10 +49,10 @@
     font-size: clamp(1.8rem, 3.6vw, 3.3rem);
     line-height: 0.98;
     letter-spacing: -0.04em;
-    color: rgba(30, 26, 22, 0.92);
+    color: rgba(13, 13, 13, 0.92);
 
     &:last-child {
-      color: rgba(30, 26, 22, 0.42);
+      color: rgba(13, 13, 13, 0.42);
       padding-left: clamp(2rem, 8vw, 8rem);
     }
   }
@@ -60,18 +60,17 @@
 
 .support {
   margin-top: 4rem;
-  max-width: 48rem; /* Menos vertical, linhas mais longas */
-  font-size: clamp(1.15rem, 1.8vw, 1.35rem); /* Fonte maior, mais peso visual */
+  max-width: 48rem;
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: -0.01em;
-  color: rgba(30, 26, 22, 0.85); /* Mais contraste, premium */
-  
-  /* Posicionamento elegante e editorial (Grid Offset) */
+  color: rgba(13, 13, 13, 0.78);
+
   margin-left: auto;
   margin-right: 8vw;
   text-align: right;
-  
+
   @media (max-width: 768px) {
     margin-top: 3rem;
     margin-left: 0;

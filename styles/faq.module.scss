@@ -1,45 +1,198 @@
 @use './variables' as vars;
 
 .faq {
-  padding: 8vh 6vw;
-  /* Matching the showcase gradient perfectly */
-  background: linear-gradient(160deg, rgba(20, 16, 13, 0.98), rgba(34, 27, 22, 0.94) 42%, rgba(50, 39, 29, 0.92) 100%);
-  color: #f5ecdf; /* Rich beige for text */
+  padding: clamp(3.5rem, 6.5vh, 5rem) 6vw;
+  background: linear-gradient(180deg, #09090b 0%, #101014 50%, #050507 100%);
+  color: var(--color-surface, #ffffff);
+  position: relative;
+  transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faqOpen {
+  padding: clamp(4.5rem, 8vh, 7rem) 6vw;
 }
 
 .faqContainer {
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
-.header {
-  margin-bottom: 4rem;
-  text-align: left;
-}
+/* ── ACCORDION CARD ── */
+.accordionCard {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 28px;
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.5);
 
-.label {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(244, 232, 215, 0.46); /* Match showcase accent color */
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: var(--step-3);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  @media (min-width: 768px) {
-    font-size: var(--step-4);
+  &:hover {
+    border-color: rgba(212, 212, 220, 0.26);
+    background: rgba(255, 255, 255, 0.035);
   }
 }
 
-.item {
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle light border */
+.accordionCardOpen {
+  border-color: rgba(212, 212, 220, 0.32);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
-.item:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+/* ── SECTION HEADER TRIGGER ── */
+.sectionHeaderBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #b8ada0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0;
+  transition: color 0.3s ease;
+
+  .sectionHeaderBtn:hover & {
+    color: #e4e4ea;
+  }
+}
+
+/* ── ANIMATED INDICATOR BUTTON ── */
+.indicatorWrapper {
+  flex-shrink: 0;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    border-color: rgba(212, 212, 220, 0.24);
+  }
+  50% {
+    box-shadow: 0 8px 28px rgba(212, 212, 220, 0.14);
+    border-color: rgba(212, 212, 220, 0.48);
+  }
+}
+
+@keyframes subtleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2.5px);
+  }
+}
+
+.indicatorBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.15rem 0.65rem 1.35rem;
+  border-radius: vars.$btn-radius;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 212, 220, 0.26);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+
+  .sectionHeaderBtn:hover & {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(226, 226, 232, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.indicatorBtnClosed {
+  animation: gentlePulse 3s ease-in-out infinite;
+
+  .indicatorIcon svg {
+    animation: subtleBounce 2s ease-in-out infinite;
+  }
+}
+
+.indicatorText {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.indicatorIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f2f2f6 0%, #c8c8d2 100%);
+  color: vars.$ink-primary;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+  }
+}
+
+/* ── DIVIDER & CONTENT ── */
+.contentDivider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 212, 220, 0.28), transparent);
+  margin: 2rem 0 1rem;
+}
+
+.sectionContent {
+  overflow: hidden;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  &:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
 }
 
 .questionBtn {
@@ -47,30 +200,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
   background: transparent;
   border: none;
   font-family: inherit;
-  font-size: var(--step-1);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
   font-weight: 400;
-  color: #f5ecdf;
+  color: rgba(255, 255, 255, 0.92);
   cursor: pointer;
   text-align: left;
-  transition: opacity 0.3s ease;
-  @media (min-width: 768px) {
-    font-size: var(--step-2);
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: #ffffff;
+    opacity: 1;
+    transform: translateX(4px);
   }
 }
 
-.questionBtn:hover {
-  opacity: 0.7;
+.questionText {
+  line-height: 1.4;
 }
 
 .icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 300;
-  color: var(--color-gold); /* Gold accent for the expand icon */
-  transition: transform 0.4s ease;
+  color: #c8c8d2;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
 }
 
 .contentWrapper {
@@ -78,52 +240,31 @@
 }
 
 .answer {
-  padding-bottom: 2rem;
-  font-size: var(--step-0);
-  line-height: 1.6;
-  color: rgba(245, 236, 223, 0.72); /* Showcase description color */
-  max-width: 600px;
+  padding-bottom: 1.75rem;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 720px;
 }
 
 /* ── FAQ CTA ── */
 .faqCta {
   display: flex;
   justify-content: center;
-  padding-top: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .faqCtaLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 1.05rem;
-  font-weight: 450;
-  letter-spacing: -0.01em;
+  @include vars.btn-outline-dark;
+  border-radius: vars.$btn-radius;
+  padding: 0.9rem 2.2rem;
+  font-size: 0.95rem;
   text-decoration: none;
-  padding: 0.85rem 1.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  transition: all 0.35s ease;
-
-  &:hover {
-    color: #fff;
-    border-color: rgba(201, 168, 76, 0.5);
-    background: rgba(201, 168, 76, 0.08);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -8px rgba(201, 168, 76, 0.2);
-  }
 }
 
 .faqCtaIcon {
-  width: 1rem;
-  height: 1rem;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  @include vars.arrow-icon-right;
 
   .faqCtaLink:hover & {
     transform: translateX(4px);

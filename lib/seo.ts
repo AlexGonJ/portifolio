@@ -4,15 +4,16 @@ export const SITE_URL =
 export const SEO_CONFIG = {
   name: 'Lexon Digital',
   founder: 'Alexander Gonçalves',
-  title: 'Lexon Digital • Design Estratégico, Sites de Alta Conversão & Engenharia Web',
-  titleTemplate: '%s | Lexon Digital',
+  title: 'Lexon Digital — Criação de Sites, Sistemas & Design Estratégico',
+  titleTemplate: '%s • Lexon Digital',
   description:
-    'Estúdio e agência de design estratégico e desenvolvimento web de alta performance liderado por Alexander Gonçalves. Criamos marcas, websites de alta conversão, chatbots inteligentes no WhatsApp e sistemas sob medida.',
+    'Agência de design estratégico e engenharia de software liderada por Alexander Gonçalves. Criamos sites de alta conversão, sistemas sob medida, marcas de alto valor e automações para escalar vendas.',
   url: SITE_URL,
   locale: 'pt_BR',
   ogImage: '/og-image.png',
   keywords: [
     'desenvolvimento de sites',
+    'sistemas sob medida',
     'landing pages de alta conversão',
     'criação de sites profissionais',
     'design estratégico',
@@ -23,6 +24,7 @@ export const SEO_CONFIG = {
     'automação de atendimento whatsapp',
     'emissor fiscal em nuvem',
     'sistema erp crm sob medida',
+    'suporte de ti e sistemas',
     'ui ux design premium',
     'alexander gonçalves',
     'lexon digital',

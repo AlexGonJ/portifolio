@@ -1,9 +1,26 @@
 import type { Metadata, Viewport } from 'next'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import Providers from './providers'
+import './tailwind.css'
 import './globals.scss'
+import '../styles/buttons.css'
 import CustomCursor from '../components/CustomCursor'
 import StructuredData from '../components/StructuredData'
 import { SITE_URL, SEO_CONFIG } from '@/lib/seo'
+
+const fontDisplay = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-display',
+  display: 'swap',
+})
+
+const fontSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+})
 
 export const viewport: Viewport = {
   themeColor: '#0a0a0c',
@@ -70,9 +87,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
     shortcut: '/favicon.ico',
-    apple: '/Hero1.png',
+    apple: '/apple-icon.png',
   },
 }
 
@@ -82,7 +102,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${fontDisplay.variable} ${fontSans.variable}`}>
       <head>
         <StructuredData />
       </head>

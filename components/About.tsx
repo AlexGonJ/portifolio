@@ -37,12 +37,10 @@ export default function About() {
 
         <div className={styles.aboutFooter}>
           <a href="/sobre" className={styles.aboutCta} aria-label={t.about.ctaText}>
-            <span className={styles.ctaText}>{t.about.ctaText}</span>
-            <span className={styles.ctaIconWrapper}>
-              <svg viewBox="0 0 24 24" className={styles.aboutCtaIcon} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </span>
+            <span>{t.about.ctaText}</span>
+            <svg viewBox="0 0 24 24" className={styles.aboutCtaIcon}>
+              <path d="M7 17 17 7M8.5 7H17v8.5" />
+            </svg>
           </a>
         </div>
       </div>

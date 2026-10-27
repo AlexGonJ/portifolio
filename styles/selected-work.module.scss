@@ -1,22 +1,48 @@
-// ─── Variables ─────────────────────────────────────────────────────────────
-$preview-radius: 16px;
-$preview-width: clamp(260px, 22vw, 400px);
-
 .selectedWork {
-  padding: clamp(5rem, 10vw, 10rem) 8vw;
+  padding: clamp(5.5rem, 10vw, 9.5rem) 8vw;
   position: relative;
   z-index: 2;
-  background: #fff;
+  background: #ffffff;
+  color: var(--color-ink);
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(2.5rem, 4.5vw, 4rem);
 }
 
 .sectionLabel {
   font-size: 0.75rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-muted);
-  margin-bottom: clamp(2rem, 5vw, 4rem);
+  margin: 0;
 }
 
+.sectionCount {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+}
+
+/* ── Asymmetric Agency Showcase (Dennis Snellenberg + Basic/Dept) ── */
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ── Left Architectural Index List ── */
 .list {
   list-style: none;
   margin: 0;
@@ -26,33 +52,29 @@ $preview-width: clamp(260px, 22vw, 400px);
 
 .item {
   border-bottom: 1px solid var(--color-border);
-  cursor: none;
-  transition: background 0.3s ease;
-
-  @media (max-width: 1024px) {
-    cursor: pointer;
-  }
+  transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.itemActive {
-  .itemNum {
-    color: var(--color-ink);
-  }
-  .itemArrow {
-    opacity: 1;
-    transform: translateX(0) translateY(0);
-  }
+.listHovering .item:not(.itemActive) {
+  opacity: 0.35;
+}
+
+.itemLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .itemContent {
   display: flex;
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding: clamp(2rem, 3.2vw, 3rem) 0;
 }
 
 .itemNum {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
   color: var(--color-muted);
@@ -66,240 +88,139 @@ $preview-width: clamp(260px, 22vw, 400px);
   min-width: 0;
 
   h3 {
-    font-size: clamp(1.6rem, 1.05rem + 3.1vw, 3.2rem);
+    font-size: clamp(1.65rem, 1.1rem + 2.2vw, 2.85rem);
     font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin: 0;
+    transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
   }
+}
 
-  .item:hover & h3 {
-    transform: translateX(12px);
-  }
+.itemRight {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
 }
 
 .itemMeta {
-  display: block;
-  margin-top: 0.4rem;
-  font-size: var(--step--1);
+  font-size: 0.85rem;
+  font-weight: 400;
   color: var(--color-muted);
+  letter-spacing: -0.005em;
+  transition: color 0.3s ease, transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .itemArrow {
-  font-size: 1.2rem;
-  color: var(--color-muted);
+  font-size: 1.1rem;
+  color: var(--color-ink);
   opacity: 0;
-  transform: translateX(-6px) translateY(6px);
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  flex-shrink: 0;
+  transform: translate3d(-6px, 6px, 0);
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 
   @media (max-width: 1024px) {
-    display: none;
+    opacity: 0.6;
+    transform: none;
   }
 }
 
-// ─── Mobile Image ─────────────────────────────────────────────────────────
-.mobileImage {
+.itemActive {
+  .itemNum {
+    color: var(--color-ink);
+  }
+
+  .itemCenter h3 {
+    transform: translateX(12px);
+  }
+
+  .itemMeta {
+    color: var(--color-ink);
+  }
+
+  .itemArrow {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ── Right Frameless Vertical Reel (Dennis Snellenberg Easing) ── */
+.stageColumn {
+  position: relative;
+  width: 100%;
+}
+
+.stageFrame {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #141416;
+}
+
+.reelTrack {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.reelSlide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slideImage {
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 0.85s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reelSlideActive .slideImage {
+  transform: scale(1);
+}
+
+/* ── Mobile / Tablet Visual ── */
+.mobileVisual {
   display: none;
 
   @media (max-width: 1024px) {
     display: block;
     position: relative;
-    width: 80px;
-    height: 56px;
-    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin-top: 1.75rem;
     overflow: hidden;
-    border-radius: 4px;
 
     :global(img) {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
     }
   }
 }
 
-// ─── Preview flutuante ─────────────────────────────────────────────────────
-.preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: $preview-width;
-  aspect-ratio: 3 / 4;
-  pointer-events: none;
-  z-index: 50;
-  border-radius: $preview-radius;
-  overflow: hidden;
-
-  // Glassmorphism dark card
-  background: rgba(12, 12, 14, 0.72);
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    0 4px 30px rgba(0, 0, 0, 0.45),
-    0 1px 0 rgba(255, 255, 255, 0.06) inset,
-    0 0 0 1px rgba(0, 0, 0, 0.6);
-
-  // Subtle top highlight
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.25) 40%,
-      rgba(255, 255, 255, 0.12) 60%,
-      transparent
-    );
-    z-index: 10;
-    pointer-events: none;
-  }
-}
-
-// ─── Preview Header ────────────────────────────────────────────────────────
-.previewHeader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 14px 16px;
-
-  // Subtle gradient overlay on top
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.55) 0%,
-    transparent 100%
-  );
-}
-
-.previewTag {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.9);
-  font-variant-numeric: tabular-nums;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-.previewDot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.previewCategory {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-// ─── Preview Image Wrap ────────────────────────────────────────────────────
-.previewImgWrap {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-  border-radius: $preview-radius;
-}
-
-.previewImg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-// ─── Preview Footer ────────────────────────────────────────────────────────
-.previewFooter {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 36px 16px 16px;
-
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.75) 0%,
-    transparent 100%
-  );
-}
-
-.previewFooterLabel {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-  max-width: 70%;
-}
-
-.previewViewTag {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.45);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-// ─── Preview Corner Glow ───────────────────────────────────────────────────
-.previewGlow {
-  position: absolute;
-  bottom: -30%;
-  right: -30%;
-  width: 70%;
-  height: 70%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(201, 168, 76, 0.18) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-// ─── Cursor VIEW ──────────────────────────────────────────────────────────
+/* ── Custom Circular "VER" Cursor (Dennis Snellenberg Signature) ── */
 .viewCursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 51;
-  overflow: hidden;
-
-  // Glassmorphism cursor
-  background: rgba(12, 12, 14, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  z-index: 60;
+  background: #111317;
+  color: #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  opacity: 0;
 
   @media (max-width: 1024px) {
     display: none;
@@ -307,23 +228,19 @@ $preview-width: clamp(260px, 22vw, 400px);
 }
 
 .viewCursorInner {
-  font-size: 0.52rem;
+  font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
+  color: #ffffff;
   font-weight: 500;
-  text-align: center;
-  line-height: 1.3;
-  white-space: pre-wrap;
-  width: 44px;
 }
 
-// ─── More work ────────────────────────────────────────────────────────────
+/* ── More Work Magnetic Button (Original Style) ── */
 .buttonWrapper {
   display: flex;
   justify-content: center;
-  margin-top: clamp(3rem, 8vw, 6rem);
-  margin-bottom: clamp(2.5rem, 7vw, 5rem);
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  margin-bottom: clamp(1rem, 3vw, 2rem);
 }
 
 .moreWorkBtn {
@@ -331,21 +248,16 @@ $preview-width: clamp(260px, 22vw, 400px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 1rem clamp(2.5rem, 8vw, 5rem);
   border-radius: 50px;
-
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-
   color: var(--color-ink);
+  text-decoration: none;
   overflow: hidden;
-
-  border: 1.5px solid rgba(201,168,76,0.7);
-
+  border: 1.5px solid rgba(201, 168, 76, 0.7);
   background: transparent;
-
   transition: all 0.4s ease;
 
   span {
@@ -358,29 +270,22 @@ $preview-width: clamp(260px, 22vw, 400px);
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-
     background: radial-gradient(
       circle,
-      rgba(201,168,76,1),
-      rgba(201,168,76,0.2) 40%,
+      rgba(201, 168, 76, 1),
+      rgba(201, 168, 76, 0.2) 40%,
       transparent 70%
     );
-
     width: 200%;
     height: 200%;
-
     animation: borderFlow 5s linear infinite;
-
     opacity: 0.8;
     z-index: 0;
-
     padding: 2px;
-
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
-
     mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -391,12 +296,9 @@ $preview-width: clamp(260px, 22vw, 400px);
     content: '';
     position: absolute;
     inset: 0;
-
     background: var(--color-ink);
-
     transform: translateY(110%);
     border-radius: 0;
-
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1;
   }
@@ -404,8 +306,7 @@ $preview-width: clamp(260px, 22vw, 400px);
   &:hover {
     color: var(--color-surface);
     transform: scale(1.04);
-
-    border-color: rgba(201,168,76,1);
+    border-color: rgba(201, 168, 76, 1);
 
     &::before {
       transform: translateY(0);
@@ -427,34 +328,35 @@ $preview-width: clamp(260px, 22vw, 400px);
   }
 }
 
-// ─── Mobile responsive ───────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .itemContent {
+    padding: 1.25rem 0 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .itemActive .itemCenter h3 {
+    transform: none;
+  }
+}
+
 @media (max-width: 640px) {
   .selectedWork {
-    padding: clamp(3rem, 8vw, 4rem) 5vw;
+    padding: clamp(3.5rem, 8vw, 4.5rem) 6vw;
   }
 
   .itemContent {
-    flex-wrap: nowrap;
-    gap: 1rem;
-    padding: clamp(1rem, 2.5vw, 1.5rem) 0;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .itemRight {
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 0;
   }
 
   .itemCenter h3 {
-    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
-  }
-
-  .itemMeta {
-    font-size: clamp(0.65rem, 2vw, 0.8rem);
-  }
-
-  .mobileImage {
-    width: 64px;
-    height: 48px;
-  }
-
-  .buttonWrapper {
-    margin-top: clamp(2rem, 5vw, 3rem);
-    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.35rem, 5vw, 1.85rem);
   }
 }

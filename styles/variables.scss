@@ -1,5 +1,153 @@
-$bg: #F5F3EF;
-$text-primary: #1C1C1C;
-$text-secondary: #6B6B6B;
-$line: #E2E2E2;
-$accent: #1C1C1C;
+$bg: #f4f4f6;
+$text-primary: #0b0b0d;
+$text-secondary: #686870;
+$line: #e4e4e9;
+$accent: #a68e74;
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STANDARDIZED BUTTON SYSTEM - SOBER MONOCHROME, SILVER & SUBTLE BRONZE
+   ══════════════════════════════════════════════════════════════════════════ */
+$btn-radius: 999px;
+$gold-primary: #b8ada0; /* Brushed warm-silver / muted champagne-bronze */
+$gold-light: #e2e2e7;   /* Brushed platinum silver */
+$gold-hover: #f2f2f6;
+$gold-dark: #8c7b68;    /* Subtle aged bronze detail */
+$ink-primary: #0b0b0e;
+$ink-card: #141417;
+
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: $btn-radius;
+  font-family: inherit;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $gold-primary;
+    outline-offset: 3px;
+  }
+}
+
+@mixin btn-primary-gold {
+  @include btn-base;
+  background: linear-gradient(135deg, #f2f2f5 0%, #cfd0d8 100%);
+  color: $ink-primary;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #dedfe6 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 10px 28px -4px rgba(255, 255, 255, 0.22),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    color: $ink-primary;
+  }
+}
+
+@mixin btn-primary-dark {
+  @include btn-base;
+  background: linear-gradient(135deg, #18181c 0%, #09090b 100%);
+  color: #f8f8fa;
+  border: 1px solid rgba(212, 212, 220, 0.24);
+  box-shadow: 
+    0 4px 18px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  &:hover {
+    background: linear-gradient(135deg, #222228 0%, #101014 100%);
+    border-color: rgba(212, 212, 220, 0.65);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.35),
+      0 0 18px rgba(212, 212, 220, 0.14);
+  }
+}
+
+@mixin btn-outline-light {
+  @include btn-base;
+  background: rgba(15, 15, 18, 0.03);
+  color: $ink-card;
+  border: 1px solid rgba(15, 15, 18, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+
+  &:hover {
+    background: #0d0d10;
+    border-color: #0d0d10;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.22);
+  }
+}
+
+@mixin btn-outline-dark {
+  @include btn-base;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(226, 226, 231, 0.6);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@mixin btn-whatsapp {
+  @include btn-base;
+  background: linear-gradient(135deg, #25d366 0%, #1ebc59 100%);
+  color: #08160c;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 18px rgba(37, 211, 102, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background: linear-gradient(135deg, #2ef076 0%, #25d366 100%);
+    color: #08160c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, 0.4);
+  }
+}
+
+@mixin arrow-icon-diagonal {
+  width: 0.95rem;
+  height: 0.95rem;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@mixin arrow-icon-right {
+  width: 0.95rem;
+  height: 0.95rem;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

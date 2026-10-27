@@ -1,257 +1,599 @@
-.showcase {
-  padding: clamp(4.5rem, 8vw, 7rem) 8vw;
-  background:
-    radial-gradient(circle at 16% 18%, rgba(181, 142, 78, 0.12), transparent 26%),
-    linear-gradient(180deg, #f7f1e8 0%, #efe4d5 100%);
-  color: #221b16;
+@use './variables' as *;
+
+// ============================================================================
+// UNIFIED FULLSCREEN SHOWCASE — FULL-BLEED IMAGERY + FEATHERED REVEAL
+// Native CSS sticky stage (zero jitter). Palette: ink, platinum, subtle bronze.
+// ============================================================================
+
+$ink: #0b0b0e;
+$platinum: #e2e2e7;
+$silver: #b4b4bc;
+$bronze: #b8ada0;
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+.showcaseTrack {
+  position: relative;
+  width: 100%;
+  height: 360vh;
+  background: $ink;
+  color: #f5f5f7;
 }
 
-.header {
+.stickyViewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: $ink;
+}
+
+// ----------------------------------------------------------------------------
+// Custom "VER" cursor
+// ----------------------------------------------------------------------------
+.customCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 92px;
+  margin: -46px 0 0 -46px;
+  border-radius: 50%;
+  background: rgba(242, 242, 246, 0.95);
+  color: $ink;
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 2rem;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-}
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0;
+  scale: 0.4;
+  transition: opacity 0.28s ease, scale 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: normal;
 
-.kicker {
-  font-size: var(--step--1);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(34, 27, 22, 0.5);
-}
-
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-
-  span {
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(34, 27, 22, 0.44);
+  @media (max-width: 1024px) {
+    display: none;
   }
 }
 
-.stack {
-  width: 100%;
+.cursorActive {
+  opacity: 1;
+  scale: 1;
 }
 
-.showcaseCard {
-  min-height: 0;
-  height: 84svh;
-  padding: 0;
-  border-radius: clamp(1.1rem, 2vw, 1.5rem);
-  overflow: hidden;
+// ----------------------------------------------------------------------------
+// Side progress rail
+// ----------------------------------------------------------------------------
+.sideRail {
+  position: absolute;
+  right: clamp(1rem, 2vw, 2.25rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 }
 
-.slide {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(1rem, 2vw, 2.6rem);
-  align-items: stretch;
-  height: 100%;
-  padding: clamp(0.75rem, 1.4vw, 1.35rem);
-  border-radius: clamp(1.1rem, 2vw, 1.5rem);
-  background:
-    linear-gradient(160deg, rgba(20, 16, 13, 0.98), rgba(34, 27, 22, 0.94) 42%, rgba(50, 39, 29, 0.92) 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 245, 231, 0.06),
-    0 24px 70px rgba(45, 32, 22, 0.16);
+.railStep {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.32);
+  transition: color 0.35s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
 }
 
-.visual {
+.railStepActive {
+  color: #fff;
+
+  .railTick {
+    height: 24px;
+    background: $bronze;
+  }
+}
+
+.railIndex {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.railTick {
+  width: 1px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: height 0.45s $ease, background-color 0.45s ease;
+}
+
+.railProgressTrack {
   position: relative;
-  min-height: 0;
+  width: 1px;
+  height: 60px;
   overflow: hidden;
-  border-radius: clamp(0.9rem, 1.4vw, 1.2rem);
-  background:
-    radial-gradient(circle at 50% 50%, var(--layer-tint), transparent 54%),
-    linear-gradient(140deg, rgba(22, 17, 13, 0.92), rgba(43, 32, 24, 0.84));
+  background: rgba(255, 255, 255, 0.14);
 }
 
-.visual::before {
-  content: '';
+.railProgressFill {
   position: absolute;
   inset: 0;
-  z-index: 4;
-  background:
-    linear-gradient(180deg, rgba(12, 10, 9, 0.1), rgba(12, 10, 9, 0.42)),
-    radial-gradient(circle at center, transparent 28%, rgba(14, 11, 9, 0.22) 78%, rgba(14, 11, 9, 0.6) 100%);
+  background: linear-gradient(180deg, $platinum, $bronze);
+  transform-origin: top center;
+  transform: scaleY(0);
 }
 
-.imageWrap {
+// ----------------------------------------------------------------------------
+// Acts (stacked, crossfading)
+// ----------------------------------------------------------------------------
+.actScene {
   position: absolute;
-  overflow: hidden;
-  border-radius: 1rem;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.9s $ease,
+    visibility 0s linear 0.9s;
+}
 
-  :global(img) {
-    object-fit: cover;
+.actActive {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2;
+  transition:
+    opacity 0.9s $ease,
+    visibility 0s linear 0s;
+}
+
+// ----------------------------------------------------------------------------
+// Full-bleed media with feathered transparency mask
+// The mask is 200% wide and slides into place -> the image "fades in" gradually
+// from the far edge toward the text, with a soft transparent seam.
+// ----------------------------------------------------------------------------
+.sceneMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  cursor: none;
+
+  @media (max-width: 1024px) {
+    cursor: pointer;
   }
 }
 
-.primaryWrap {
-  inset: 4%;
-  opacity: 0.54;
+.mediaMask {
+  position: absolute;
+  inset: 0;
 
-  :global(img) {
-    transform: scale(1.08);
-    filter: grayscale(0.04) saturate(0.92) contrast(1.04) brightness(0.74);
-  }
+  // Default (image on the right, text on the left)
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.08) 58%,
+    rgba(0, 0, 0, 0.55) 68%,
+    #000 80%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.08) 58%,
+    rgba(0, 0, 0, 0.55) 68%,
+    #000 80%
+  );
+  -webkit-mask-size: 200% 100%;
+  mask-size: 200% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0% 0;
+  mask-position: 0% 0;
+  transition:
+    -webkit-mask-position 1.6s $ease,
+    mask-position 1.6s $ease;
 }
 
-/* ── Secondary image/video — enlarged ── */
-.secondaryWrap {
-  inset: 10% 4% 6% 32%;
-  z-index: 3;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.24);
-
-  :global(img) {
-    transform: scale(1.03);
-    filter: saturate(1.02) contrast(1.06) brightness(0.94);
-  }
+.actActive .mediaMask {
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
 }
 
-.video {
-  width: 100%;
-  height: 100%;
+// Reversed (image on the left, text on the right)
+.actReversed .mediaMask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 20%,
+    rgba(0, 0, 0, 0.55) 32%,
+    rgba(0, 0, 0, 0.08) 42%,
+    transparent 50%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 20%,
+    rgba(0, 0, 0, 0.55) 32%,
+    rgba(0, 0, 0, 0.08) 42%,
+    transparent 50%,
+    transparent 100%
+  );
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+}
+
+.actReversed.actActive .mediaMask {
+  -webkit-mask-position: 0% 0;
+  mask-position: 0% 0;
+}
+
+.imageLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.08);
+  transition:
+    opacity 0.9s $ease,
+    transform 1.8s $ease;
+}
+
+.imageLayerActive {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.actScene:not(.actActive) .imageLayerActive {
+  transform: scale(1.08);
+}
+
+.showcaseImage {
   object-fit: cover;
+  object-position: center;
+  filter: saturate(0.88) contrast(1.04);
+  transition: transform 1.2s $ease, filter 0.8s ease;
+
+  .sceneMedia:hover & {
+    transform: scale(1.025);
+    filter: saturate(1) contrast(1.04);
+  }
 }
 
-/* ── Copy area — more solid background ── */
-.copy {
+// Top/bottom tonal blend so the image melts into the section edges
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba($ink, 0.7) 0%, rgba($ink, 0) 22%),
+    linear-gradient(0deg, rgba($ink, 0.85) 0%, rgba($ink, 0) 30%);
+}
+
+// ----------------------------------------------------------------------------
+// Editorial content layer
+// ----------------------------------------------------------------------------
+.sceneContent {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: clamp(5rem, 11vh, 8rem) clamp(1.75rem, 6vw, 7rem) clamp(2.5rem, 6vh, 4.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(0.75rem, 1.6vw, 1.75rem);
-  color: #f5ecdf;
-  background: rgba(20, 16, 13, 0.6);
-  border-radius: clamp(0.6rem, 1vw, 0.9rem);
+  pointer-events: none;
+
+  a,
+  button {
+    pointer-events: auto;
+  }
 }
 
-.index,
-.eyebrow,
-.accent {
+.editorialCol {
+  width: min(540px, 40vw);
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s $ease 0.15s,
+    transform 1s $ease 0.15s,
+    filter 0.9s $ease 0.15s;
+}
+
+.actPast .editorialCol {
+  transform: translate3d(0, -40px, 0);
+}
+
+.actActive .editorialCol {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.actReversed .editorialCol {
+  margin-left: auto;
+}
+
+.actHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  margin-bottom: clamp(1rem, 2.4vh, 1.75rem);
+}
+
+.actNumber {
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: $platinum;
+  padding-right: 1.1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.actEyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: $bronze;
 }
 
-.index {
-  font-size: clamp(0.6rem, 0.8vw, 0.72rem);
-  letter-spacing: 0.18em;
-  color: rgba(244, 232, 215, 0.34);
+.actTitle {
+  margin: 0 0 clamp(1.1rem, 2.4vh, 1.75rem);
+  font-size: clamp(2.6rem, 4.6vw, 5.2rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  background: linear-gradient(180deg, #ffffff 30%, $silver 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.eyebrow {
-  margin-top: clamp(0.5rem, 1vw, 1rem);
-  font-size: clamp(0.6rem, 0.8vw, 0.72rem);
-  letter-spacing: 0.2em;
-  color: #c79a58;
+.actDescription {
+  margin: 0 0 clamp(2rem, 4.5vh, 3.25rem);
+  max-width: 42ch;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.copy h2 {
-  margin-top: clamp(0.4rem, 0.8vw, 0.8rem);
-  max-width: 12ch;
-  font-size: clamp(1.4rem, 1rem + 2vw, 4.6rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
+// Hairline project list
+.projectList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.projectRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: clamp(0.95rem, 2vh, 1.35rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.42);
+  text-decoration: none;
+  transition: color 0.35s ease, padding-left 0.45s $ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, $platinum, $bronze);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s $ease;
+  }
+
+  &:hover {
+    color: #fff;
+    padding-left: 0.5rem;
+  }
+}
+
+.projectRowActive {
+  color: #fff;
+
+  &::after {
+    transform: scaleX(1);
+  }
+
+  .projectIndex {
+    color: $bronze;
+  }
+
+  .projectArrow {
+    color: #fff;
+    transform: translate3d(3px, -3px, 0);
+  }
+}
+
+.projectIndex {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.35s ease;
+}
+
+.projectName {
+  font-size: clamp(1.25rem, 1.7vw, 1.75rem);
   font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
-.description {
-  margin-top: clamp(0.5rem, 1vw, 1rem);
-  max-width: 28ch;
-  font-size: clamp(0.78rem, 0.7rem + 0.5vw, 1.1rem);
-  line-height: 1.55;
-  color: rgba(245, 236, 223, 0.72);
+.projectArrow {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.3);
+  transition: transform 0.35s ease, color 0.35s ease;
 }
 
-.accent {
-  margin-top: clamp(0.6rem, 1vw, 1.2rem);
-  font-size: clamp(0.58rem, 0.7vw, 0.7rem);
+.archiveLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 0.18em;
-  color: rgba(244, 232, 215, 0.5);
-}
+  text-transform: uppercase;
+  color: $platinum;
+  text-decoration: none;
+  transition: color 0.3s ease, gap 0.3s ease;
 
-.bottomNote {
-  margin-top: clamp(1.5rem, 3vw, 2rem);
-  max-width: 42rem;
-  font-size: var(--step-0);
-  line-height: 1.65;
-  color: rgba(34, 27, 22, 0.66);
-}
-
-/* ── Tablet ── */
-@media (max-width: 960px) {
-  .showcase {
-    padding-inline: 6vw;
-  }
-
-  .header {
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .showcaseCard {
-    height: auto;
-    min-height: 0;
-  }
-
-  .slide {
-    grid-template-columns: 1fr;
-    height: auto;
-    min-height: auto;
-  }
-
-  .visual {
-    min-height: clamp(16rem, 50vw, 26rem);
-  }
-
-  .secondaryWrap {
-    inset: 14% 6% 8% 28%;
-  }
-
-  .copy {
-    padding: clamp(0.75rem, 2vw, 1.25rem);
-  }
-
-  .copy h2 {
-    max-width: none;
-    font-size: clamp(1.6rem, 4.5vw, 2.8rem);
-  }
-
-  .description {
-    max-width: none;
-    font-size: clamp(0.78rem, 2vw, 1rem);
+  &:hover {
+    color: #fff;
+    gap: 0.9rem;
   }
 }
 
-/* ── Mobile ── */
-@media (max-width: 640px) {
-  .showcaseCard {
+// Caption on the image side, bottom
+.visualCaption {
+  position: absolute;
+  right: clamp(3.5rem, 6vw, 7rem);
+  bottom: clamp(2rem, 5vh, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  text-align: right;
+  animation: captionIn 0.8s $ease both;
+}
+
+.actReversed .visualCaption {
+  right: auto;
+  left: clamp(1.75rem, 6vw, 7rem);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.captionTitle {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.captionRole {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+@keyframes captionIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// ============================================================================
+// MOBILE / TABLET — stacked flow, image full-bleed on top fading into text
+// ============================================================================
+@media (max-width: 1024px) {
+  .showcaseTrack {
     height: auto;
-    min-height: auto;
   }
 
-  .visual {
-    min-height: clamp(12rem, 55vw, 18rem);
+  .stickyViewport {
+    position: relative;
+    height: auto;
+    overflow: visible;
   }
 
-  .secondaryWrap {
-    inset: 18% 5% 6% 22%;
+  .actScene,
+  .actActive,
+  .actPast,
+  .actFuture {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    padding-bottom: 4rem;
   }
 
-  .copy h2 {
-    font-size: clamp(1.3rem, 5vw, 2rem);
+  .sceneMedia {
+    position: relative;
+    inset: auto;
+    height: 62vh;
+    min-height: 340px;
   }
 
-  .description {
-    font-size: clamp(0.72rem, 2.5vw, 0.9rem);
-    line-height: 1.5;
+  .mediaMask,
+  .actReversed .mediaMask,
+  .actActive .mediaMask,
+  .actReversed.actActive .mediaMask {
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
   }
 
-  .eyebrow,
-  .index {
-    font-size: 0.58rem;
+  .actScene:not(.actActive) .imageLayerActive {
+    transform: none;
+  }
+
+  .mediaShade {
+    background: linear-gradient(180deg, rgba($ink, 0.55) 0%, rgba($ink, 0) 25%);
+  }
+
+  .sceneContent {
+    height: auto;
+    margin-top: -6rem;
+    padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .editorialCol,
+  .actPast .editorialCol,
+  .actReversed .editorialCol {
+    width: 100%;
+    margin-left: 0;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .actTitle {
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
+  }
+
+  .visualCaption,
+  .actReversed .visualCaption {
+    position: static;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 1.5rem;
   }
 }

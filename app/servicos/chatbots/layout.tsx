@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Automações & Chatbots Inteligentes para WhatsApp • Lexon Digital',
+  title: 'Automações & Chatbots Inteligentes',
   description:
     'Chatbots com atendimento 24/7 no WhatsApp e no site. Qualifique leads automaticamente, reduza tempo de resposta, aumente vendas e integre com seu sistema.',
   keywords: [

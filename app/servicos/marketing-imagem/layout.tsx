@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Marketing, Imagem & Branding Estratégico • Lexon Digital',
+  title: 'Branding, Marketing & Imagem',
   description:
     'Criação de logotipos, identidades visuais de alto padrão, direção de arte, vídeos comerciais e comunicação visual completa (fachadas, papelaria, uniformes).',
   keywords: [

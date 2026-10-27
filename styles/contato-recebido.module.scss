@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 .thankYouPage {
   min-height: 100vh;
   background-color: #0b0b0e;
@@ -143,25 +145,11 @@
 }
 
 .btnWhatsapp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: #25d366;
-  color: #0b0b0e;
+  @include vars.btn-whatsapp;
+  border-radius: vars.$btn-radius;
   font-size: 0.95rem;
-  font-weight: 600;
-  padding: 13px 24px;
-  border-radius: 14px;
+  padding: 13px 26px;
   text-decoration: none;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.3);
-
-  &:hover {
-    background: #2ee672;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
-  }
 
   svg {
     width: 18px;
@@ -171,25 +159,11 @@
 }
 
 .btnSecondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #f5f5f7;
+  @include vars.btn-outline-light;
+  border-radius: vars.$btn-radius;
   font-size: 0.95rem;
-  font-weight: 500;
-  padding: 13px 24px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 13px 26px;
   text-decoration: none;
-  transition: all 0.25s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.28);
-    transform: translateY(-2px);
-  }
 }
 
 .trustFootnote {

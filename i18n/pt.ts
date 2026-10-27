@@ -35,11 +35,19 @@ export const pt: TranslatorProps = {
       'Soluções tecnológicas e visuais desenvolvidas para otimizar processos, fortalecer sua marca e impulsionar vendas.',
     items: [
       {
-        title: 'Desenvolvimento Personalizado',
+        title: 'Desenvolvimento Web',
         description:
-          'Sites institucionais, landing pages e sistemas sob medida com aparência premium, performance e foco em conversão.',
-        details: ['Sites otimizados para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
+          'Sites institucionais, landing pages e sistemas web sob medida com aparência premium, alta performance e foco em conversão.',
+        details: ['Sites institucionais & Landing Pages', 'Otimização avançada para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
         link: '/servicos/desenvolvimento',
+        isExternal: false
+      },
+      {
+        title: 'E-commerce',
+        description:
+          'Lojas virtuais completas e escaláveis com checkout de alta conversão, gestão de catálogo e integração com meios de pagamento e logística.',
+        details: ['Lojas virtuais sob medida', 'Checkout rápido de alta conversão', 'Integração com pagamentos e frete', 'Gestão de produtos e estoque'],
+        link: '/servicos/desenvolvimento#ecommerce',
         isExternal: false
       },
       {
@@ -55,7 +63,7 @@ export const pt: TranslatorProps = {
         description:
           'Plataforma completa de agendamento online para clínicas, salões e profissionais autônomos. Reduza faltas e organize sua agenda.',
         details: ['Lembretes automáticos (WhatsApp)', 'Gestão de equipe e horários', 'Pagamento antecipado'],
-        link: 'https://lexonagendamento.vercel.app/', // Link externo
+        link: 'https://lexonagendamento.vercel.app/',
         isExternal: true
       },
       {
@@ -74,6 +82,14 @@ export const pt: TranslatorProps = {
         link: '/servicos/chatbots',
         isExternal: false
       },
+      {
+        title: 'Suporte de TI & Sistemas',
+        description:
+          'Acompanhamento técnico, manutenção preventiva e evolução contínua para os sistemas e a estrutura digital da sua empresa.',
+        details: ['Manutenção e evolução de sistemas', 'Suporte técnico empresarial', 'Monitoramento e estabilidade'],
+        link: '/servicos/suporte-ti',
+        isExternal: false
+      },
     ],
     ctaText: 'Solicitar orçamento',
   },
@@ -82,41 +98,96 @@ export const pt: TranslatorProps = {
     moreWork: 'Ver mais',
     view: 'VER',
     projects: [
-      { title: 'Plataforma web', meta: 'Website e Sistema ERP' },
-      { title: 'Identidade de Marca', meta: 'Branding e Design' },
-      { title: 'Plataforma Web Editorial', meta: 'Website e Animações GSAP — Moda Agency' },
+      { title: 'Plataforma Web', meta: 'Website e Sistema ERP — 2025' },
+      { title: 'Identidade de Marca', meta: 'Branding e Design — 2024' },
+      { title: 'Plataforma Web Editorial', meta: 'Website e Animações GSAP — 2024' },
     ],
   },
   motionShowcase: {
-    meta1: 'Estratégia e execução',
-    meta2: 'Crescimento real',
-    kicker: 'O que eu faço por você',
+    meta1: 'Estratégia & execução',
+    meta2: '03 Pilares — 05 Cases Reais',
+    kicker: 'O que eu faço por você • Projetos Selecionados',
+    heading: 'Entrega estratégica provada por projetos reais.',
+    subhead:
+      'Alterne entre os projetos de cada pilar para visualizar a execução ao vivo ou clique para abrir o estudo de caso completo.',
+    casesLabel: 'Projetos selecionados neste pilar',
+    viewCase: 'Ver case',
+    viewCursor: 'VER',
+    moreWork: 'Ver todos os 05 projetos',
     bottomNote:
       'Web, branding e marketing digital alinhados a um único objetivo: mais receita para o seu negócio.',
     slides: [
       {
         id: '01',
-        eyebrow: 'Webdesign and development',
-        title: 'Sites que carregam rápido, posicionam no Google e convertem clientes.',
+        eyebrow: 'Webdesign, Sistemas & E-commerce',
+        title: 'Sites, lojas e sistemas feitos para converter.',
         description:
-          'Desenvolvimento com foco em performance, SEO e experiência do usuário. Seus concorrentes perdem clientes por terem sites lentos, você não vai.',
+          'Arquitetura rápida, SEO e experiência de alto padrão para transformar cliques em clientes.',
         accent: 'Performance, SEO e conversão',
+        cases: [
+          {
+            title: 'Localiza Multas',
+            role: 'Plataforma Web & ERP',
+            year: '2025',
+            tags: ['Next.js', 'ERP', 'SEO'],
+            href: '/work/localiza-multas',
+          },
+          {
+            title: 'Vitrine Masculina',
+            role: 'E-commerce Full-Stack',
+            year: '2026',
+            tags: ['Medusa v2', 'Checkout', 'Next.js'],
+            href: '/work/vitrine-masculina',
+          },
+        ],
       },
       {
         id: '02',
-        eyebrow: 'Branding',
-        title: 'Identidades visuais que fazem o cliente escolher você antes de ler uma só palavra.',
+        eyebrow: 'Branding & Identidade Visual',
+        title: 'Marcas que vendem antes da primeira palavra.',
         description:
-          'Marca, tipografia, paleta e sistema visual construídos para transmitir valor premium e justificar preços mais altos. Sua marca vira seu melhor vendedor.',
-        accent: 'Marca, posicionamento e valor percebido',
+          'Identidade visual, tipografia e fachada comercial construídas para transmitir valor premium.',
+        accent: 'Marca, posicionamento e valor',
+        cases: [
+          {
+            title: 'Dra. Aline Gonçalves',
+            role: 'Identidade de Marca',
+            year: '2026',
+            tags: ['Branding', 'Identidade', 'Estratégia'],
+            href: '/work/aline-goncalves',
+          },
+          {
+            title: 'Rebranding Via Bike',
+            role: 'Marca & Fachada 3D',
+            year: '2026',
+            tags: ['Rebranding', 'Fachada', 'Sinalização'],
+            href: '/work/via-bike',
+          },
+        ],
       },
       {
         id: '03',
-        eyebrow: 'Digital marketing',
-        title: 'Marketing visual que faz parar na tela e transforma seguidores em compradores.',
+        eyebrow: 'Direção Criativa & Marketing Visual',
+        title: 'Direção visual que transforma atenção em receita.',
         description:
-          'Conteúdo para Instagram, campanhas visuais e direção criativa que geram engajamento real e enchem a DM de mensagens de clientes interessados.',
-        accent: 'Conteúdo, engajamento e vendas',
+          'Plataformas editoriais imersivas, audiovisual e campanhas pensadas para despertar desejo.',
+        accent: 'Motion, conteúdo e vendas',
+        cases: [
+          {
+            title: 'Moda Agency',
+            role: 'Plataforma Editorial & GSAP',
+            year: '2026',
+            tags: ['Editorial', 'GSAP', 'Next.js'],
+            href: '/work/moda-agency',
+          },
+          {
+            title: 'Via Bike — Campanha',
+            role: 'Audiovisual & Campanha',
+            year: '2026',
+            tags: ['Vídeo', 'Campanha', 'Direção'],
+            href: '/work/via-bike',
+          },
+        ],
       },
     ],
   },
@@ -137,7 +208,7 @@ export const pt: TranslatorProps = {
     asideLead:
       'Pronto para ter um site que converte, uma marca que vende e um posicionamento digital que gera resultado? Vamos conversar.',
     asideMeta1: 'Brasil / Remoto',
-    asideMeta2: 'Vagas limitadas em 2026',
+    asideMeta2: 'Resposta em até 24h',
   },
   resultCards: {
     cards: [
@@ -150,8 +221,9 @@ export const pt: TranslatorProps = {
   contactForm: {
     namePlaceholder: 'Qual o seu nome?',
     emailPlaceholder: 'Seu endereço de e-mail',
+    phonePlaceholder: 'Telefone / WhatsApp com DDD',
     serviceLabel: 'Qual serviço você precisa?',
-    serviceWebsite: 'Website',
+    serviceWebsite: 'Website / Sistema',
     serviceBranding: 'Branding',
     serviceMarketing: 'Marketing',
     serviceOther: 'Outro',
@@ -160,10 +232,9 @@ export const pt: TranslatorProps = {
     sending: 'Enviando...',
     success: 'Mensagem enviada com sucesso!',
     error: 'Ocorreu um erro. Tente novamente.',
-    trustFree: 'Orçamento gratuito',
-    trust24h: 'Resposta em 24h',
-    trustNoStrings: 'Sem compromisso',
+    trust24h: 'Resposta em até 24h',
     orWhatsapp: 'ou converse direto',
+    phoneOrWhatsappLabel: 'Telefone & WhatsApp direto',
     whatsappLabel: 'Chamar no WhatsApp',
   },
   faq: {

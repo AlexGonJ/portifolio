@@ -111,7 +111,7 @@
 
 .servicesLabel {
   margin-bottom: 0.85rem;
-  color: rgba(213, 183, 105, 0.92);
+  color: var(--color-gold, #c9a84c);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -140,14 +140,14 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   span {
-    color: #d5b769;
+    color: var(--color-gold, #c9a84c);
   }
 
   &:hover,
   &:focus-visible {
-    border-color: rgba(213, 183, 105, 0.5);
-    background: rgba(213, 183, 105, 0.12);
-    color: #fffdf7;
+    border-color: rgba(201, 168, 76, 0.5);
+    background: rgba(201, 168, 76, 0.12);
+    color: #ffffff;
     outline: none;
   }
 }
@@ -156,7 +156,7 @@
   display: inline-flex;
   gap: 0.45rem;
   margin-top: 0.9rem;
-  color: #d5b769;
+  color: var(--color-gold, #c9a84c);
   font-size: 0.82rem;
   text-decoration: none;
 
@@ -175,7 +175,7 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: #fffdf7;
+  color: #ffffff;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   
@@ -188,13 +188,13 @@
     font-size: 1rem;
     font-weight: 300;
     margin-right: 1.25rem;
-    color: rgba(213, 183, 105, 0.92);
+    color: var(--color-gold, #c9a84c);
     opacity: 0.5;
     transition: opacity 0.3s ease;
   }
 
   &:hover {
-    color: rgba(255, 205, 84, 0.9);
+    color: var(--color-gold-light, #dfc067);
     transform: translateX(10px);
 
     .num {
@@ -207,7 +207,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(213, 183, 105, 0.92); // Gold accent
+  color: var(--color-gold, #c9a84c);
   margin-bottom: 1.25rem;
 }
 
@@ -236,8 +236,8 @@
   }
 
   &:hover {
-    color: #fffdf7;
-    svg { opacity: 1; fill: #ffda68; }
+    color: #ffffff;
+    svg { opacity: 1; fill: var(--color-gold, #c9a84c); }
   }
 }
 

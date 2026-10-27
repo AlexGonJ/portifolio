@@ -2,35 +2,9 @@
 
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import TestimonialCards from '@/components/ui/testimonial'
 import styles from '../styles/testimonials.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
-
-function StarRating({ count = 5 }: { count?: number }) {
-  return (
-    <div className={styles.stars} aria-label={`${count} out of 5 stars`}>
-      {Array.from({ length: count }, (_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className={styles.star}>
-          <path d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.49L10 14.27 5.06 16.7 6 11.21l-4-3.9 5.53-.8L10 1.5z" />
-        </svg>
-      ))}
-    </div>
-  )
-}
-
-function Avatar({ name }: { name: string }) {
-  const initials = name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
-
-  return (
-    <div className={styles.avatar}>
-      <span>{initials}</span>
-    </div>
-  )
-}
 
 export default function Testimonials() {
   const { t } = useLanguage()
@@ -116,27 +90,7 @@ export default function Testimonials() {
           <h2 className={styles.title}>{t.testimonials?.title}</h2>
         </div>
 
-        <div className={styles.grid}>
-          {testimonials.map((item, i) => (
-            <div key={i} className={styles.card} data-testimonial-card>
-              <div className={styles.cardTop}>
-                <StarRating count={5} />
-              </div>
-
-              <blockquote className={styles.quote}>
-                &ldquo;{item.quote}&rdquo;
-              </blockquote>
-
-              <div className={styles.author}>
-                <Avatar name={item.name} />
-                <div className={styles.authorInfo}>
-                  <span className={styles.authorName}>{item.name}</span>
-                  <span className={styles.authorRole}>{item.role}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <TestimonialCards items={testimonials} />
 
         <div className={styles.ctaWrapper} data-testimonial-cta>
           <a href="#contato" className={styles.ctaLink}>

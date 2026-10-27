@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Produtos & Soluções Prontas • Lexon Digital',
+  title: 'Produtos & Soluções SaaS',
   description:
     'Conheça os produtos digitais e plataformas desenvolvidas pela Lexon Digital para acelerar negócios, clínicas e empresas.',
   alternates: {

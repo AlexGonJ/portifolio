@@ -8,13 +8,32 @@ import styles from '../styles/contact-form.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 import { trackPixelEvent } from '@/lib/pixel'
 
-const WHATSAPP_URL = '/whatsapp'
-
 const SERVICE_OPTIONS = [
   { id: 'website', labelKey: 'serviceWebsite' },
   { id: 'branding', labelKey: 'serviceBranding' },
   { id: 'marketing', labelKey: 'serviceMarketing' },
   { id: 'other', labelKey: 'serviceOther' },
+] as const
+
+const COUNTRY_CODES = [
+  { code: '+55', flag: '🇧🇷', name: 'Brasil', dddLength: 2 },
+  { code: '+1', flag: '🇺🇸', name: 'Estados Unidos / Canadá', dddLength: 3 },
+  { code: '+351', flag: '🇵🇹', name: 'Portugal', dddLength: 2 },
+  { code: '+34', flag: '🇪🇸', name: 'Espanha', dddLength: 2 },
+  { code: '+44', flag: '🇬🇧', name: 'Reino Unido', dddLength: 3 },
+  { code: '+54', flag: '🇦🇷', name: 'Argentina', dddLength: 2 },
+  { code: '+598', flag: '🇺🇾', name: 'Uruguai', dddLength: 2 },
+  { code: '+595', flag: '🇵🇾', name: 'Paraguai', dddLength: 2 },
+  { code: '+56', flag: '🇨🇱', name: 'Chile', dddLength: 2 },
+  { code: '+49', flag: '🇩🇪', name: 'Alemanha', dddLength: 3 },
+  { code: '+33', flag: '🇫🇷', name: 'França', dddLength: 2 },
+  { code: '+39', flag: '🇮🇹', name: 'Itália', dddLength: 3 },
+  { code: '+52', flag: '🇲🇽', name: 'México', dddLength: 2 },
+  { code: '+41', flag: '🇨🇭', name: 'Suíça', dddLength: 2 },
+  { code: '+61', flag: '🇦🇺', name: 'Austrália', dddLength: 2 },
+  { code: '+81', flag: '🇯🇵', name: 'Japão', dddLength: 2 },
+  { code: '+244', flag: '🇦🇴', name: 'Angola', dddLength: 2 },
+  { code: '+258', flag: '🇲🇿', name: 'Moçambique', dddLength: 2 },
 ] as const
 
 export default function ContactForm() {
@@ -24,6 +43,81 @@ export default function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [selectedService, setSelectedService] = useState<string | null>(null)
+
+  // Telefone aprimorado: Prefixo + DDD + Número
+  const [countryCode, setCountryCode] = useState('+55')
+  const [ddd, setDdd] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const dddInputRef = useRef<HTMLInputElement>(null)
+  const numberInputRef = useRef<HTMLInputElement>(null)
+
+  const fullPhone = ddd && phoneNumber
+    ? `${countryCode} (${ddd}) ${phoneNumber}`
+    : phoneNumber
+      ? `${countryCode} ${phoneNumber}`
+      : ''
+
+  const handlePastedFullNumber = (rawDigits: string) => {
+    let digits = rawDigits.replace(/\D/g, '')
+    if (digits.startsWith('55') && digits.length >= 12) {
+      setCountryCode('+55')
+      digits = digits.slice(2)
+    }
+    const dddVal = digits.slice(0, 2)
+    const numVal = digits.slice(2, 11)
+    setDdd(dddVal)
+    if (numVal.length <= 4) {
+      setPhoneNumber(numVal)
+    } else if (numVal.length <= 8) {
+      setPhoneNumber(`${numVal.slice(0, 4)}-${numVal.slice(4)}`)
+    } else {
+      setPhoneNumber(`${numVal.slice(0, 5)}-${numVal.slice(5)}`)
+    }
+    if (numberInputRef.current) {
+      numberInputRef.current.focus()
+    }
+  }
+
+  const handleDddChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '')
+    const selectedCountry = COUNTRY_CODES.find((c) => c.code === countryCode) || COUNTRY_CODES[0]
+    const maxDdd = selectedCountry.dddLength
+
+    if (raw.length > maxDdd + 4) {
+      handlePastedFullNumber(raw)
+      return
+    }
+
+    const val = raw.slice(0, maxDdd)
+    setDdd(val)
+    if (val.length === maxDdd && numberInputRef.current) {
+      numberInputRef.current.focus()
+    }
+  }
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '')
+
+    if (raw.length > 10 && ddd.length === 0) {
+      handlePastedFullNumber(raw)
+      return
+    }
+
+    const digits = raw.slice(0, 9)
+    if (digits.length <= 4) {
+      setPhoneNumber(digits)
+    } else if (digits.length <= 8) {
+      setPhoneNumber(`${digits.slice(0, 4)}-${digits.slice(4)}`)
+    } else {
+      setPhoneNumber(`${digits.slice(0, 5)}-${digits.slice(5)}`)
+    }
+  }
+
+  const handleNumberKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && phoneNumber === '' && dddInputRef.current) {
+      dddInputRef.current.focus()
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,6 +129,7 @@ export default function ContactForm() {
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
+      phone: fullPhone || formData.get('phone'),
       service: selectedService,
       message: formData.get('message'),
     }
@@ -53,7 +148,6 @@ export default function ContactForm() {
       }
 
       setStatus('success')
-      // Dispara evento de Lead no Meta Pixel se o consentimento tiver sido concedido
       trackPixelEvent('Lead', {
         content_name: selectedService || 'General Inquiry',
         currency: 'BRL',
@@ -61,9 +155,10 @@ export default function ContactForm() {
 
       if (formRef.current) {
         formRef.current.reset()
+        setDdd('')
+        setPhoneNumber('')
       }
 
-      // Redireciona para a página de contato recebido (rastreamento de conversão)
       setTimeout(() => {
         router.push('/contato-recebido')
       }, 500)
@@ -73,7 +168,6 @@ export default function ContactForm() {
     }
   }
 
-  // Floating Magnetic Button Effect (same aesthetic as SelectedWork)
   useEffect(() => {
     const btn = btnRef.current
     if (!btn) return
@@ -106,7 +200,6 @@ export default function ContactForm() {
     }
   }, [])
 
-  // Reveal Animation
   useEffect(() => {
     let ctx: gsap.Context | undefined
 
@@ -117,17 +210,17 @@ export default function ContactForm() {
       ctx = gsap.context(() => {
         gsap.fromTo(
           '.gsap-form-item',
-          { y: 24, opacity: 0 },
+          { y: 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.72,
-            stagger: 0.08,
+            duration: 0.65,
+            stagger: 0.07,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: formRef.current,
-              start: 'top 85%'
-            }
+              start: 'top 85%',
+            },
           }
         )
       }, formRef)
@@ -138,41 +231,115 @@ export default function ContactForm() {
 
   return (
     <div className={styles.formContainer}>
-      <form 
-        ref={formRef}
-        className={styles.form}
-        onSubmit={handleSubmit}
-      >
-        <div className={`${styles.inputGroup} gsap-form-item`}>
-          <input 
-            type="text" 
-            name="name" 
-            id="name" 
-            className={styles.input} 
-            placeholder={t.contactForm.namePlaceholder} 
-            required 
-          />
+      <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
+        <div className={`${styles.inputRow} gsap-form-item`}>
+          <div className={styles.inputGroup}>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className={styles.input}
+              placeholder={t.contactForm.namePlaceholder}
+              autoComplete="name"
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className={styles.input}
+              placeholder={t.contactForm.emailPlaceholder}
+              autoComplete="email"
+              required
+            />
+          </div>
         </div>
 
         <div className={`${styles.inputGroup} gsap-form-item`}>
-          <input 
-            type="email" 
-            name="email" 
-            id="email" 
-            className={styles.input} 
-            placeholder={t.contactForm.emailPlaceholder} 
-            required 
-          />
+          <div className={styles.phoneRow}>
+            {/* Prefixo Selecionável */}
+            <div className={styles.countrySelectWrapper}>
+              <select
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                className={styles.countrySelect}
+                aria-label="Prefixo do país"
+              >
+                {COUNTRY_CODES.map((country) => (
+                  <option key={country.code + country.name} value={country.code}>
+                    {country.flag} {country.code} — {country.name}
+                  </option>
+                ))}
+              </select>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={styles.countryChevron}
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+
+            <span className={styles.phoneDivider} aria-hidden="true" />
+
+            {/* DDD */}
+            <div className={styles.dddWrapper}>
+              <input
+                ref={dddInputRef}
+                type="tel"
+                inputMode="numeric"
+                id="phone-ddd"
+                value={ddd}
+                onChange={handleDddChange}
+                placeholder="DDD"
+                maxLength={countryCode === '+1' ? 3 : 2}
+                className={styles.dddInput}
+                autoComplete="tel-area-code"
+                required
+                aria-label="Código DDD"
+              />
+            </div>
+
+            <span className={styles.phoneDivider} aria-hidden="true" />
+
+            {/* Número */}
+            <input
+              ref={numberInputRef}
+              type="tel"
+              inputMode="numeric"
+              name="phone"
+              id="phone"
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+              onKeyDown={handleNumberKeyDown}
+              placeholder={countryCode === '+55' ? '99999-9999' : 'Número do telefone'}
+              className={styles.numberInput}
+              autoComplete="tel-local"
+              required
+              aria-label="Número de telefone ou WhatsApp"
+            />
+          </div>
+          <input type="hidden" name="full_phone" value={fullPhone} />
         </div>
 
         <div className={`${styles.serviceSelector} gsap-form-item`}>
           <p className={styles.serviceLabel}>{t.contactForm.serviceLabel}</p>
-          <div className={styles.serviceChips}>
+          <div className={styles.serviceOptions}>
             {SERVICE_OPTIONS.map((opt) => (
               <button
                 key={opt.id}
                 type="button"
-                className={`${styles.serviceChip} ${selectedService === opt.id ? styles.serviceChipActive : ''}`}
+                className={`${styles.serviceOption} ${
+                  selectedService === opt.id ? styles.serviceOptionActive : ''
+                }`}
                 onClick={() => setSelectedService(selectedService === opt.id ? null : opt.id)}
               >
                 {(t.contactForm as Record<string, string>)[opt.labelKey]}
@@ -182,88 +349,50 @@ export default function ContactForm() {
         </div>
 
         <div className={`${styles.inputGroup} gsap-form-item`}>
-          <textarea 
-            name="message" 
-            id="message" 
-            className={styles.input} 
-            placeholder={t.contactForm.messagePlaceholder} 
-            rows={2}
-            required 
+          <textarea
+            name="message"
+            id="message"
+            className={styles.input}
+            placeholder={t.contactForm.messagePlaceholder}
+            rows={3}
+            required
           />
         </div>
 
-        <button 
-          ref={btnRef} 
-          type="submit" 
-          disabled={status === 'submitting'}
-          className={`${styles.submitBtn} gsap-form-item`}
-        >
-          {status === 'submitting' ? t.contactForm.sending : t.contactForm.submit}
-        </button>
+        <div className={`${styles.formFooter} gsap-form-item`}>
+          <button
+            ref={btnRef}
+            type="submit"
+            disabled={status === 'submitting'}
+            className={styles.submitBtn}
+          >
+            {status === 'submitting' ? t.contactForm.sending : t.contactForm.submit}
+          </button>
 
-        <div className={`${styles.trustRow} gsap-form-item`}>
-          <span className={styles.trustItem}>
-            <svg viewBox="0 0 16 16" className={styles.trustIcon}>
-              <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm3.03 5.28-3.5 3.5a.75.75 0 0 1-1.06 0l-1.5-1.5a.75.75 0 1 1 1.06-1.06L7 8.69l2.97-2.97a.75.75 0 0 1 1.06 1.06Z" />
-            </svg>
-            {t.contactForm.trustFree}
-          </span>
-          <span className={styles.trustItem}>
-            <svg viewBox="0 0 16 16" className={styles.trustIcon}>
-              <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm3.03 5.28-3.5 3.5a.75.75 0 0 1-1.06 0l-1.5-1.5a.75.75 0 1 1 1.06-1.06L7 8.69l2.97-2.97a.75.75 0 0 1 1.06 1.06Z" />
-            </svg>
-            {t.contactForm.trust24h}
-          </span>
-          <span className={styles.trustItem}>
-            <svg viewBox="0 0 16 16" className={styles.trustIcon}>
-              <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm3.03 5.28-3.5 3.5a.75.75 0 0 1-1.06 0l-1.5-1.5a.75.75 0 1 1 1.06-1.06L7 8.69l2.97-2.97a.75.75 0 0 1 1.06 1.06Z" />
-            </svg>
-            {t.contactForm.trustNoStrings}
-          </span>
+          <div className={styles.footerMeta}>
+            <span className={styles.responseBadge}>{t.contactForm.trust24h}</span>
+            <p className={styles.privacyNotice}>
+              {lang === 'pt' ? (
+                <>
+                  Ao enviar, você concorda com nossa{' '}
+                  <Link href="/politica-de-privacidade">Política de Privacidade</Link>.
+                </>
+              ) : (
+                <>
+                  By submitting, you agree to our{' '}
+                  <Link href="/politica-de-privacidade">Privacy Policy</Link>.
+                </>
+              )}
+            </p>
+          </div>
         </div>
-
-        <p className={`${styles.privacyNotice} gsap-form-item`}>
-          {lang === 'pt' ? (
-            <>
-              Seus dados estão protegidos. Ao enviar, você concorda com nossa{' '}
-              <Link href="/politica-de-privacidade">Política de Privacidade</Link>.
-            </>
-          ) : (
-            <>
-              Your data is secure. By submitting, you agree to our{' '}
-              <Link href="/politica-de-privacidade">Privacy Policy</Link>.
-            </>
-          )}
-        </p>
-
-        <div className={`${styles.dividerRow} gsap-form-item`}>
-          <span className={styles.dividerLine} />
-          <span className={styles.dividerText}>{t.contactForm.orWhatsapp}</span>
-          <span className={styles.dividerLine} />
-        </div>
-
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noreferrer"
-          className={`${styles.whatsappAlt} gsap-form-item`}
-        >
-          <svg viewBox="0 0 24 24" className={styles.whatsappIcon}>
-            <path d="M12.03 2.5a9.63 9.63 0 0 0-8.24 14.6l-1.3 4.7 4.88-1.26a9.63 9.63 0 1 0 4.66-18.04Zm5.18 13.52c-.22.61-1.27 1.15-1.75 1.25-.45.1-.98.17-3.14-.72-2.6-1.07-4.23-3.72-4.36-3.89-.13-.17-1.04-1.39-1.04-2.65s.65-1.88.88-2.12c.22-.22.48-.28.64-.28.16 0 .33 0 .47.03.15.03.35-.06.54.4.19.46.65 1.59.71 1.7.06.12.1.26.02.42-.08.15-.12.25-.24.4-.12.14-.26.31-.37.42-.1.12-.22.25-.1.46.12.22.56.93 1.2 1.5.83.73 1.54.96 1.76 1.07.22.1.35.08.48-.06.13-.15.56-.65.71-.88.15-.22.3-.18.5-.11.21.08 1.32.61 1.54.72.22.11.37.16.42.26.05.1.05.58-.17 1.19Z" />
-          </svg>
-          {t.contactForm.whatsappLabel}
-        </a>
 
         {status === 'success' && (
-          <div className={styles.successMessage}>
-            {t.contactForm.success}
-          </div>
+          <div className={styles.successMessage}>{t.contactForm.success}</div>
         )}
 
         {status === 'error' && (
-          <div className={styles.errorMessage}>
-            {t.contactForm.error}
-          </div>
+          <div className={styles.errorMessage}>{t.contactForm.error}</div>
         )}
       </form>
     </div>

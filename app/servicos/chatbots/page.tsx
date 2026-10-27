@@ -67,9 +67,11 @@ export default function ChatbotsPage() {
                   <a
                     href="/#contato"
                     className={styles.cta}
-                    style={{ color: '#1a1a1a', background: '#c9a84c' }}
                   >
                     Solicitar Orçamento
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 17 17 7M8.5 7H17v8.5" />
+                    </svg>
                   </a>
                 </div>
               </header>

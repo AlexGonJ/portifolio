@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, message } = body
+    const { name, email, phone, service, message } = body
 
     const scriptUrl = process.env.GOOGLE_SCRIPT_URL
     if (!scriptUrl) {
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, message }),
+      body: JSON.stringify({ name, email, phone, service, message }),
     })
 
     if (!response.ok) {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Portfólio & Casos de Sucesso • Lexon Digital',
+  title: 'Portfólio & Casos de Sucesso',
   description:
     'Explore nossos cases reais de websites de alta conversão, e-commerces, plataformas web e identidades visuais estratégicas que multiplicaram faturamentos.',
   alternates: {

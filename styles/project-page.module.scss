@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 /* ==========================================================================
    PROJECT CASE STUDY
    Senior UI/UX Design System
@@ -89,28 +91,18 @@
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  @include vars.btn-primary-gold;
   margin-top: 0.75rem;
-  padding: 0.875rem 1.75rem;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: #002d6b;
-  background: #ffffff;
-  border-radius: 100px;
-  text-decoration: none;
-  transition: background 0.25s, transform 0.25s;
+  padding: 0.9rem 2.2rem;
+  font-size: 0.95rem;
+  width: fit-content;
 
   svg {
-    width: 18px; height: 18px;
-    transition: transform 0.3s ease;
+    @include vars.arrow-icon-diagonal;
   }
 
-  &:hover {
-    background: #f0f0f0;
-    transform: translateY(-1px);
-    svg { transform: translate(3px, -3px); }
+  &:hover svg {
+    transform: translate3d(3px, -3px, 0);
   }
 }
 

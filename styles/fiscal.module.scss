@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 /* ==========================================================================
    SISTEMA FISCAL — CONVERSION-FOCUSED LANDING PAGE
    Designed for quick scanning, visual metrics, and clear CTAs
@@ -308,23 +310,18 @@
 }
 
 .ctaButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  @include vars.btn-primary-gold;
   margin-top: 0.5rem;
-  padding: 1rem 2rem;
+  padding: 0.95rem 2.25rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #111317;
-  background: linear-gradient(135deg, #c9a84c 0%, #e8c864 100%);
-  border-radius: 100px;
-  text-decoration: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  letter-spacing: -0.01em;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(201, 168, 76, 0.35);
+  svg {
+    @include vars.arrow-icon-right;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
   }
 }
 

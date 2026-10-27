@@ -33,11 +33,19 @@ export const en = {
       'Technological and visual solutions developed to optimize processes, strengthen your brand and boost sales.',
     items: [
       {
-        title: 'Custom Development',
+        title: 'Web Development',
         description:
-          'Institutional websites, landing pages and custom systems with premium appearance, performance and conversion focus.',
-        details: ['SEO optimized websites', 'Custom web systems', 'Conversion focused interfaces'],
+          'Institutional websites, landing pages and custom web systems with premium appearance, high performance and conversion focus.',
+        details: ['Institutional sites & Landing Pages', 'Advanced SEO optimization', 'Custom web systems', 'Conversion-focused interfaces'],
         link: '/servicos/desenvolvimento',
+        isExternal: false
+      },
+      {
+        title: 'E-commerce',
+        description:
+          'Complete, scalable online stores with high-conversion checkout, catalog management, and payment and shipping integrations.',
+        details: ['Custom online stores', 'Fast high-conversion checkout', 'Payment & shipping integration', 'Product & inventory management'],
+        link: '/servicos/desenvolvimento#ecommerce',
         isExternal: false
       },
       {
@@ -53,7 +61,7 @@ export const en = {
         description:
           'Complete online scheduling platform for clinics, salons and independent professionals. Reduce no-shows and organize your agenda.',
         details: ['Automatic reminders (WhatsApp)', 'Team and schedule management', 'Advance payment'],
-        link: 'https://lexonagendamento.vercel.app/', // Link externo
+        link: 'https://lexonagendamento.vercel.app/',
         isExternal: true
       },
       {
@@ -72,6 +80,14 @@ export const en = {
         link: '/servicos/chatbots',
         isExternal: false
       },
+      {
+        title: 'IT & Systems Support',
+        description:
+          'Technical support, preventive maintenance, and continuous evolution for your business systems and digital infrastructure.',
+        details: ['Systems maintenance & updates', 'Business technical support', 'Monitoring & stability'],
+        link: '/servicos/suporte-ti',
+        isExternal: false
+      },
     ],
     ctaText: 'Request a quote',
   },
@@ -80,41 +96,96 @@ export const en = {
     moreWork: 'More work',
     view: 'VIEW',
     projects: [
-      { title: 'Web Platform', meta: 'Website and ERP System' },
-      { title: 'Brand Identity', meta: 'Branding and Design' },
-      { title: 'Editorial Web Platform', meta: 'Website and GSAP Animations — Moda Agency' },
+      { title: 'Web Platform', meta: 'Website & ERP System — 2025' },
+      { title: 'Brand Identity', meta: 'Branding & Design — 2024' },
+      { title: 'Editorial Web Platform', meta: 'Website & GSAP Animations — 2024' },
     ],
   },
   motionShowcase: {
-    meta1: 'Strategy and execution',
-    meta2: 'Real growth',
-    kicker: 'What I do for you',
+    meta1: 'Strategy & execution',
+    meta2: '03 Pillars — 05 Case Studies',
+    kicker: 'What I do for you • Selected Work',
+    heading: 'Capabilities proven by real projects in production.',
+    subhead:
+      'Hover or select a project inside each pillar to preview the case study, or click to explore the full execution.',
+    casesLabel: 'Selected projects in this pillar',
+    viewCase: 'View case',
+    viewCursor: 'VIEW',
+    moreWork: 'Explore all 05 projects',
     bottomNote:
       'Web, branding and digital marketing aligned to a single goal: more revenue for your business.',
     slides: [
       {
         id: '01',
-        eyebrow: 'Webdesign and development',
-        title: 'Websites that load fast, rank on Google and convert customers.',
+        eyebrow: 'Webdesign, Systems & E-commerce',
+        title: 'Websites, stores and systems built to convert.',
         description:
-          "Development focused on performance, SEO and user experience. Your competitors lose customers to slow websites, you won't.",
-        accent: 'Performance, SEO and conversion',
+          'Fast architecture, SEO and high-craft UX designed to turn visitors into clients.',
+        accent: 'Performance, SEO & conversion',
+        cases: [
+          {
+            title: 'Localiza Multas',
+            role: 'Web Platform & ERP',
+            year: '2025',
+            tags: ['Next.js', 'ERP', 'SEO'],
+            href: '/work/localiza-multas',
+          },
+          {
+            title: 'Vitrine Masculina',
+            role: 'Full-Stack E-commerce',
+            year: '2026',
+            tags: ['Medusa v2', 'Checkout', 'Next.js'],
+            href: '/work/vitrine-masculina',
+          },
+        ],
       },
       {
         id: '02',
-        eyebrow: 'Branding',
-        title: 'Visual identities that make customers choose you before reading a single word.',
+        eyebrow: 'Branding & Visual Identity',
+        title: 'Brands that sell before a single word is read.',
         description:
-          'Brand, typography, palette and visual system built to communicate premium value and justify higher prices. Your brand becomes your best salesperson.',
-        accent: 'Brand, positioning and perceived value',
+          'Visual identity, typography and commercial storefronts crafted to command premium value.',
+        accent: 'Brand, positioning & value',
+        cases: [
+          {
+            title: 'Dra. Aline Gonçalves',
+            role: 'Brand Identity',
+            year: '2026',
+            tags: ['Branding', 'Identity', 'Strategy'],
+            href: '/work/aline-goncalves',
+          },
+          {
+            title: 'Via Bike Rebranding',
+            role: 'Brand & 3D Storefront',
+            year: '2026',
+            tags: ['Rebranding', 'Storefront', 'Signage'],
+            href: '/work/via-bike',
+          },
+        ],
       },
       {
         id: '03',
-        eyebrow: 'Digital marketing',
-        title: 'Visual marketing that stops the scroll and turns followers into buyers.',
+        eyebrow: 'Creative Direction & Digital Marketing',
+        title: 'Visual direction that turns attention into revenue.',
         description:
-          'Instagram content, visual campaigns and creative direction that drive real engagement and fill your DMs with interested customers.',
-        accent: 'Content, engagement and sales',
+          'Immersive editorial web platforms, video production and campaigns built to spark desire.',
+        accent: 'Motion, campaigns & sales',
+        cases: [
+          {
+            title: 'Moda Agency',
+            role: 'Editorial Platform & GSAP',
+            year: '2026',
+            tags: ['Editorial', 'GSAP', 'Next.js'],
+            href: '/work/moda-agency',
+          },
+          {
+            title: 'Via Bike Campaign',
+            role: 'Audiovisual & Campaign',
+            year: '2026',
+            tags: ['Video', 'Campaign', 'Direction'],
+            href: '/work/via-bike',
+          },
+        ],
       },
     ],
   },
@@ -135,7 +206,7 @@ export const en = {
     asideLead:
       "Ready for a website that converts, a brand that sells, and a digital presence that drives results? Let's talk.",
     asideMeta1: 'Brazil / Remote',
-    asideMeta2: 'Limited spots in 2026',
+    asideMeta2: 'Response within 24h',
   },
   resultCards: {
     cards: [
@@ -148,8 +219,9 @@ export const en = {
   contactForm: {
     namePlaceholder: "What's your name?",
     emailPlaceholder: 'Your email address',
+    phonePlaceholder: 'Phone / WhatsApp number',
     serviceLabel: 'What service do you need?',
-    serviceWebsite: 'Website',
+    serviceWebsite: 'Website / System',
     serviceBranding: 'Branding',
     serviceMarketing: 'Marketing',
     serviceOther: 'Other',
@@ -158,10 +230,9 @@ export const en = {
     sending: 'Sending...',
     success: 'Message sent successfully!',
     error: 'An error occurred. Please try again.',
-    trustFree: 'Free quote',
-    trust24h: 'Response in 24h',
-    trustNoStrings: 'No strings attached',
+    trust24h: 'Response within 24h',
     orWhatsapp: 'or chat directly',
+    phoneOrWhatsappLabel: 'Direct Phone & WhatsApp',
     whatsappLabel: 'Chat on WhatsApp',
   },
   faq: {

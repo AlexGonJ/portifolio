@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitText from '@/components/ui/SplitText'
 import styles from '../styles/footer.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useCookieConsent } from './CookieConsent/CookieConsentContext'
@@ -70,18 +71,6 @@ export default function Footer() {
             },
           }
         )
-
-        gsap.to(orbRef.current, {
-          yPercent: -14,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top bottom',
-            end: 'bottom bottom',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        })
       })
 
       const orb = orbRef.current
@@ -149,10 +138,27 @@ export default function Footer() {
         <div className={styles.main}>
           <div className={styles.copyColumn}>
             <p className={styles.kicker}>{t.footer.kicker}</p>
-            <h2 ref={titleRef} className={styles.title}>
-              {t.footer.title1}
-              <span className={styles.titleOffset}>{t.footer.title2}</span>
-              {t.footer.title3}
+            <h2 ref={titleRef} className={styles.title} aria-label={`${t.footer.title1} ${t.footer.title2} ${t.footer.title3}`}>
+              {[t.footer.title1, t.footer.title2, t.footer.title3].map((line, idx) => (
+                <SplitText
+                  key={line}
+                  tag="span"
+                  text={line}
+                  className={`${styles.titleLine} ${idx === 1 ? styles.titleOffset : ''}`}
+                  effect="rise"
+                  splitType="chars"
+                  mask
+                  trigger="view"
+                  hoverEffect="lift"
+                  startDelay={idx * 0.22}
+                  delay={42}
+                  duration={1.3}
+                  accentColor="#b8ada0"
+                  threshold={0.2}
+                  rootMargin="-60px"
+                  textAlign="left"
+                />
+              ))}
             </h2>
 
             <p ref={copyRef} className={styles.copy}>

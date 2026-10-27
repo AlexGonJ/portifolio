@@ -12,10 +12,10 @@
   color: #ffffff;
   transition: transform 0.3s ease;
 
-  pointer-events: none; // let clicks pass through the invisible nav container
+  pointer-events: none;
 
   @media (max-width: 768px) {
-    padding: 2.5vh 6vw; // Padding menor no mobile
+    padding: 2.5vh 6vw;
   }
 
   &.themeLight {
@@ -25,22 +25,22 @@
     }
     
     .navRight {
-      color: #1a1a1a;
+      color: var(--color-ink, #0d0d0d);
       
       .burgerWrapper {
-        color: #1a1a1a;
+        color: var(--color-ink, #0d0d0d);
       }
       
       .burgerBtn {
-        color: #1a1a1a;
+        color: var(--color-ink, #0d0d0d);
         
         .burgerLines div {
-          background-color: #1a1a1a;
+          background-color: var(--color-ink, #0d0d0d);
         }
       }
       
       .langBtn {
-        color: #1a1a1a;
+        color: var(--color-ink, #0d0d0d);
       }
     }
   }
@@ -55,7 +55,7 @@
   transition: opacity 0.3s ease;
 
   @media (max-width: 480px) {
-    font-size: 1rem; // Logo levemente menor em celulares pequenos
+    font-size: 1rem;
   }
 }
 
@@ -73,7 +73,6 @@
   margin: 0;
   padding: 0;
 
-  // ESCONDE O MENU DE LINKS NO MOBILE
   @media (max-width: 900px) {
     display: none !important;
   }
@@ -124,17 +123,15 @@
   gap: 0.25rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1rem;
-  background: rgba(16, 16, 16, 0.92);
+  background: rgba(14, 14, 16, 0.94);
   backdrop-filter: blur(16px);
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.25);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: translateY(-0.5rem);
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.45s;
 
-  // Preenche o espaço visual entre o link e o dropdown para o cursor
-  // atravessar sem sair da área interativa do menu.
   &::before {
     content: '';
     position: absolute;
@@ -147,7 +144,7 @@
 
 .servicesDropdownLabel {
   padding: 0.25rem 0.55rem 0.55rem;
-  color: rgba(213, 183, 105, 0.92);
+  color: var(--color-gold, #c9a84c);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -169,13 +166,13 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 
   span {
-    color: #d5b769;
+    color: var(--color-gold, #c9a84c);
   }
 
   &:hover,
   &:focus-visible {
     color: #ffffff;
-    background: rgba(213, 183, 105, 0.13);
+    background: rgba(201, 168, 76, 0.14);
     outline: none;
   }
 }
@@ -187,7 +184,6 @@
   cursor: pointer;
   color: #ffffff;
 
-  // GARANTE QUE O BURGER APAREÇA NO MOBILE MESMO SEM SCROLL
   @media (max-width: 900px) {
     display: flex !important;
     opacity: 1 !important;
@@ -215,10 +211,10 @@
   border: none;
   color: #fff;
   cursor: pointer;
-  z-index: 101; // acima de tudo
+  z-index: 101;
   
   &.isOpen {
-    mix-blend-mode: normal; // Evita bugar invertido qd menu está aberto escuro
+    mix-blend-mode: normal;
 
     .burgerLines {
       div:nth-child(1) {
@@ -260,38 +256,38 @@
 }
 
 .projectNav {
-  color: #111;
+  color: var(--color-ink, #0d0d0d);
 
   .menuItem {
-    color: #111;
+    color: var(--color-ink, #0d0d0d);
     &::after {
-      background-color: #111;
+      background-color: var(--color-ink, #0d0d0d);
     }
   }
 
   .burgerBtn {
-    color: #111;
+    color: var(--color-ink, #0d0d0d);
   }
   
   .burgerLines div {
-    background-color: #111;
+    background-color: var(--color-ink, #0d0d0d);
   }
 
   .langBtn {
-    color: #111;
+    color: var(--color-ink, #0d0d0d);
   }
 
   .servicesDropdown {
-    border-color: rgba(17, 17, 17, 0.1);
-    background: rgba(255, 253, 247, 0.96);
+    border-color: rgba(13, 13, 13, 0.1);
+    background: rgba(255, 255, 255, 0.96);
   }
 
   .serviceDropdownLink {
-    color: rgba(17, 17, 17, 0.82);
+    color: rgba(13, 13, 13, 0.82);
 
     &:hover,
     &:focus-visible {
-      color: #111;
+      color: var(--color-ink, #0d0d0d);
       background: rgba(201, 168, 76, 0.14);
     }
   }

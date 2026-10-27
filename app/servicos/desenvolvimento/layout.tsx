@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Desenvolvimento de Sites e Sistemas Sob Medida • Lexon Digital',
+  title: 'Desenvolvimento de Sites e Sistemas',
   description:
     'Desenvolvimento de websites de alta conversão, landing pages premium, e-commerces e sistemas ERP/CRM em Next.js com carregamento em milissegundos e SEO avançado.',
   keywords: [

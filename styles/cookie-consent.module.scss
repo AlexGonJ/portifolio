@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 .bannerWrapper {
   position: fixed;
   bottom: 24px;
@@ -122,22 +124,12 @@
 }
 
 .btnPrimary {
-  background: #f5f5f7;
-  color: #0d0d0d;
+  @include vars.btn-primary-gold;
+  border-radius: vars.$btn-radius;
   font-size: 0.88rem;
-  font-weight: 600;
-  padding: 11px 18px;
-  border-radius: 12px;
-  border: 1px solid transparent;
+  padding: 11px 20px;
   cursor: pointer;
-  transition: all 0.25s ease;
   text-align: center;
-
-  &:hover {
-    background: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
-  }
 
   @media (min-width: 480px) {
     grid-column: span 2;
@@ -145,38 +137,34 @@
 }
 
 .btnSecondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: #f5f5f7;
+  @include vars.btn-outline-light;
+  border-radius: vars.$btn-radius;
   font-size: 0.84rem;
-  font-weight: 500;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
   text-align: center;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.25);
-  }
 }
 
 .btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.82rem;
   font-weight: 500;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 16px;
+  border-radius: vars.$btn-radius;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   text-align: center;
 
   &:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
   }
 }
 

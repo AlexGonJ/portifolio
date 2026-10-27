@@ -52,74 +52,21 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-top: 3.5rem;
+    margin-top: 3rem;
   }
 
   .aboutCta {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.25rem;
-    color: #111317;
-    text-decoration: none;
+    @include vars.btn-outline-light;
+    padding: 0.9rem 2.2rem;
+    font-size: 1rem;
     width: fit-content;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    
-    .ctaText {
-      font-size: 1.35rem; /* Fonte maior conforme solicitado */
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #c9a84c;
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-    }
-
-    .ctaIconWrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: rgba(201, 168, 76, 0.15);
-      color: #c9a84c;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
 
     .aboutCtaIcon {
-      width: 1.25rem;
-      height: 1.25rem;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      @include vars.arrow-icon-diagonal;
     }
 
-    &:hover {
-      .ctaText::after {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-      
-      .ctaIconWrapper {
-        background: #c9a84c;
-        color: #ffffff;
-        transform: translateX(8px);
-        box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
-      }
-      
-      .aboutCtaIcon {
-        transform: translateX(2px);
-      }
+    &:hover .aboutCtaIcon {
+      transform: translate3d(3px, -3px, 0);
     }
   }
 }
@@ -132,12 +79,9 @@
     padding: 4rem 6vw;
   }
   
-  .about .aboutCta .ctaText {
-    font-size: 1.15rem;
-  }
-  
-  .about .aboutCta .ctaIconWrapper {
-    width: 2.5rem;
-    height: 2.5rem;
+  .about .aboutCta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
   }
 }

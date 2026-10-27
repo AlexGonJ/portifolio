@@ -4,11 +4,10 @@ import { useState, useEffect } from 'react'
 import { usePixelCustomEvent } from '@/hooks/usePixelCustomEvent'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
-import SelectedWork from '@/components/SelectedWork'
 import About from '@/components/About'
 import ResultCards from '@/components/ResultCards'
 import Services from '@/components/Services'
-import MotionShowcase from '@/components/MotionShowcase'
+import SelectedWork from '@/components/SelectedWork'
 import EditorialBreak from '@/components/EditorialBreak'
 import Testimonials from '@/components/Testimonials'
 import Contact from '@/components/Contact'
@@ -45,8 +44,6 @@ export default function Home() {
 
   return (
     <>
-
-
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
       <div className="smooth-wrapper" style={{ opacity: isLoading ? 0 : 1 }}>
@@ -57,7 +54,6 @@ export default function Home() {
           <ResultCards />
           <Services />
           <SelectedWork />
-          <MotionShowcase />
           <EditorialBreak />
           <Testimonials />
           <Faq />
