@@ -46,7 +46,7 @@ export default function Home() {
     <>
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
-      <div className="smooth-wrapper" style={{ opacity: isLoading ? 0 : 1 }}>
+      <div className="smooth-wrapper">
         <main style={{ backgroundColor: '#fff', position: 'relative', zIndex: 1 }}>
           <Navbar />
           <Hero start={!isLoading} />

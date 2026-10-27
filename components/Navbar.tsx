@@ -85,7 +85,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
               {pathname !== '/' && (
                 <li><Link href="/" className={styles.menuItem}>Home</Link></li>
               )}
-              <li><Link href={pathname === '/' ? "sobre" : "/sobre"} className={styles.menuItem}>{t.nav.about}</Link></li>
+              <li><Link href="/sobre" className={styles.menuItem}>{t.nav.about}</Link></li>
               <li
                 className={`${styles.servicesMenu} ${isServicesMenuOpen ? styles.servicesMenuOpen : ''}`}
                 onMouseEnter={openServicesMenu}
@@ -119,6 +119,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
                 <button
                   onClick={toggleLanguage}
                   className={styles.langBtn}
+                  aria-label="Alternar idioma"
                 >
                   <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
                 </button>
@@ -136,6 +137,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
             <button
               onClick={toggleLanguage}
               className={`${styles.langBtn} ${styles.mobileLangBtn}`}
+              aria-label="Alternar idioma"
             >
               <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
             </button>

@@ -503,6 +503,8 @@ function WheelCard({
           src={item.src}
           alt={decorative ? "" : (item.alt ?? item.title ?? "")}
           draggable={false}
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
         />
       ) : (

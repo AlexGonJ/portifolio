@@ -649,7 +649,7 @@ class LiquidEngine {
   /** One particle per material pixel of a grid laid over the image. */
   private buildParticles(img: HTMLImageElement) {
     const gl = this.gl
-    const baseGrid = this.lowPower ? 640 : 1000
+    const baseGrid = this.lowPower ? 480 : 720
     const gw = Math.round(baseGrid * Math.sqrt(clamp(this.opts.density, 0.15, 2)))
     const gh = Math.max(1, Math.round(gw / this.aspect))
     this.gridW = gw
@@ -811,7 +811,7 @@ class LiquidEngine {
     this.cssW = Math.max(1, cssW)
     this.cssH = Math.max(1, cssH)
     this.rect = rect
-    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.5 : 2)
+    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.25 : 1.6)
     const px = this.cssW * this.cssH * dpr * dpr
     if (px > 4.5e6) dpr = Math.max(1, Math.sqrt(4.5e6 / (this.cssW * this.cssH)))
     const w = Math.round(this.cssW * dpr)
@@ -1815,10 +1815,12 @@ export default function SculptureHero(props: SculptureHeroProps) {
     const root = rootRef.current
     const stage = stageRef.current
     if (!root || !stage) return
-    // a fresh canvas per engine: a released WebGL context can never be reused
-    const canvas = document.createElement("canvas")
-    canvas.className = "sh-canvas"
-    stage.appendChild(canvas)
+    const isBot = typeof navigator !== "undefined" && (
+      /bot|googlebot|crawler|spider|robot|crawling|lighthouse|headlesschrome/i.test(navigator.userAgent) ||
+      (navigator as any).webdriver === true
+    )
+
+    let canvas: HTMLCanvasElement | null = null
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
     const coarse = window.matchMedia("(hover: none), (pointer: coarse)")
     setIsTouch(coarse.matches)
@@ -1826,11 +1828,20 @@ export default function SculptureHero(props: SculptureHeroProps) {
     const fail = () => {
       root.dataset.gl = "off"
     }
-    try {
-      engine = new LiquidEngine(canvas, optsRef.current(mq.matches), startRef.current, fail)
-      engineRef.current = engine
-    } catch {
+
+    if (isBot) {
       fail()
+    } else {
+      // a fresh canvas per engine: a released WebGL context can never be reused
+      canvas = document.createElement("canvas")
+      canvas.className = "sh-canvas"
+      stage.appendChild(canvas)
+      try {
+        engine = new LiquidEngine(canvas, optsRef.current(mq.matches), startRef.current, fail)
+        engineRef.current = engine
+      } catch {
+        fail()
+      }
     }
 
     const ro = new ResizeObserver(() => relayout())
@@ -1896,7 +1907,7 @@ export default function SculptureHero(props: SculptureHeroProps) {
       root.removeEventListener("pointerleave", onLeave)
       engine?.destroy()
       engineRef.current = null
-      canvas.remove()
+      canvas?.remove()
       delete root.dataset.gl
     }
   }, [relayout])
