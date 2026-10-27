@@ -51,7 +51,7 @@ export default function ViaBikeProject() {
             <section className={styles.heroWrapper}>
               <div className={styles.heroBackground}>
                 <Image
-                  src="/projects/via-bike/logo.png"
+                  src="/projects/via-bike/logo.webp"
                   alt="Via Bike Hero Background"
                   fill
                   priority
@@ -108,7 +108,7 @@ export default function ViaBikeProject() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame} style={{ padding: '40px', background: '#07080b', display: 'flex', justifyContent: 'center' }}>
                   <Image
-                    src="/projects/via-bike/logo.png"
+                    src="/projects/via-bike/logo.webp"
                     alt="Via Bike Logo Transparente"
                     width={500}
                     height={250}
@@ -133,7 +133,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/fachada.jpeg"
+                      src="/projects/via-bike/fachada.webp"
                       alt="Fachada Desenho e Proposta 1"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -148,7 +148,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/facade2.png"
+                      src="/projects/via-bike/facade2.webp"
                       alt="Detalhes e Ângulo Alternativo da Fachada"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -163,7 +163,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/facade3.png"
+                      src="/projects/via-bike/facade3.webp"
                       alt="Estudo de Fachada 3"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -178,7 +178,7 @@ export default function ViaBikeProject() {
                 <div className={styles.facadeCard}>
                   <div className={styles.facadeImageWrapper}>
                     <Image
-                      src="/projects/via-bike/frente.JPEG"
+                      src="/projects/via-bike/frente.webp"
                       alt="Fachada Opção Finalizada"
                       fill
                       onLoad={() => ScrollTrigger.refresh()}
@@ -207,7 +207,7 @@ export default function ViaBikeProject() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/via-bike/poster-stand.png"
+                    src="/projects/via-bike/poster-stand.webp"
                     alt="Banners e Placas Externas da Via Bike"
                     width={1400}
                     height={900}
@@ -262,7 +262,7 @@ export default function ViaBikeProject() {
                       <>
                         <div className={styles.videoBgImage}>
                           <Image
-                            src="/projects/via-bike/laptop.jpg"
+                            src="/projects/via-bike/laptop.webp"
                             alt="Reels Oficina e Diagnóstico"
                             fill
                           />
@@ -314,7 +314,7 @@ export default function ViaBikeProject() {
                       <>
                         <div className={styles.videoBgImage}>
                           <Image
-                            src="/projects/via-bike/cap.jpg"
+                            src="/projects/via-bike/cap.webp"
                             alt="Reels Vestuário e Acessórios"
                             fill
                           />
@@ -366,7 +366,7 @@ export default function ViaBikeProject() {
                       <>
                         <div className={styles.videoBgImage}>
                           <Image
-                            src="/projects/via-bike/mockup.jpg"
+                            src="/projects/via-bike/mockup.webp"
                             alt="Reels Campanha Promocional"
                             fill
                           />
@@ -395,7 +395,7 @@ export default function ViaBikeProject() {
                 <h2 style={{ fontSize: 'clamp(2rem, 3vw, 3rem)', color: '#ffffff', marginTop: '1rem' }}>Sinalização Interna</h2>
               </div>
               <Image
-                src="/projects/via-bike/artboard.png"
+                src="/projects/via-bike/artboard.webp"
                 alt="Artboards de sinalização da Via Bike"
                 width={1400}
                 height={800}

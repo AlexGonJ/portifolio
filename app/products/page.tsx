@@ -30,11 +30,11 @@ interface Product {
 }
 
 const heroShowcase = [
-  { src: '/projects/fiscal-desk.png', alt: 'Sistema Fiscal' },
-  { src: '/projects/vendas.png', alt: 'Power BI Vendas' },
-  { src: '/projects/dre.png', alt: 'Planilha DRE' },
-  { src: '/projects/moda-home.png', alt: 'Template Web' },
-  { src: '/projects/work1.png', alt: 'Gestão de Tempo' },
+  { src: '/projects/fiscal-desk.webp', alt: 'Sistema Fiscal' },
+  { src: '/projects/vendas.webp', alt: 'Power BI Vendas' },
+  { src: '/projects/dre.webp', alt: 'Planilha DRE' },
+  { src: '/projects/moda-home.webp', alt: 'Template Web' },
+  { src: '/projects/work1.webp', alt: 'Gestão de Tempo' },
 ]
 
 const productsData: Product[] = [
@@ -87,7 +87,7 @@ const productsData: Product[] = [
         'Suporte técnico direto para emissão da 1ª nota',
       ],
     },
-    image: '/projects/fiscal-desk.png',
+    image: '/projects/fiscal-desk.webp',
   },
   {
     id: 'sistema-agendamento',
@@ -136,7 +136,7 @@ const productsData: Product[] = [
         'Guia de instalação simples em menos de 15 minutos',
       ],
     },
-    image: '/projects/dental.png',
+    image: '/projects/dental.webp',
   },
   {
     id: 'sistema-gestao-tempo',
@@ -185,7 +185,7 @@ const productsData: Product[] = [
         'Templates pré-configurados para agências e freelancers',
       ],
     },
-    image: '/projects/work1.png',
+    image: '/projects/work1.webp',
   },
   {
     id: 'power-bi-vendas',
@@ -234,7 +234,7 @@ const productsData: Product[] = [
         'Vídeo tutorial ensinando como atualizar os dados com 1 clique',
       ],
     },
-    image: '/projects/vendas.png',
+    image: '/projects/vendas.webp',
   },
   {
     id: 'planilha-gestao-dre',
@@ -283,7 +283,7 @@ const productsData: Product[] = [
         'Aula gravada ensinando a interpretar os indicadores do DRE',
       ],
     },
-    image: '/projects/dre.png',
+    image: '/projects/dre.webp',
   },
   {
     id: 'template-web-portfolio',
@@ -332,7 +332,7 @@ const productsData: Product[] = [
         'Licença comercial irrestrita para usar em quantos clientes quiser',
       ],
     },
-    image: '/projects/moda-home.png',
+    image: '/projects/moda-home.webp',
   },
   {
     id: 'guia-automacao-pme',
@@ -381,7 +381,7 @@ const productsData: Product[] = [
         'Atualizações gratuitas do material',
       ],
     },
-    image: '/projects/card.jpeg',
+    image: '/projects/card.webp',
   },
 ]
 

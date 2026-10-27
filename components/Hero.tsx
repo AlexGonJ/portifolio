@@ -37,6 +37,7 @@ export default function Hero({ start = true, mobileSculptureScale }: HeroProps) 
       background="#E0DAD0"
       theme="light"
       themeToggle={true}
+      loadFonts={false}
       intro={true}
       ambient={true}
       ambientIntensity={0.65}

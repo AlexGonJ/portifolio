@@ -154,7 +154,7 @@ export default function SistemaFiscalPage() {
               </div>
               <div className={f.screenshotFrame}>
                 <Image
-                  src="/projects/importar-xml.png"
+                  src="/projects/importar-xml.webp"
                   alt="Interface de importação de XML — entrada automática de estoque"
                   width={1024}
                   height={499}
@@ -170,7 +170,7 @@ export default function SistemaFiscalPage() {
             <section className={`${f.visualSplit} project-animate`}>
               <div className={f.visualSplitImage}>
                 <Image
-                  src="/projects/fiscal-barcode.png"
+                  src="/projects/fiscal-barcode.webp"
                   alt="Lojista utilizando leitor de código de barras"
                   fill
                   sizes="(max-width: 900px) 100vw, 50vw"
@@ -219,7 +219,7 @@ export default function SistemaFiscalPage() {
               </div>
               <div className={f.screenshotFrame}>
                 <Image
-                  src="/projects/vendas.png"
+                  src="/projects/vendas.webp"
                   alt="Painel de vendas — gestão de notas fiscais e cupons"
                   width={1024}
                   height={498}
@@ -234,7 +234,7 @@ export default function SistemaFiscalPage() {
             <section className={`${f.visualSplit} ${f.visualSplitReverse} project-animate`}>
               <div className={f.visualSplitImage}>
                 <Image
-                  src="/projects/fiscal-desk.png"
+                  src="/projects/fiscal-desk.webp"
                   alt="Pessoa organizando documentos fiscais no computador"
                   fill
                   sizes="(max-width: 900px) 100vw, 50vw"
@@ -359,7 +359,7 @@ export default function SistemaFiscalPage() {
             <section className={`${f.visualSplit} project-animate`}>
               <div className={f.visualSplitImage}>
                 <Image
-                  src="/projects/fiscal-team.png"
+                  src="/projects/fiscal-team.webp"
                   alt="Equipe trabalhando com organização e produtividade"
                   fill
                   sizes="(max-width: 900px) 100vw, 50vw"

@@ -132,7 +132,7 @@ export default function SuporteTiPage() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/fiscal-team.png"
+                    src="/projects/fiscal-team.webp"
                     width={800}
                     height={600}
                     alt="Equipe e Suporte de TI Empresarial"

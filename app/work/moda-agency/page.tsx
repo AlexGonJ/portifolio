@@ -48,7 +48,7 @@ export default function ModaAgency() {
             <section className={styles.heroWrapper} style={{ backgroundColor: '#0f0f11' }}>
               <div className={styles.heroBackground}>
                 <Image
-                  src="/projects/moda-hero.jpg"
+                  src="/projects/moda-hero.webp"
                   alt="Moda Agency Hero Background"
                   fill
                   priority
@@ -121,7 +121,7 @@ export default function ModaAgency() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/moda-second.jpg"
+                    src="/projects/moda-second.webp"
                     alt="Moda Agency Brand Experience"
                     width={1400}
                     height={900}
@@ -203,7 +203,7 @@ export default function ModaAgency() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/moda-third.jpg"
+                    src="/projects/moda-third.webp"
                     alt="Moda Agency Design Details"
                     width={1400}
                     height={900}
@@ -215,7 +215,7 @@ export default function ModaAgency() {
             {/* ── FULL WIDTH IMAGE ── */}
             <div className={`${styles.showcase} project-animate`}>
               <Image
-                src="/projects/moda-home.png"
+                src="/projects/moda-home.webp"
                 alt="Moda Agency Full Experience Showcase"
                 width={1400}
                 height={800}

@@ -48,7 +48,7 @@ export default function AlineGoncalves() {
             <section className={styles.heroWrapper}>
               <div className={styles.heroBackground}>
                 <Image
-                  src="/projects/aline.png"
+                  src="/projects/aline.webp"
                   alt="Dra. Aline Gonçalves Hero Background"
                   fill
                   priority
@@ -115,7 +115,7 @@ export default function AlineGoncalves() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/aline2.png"
+                    src="/projects/aline2.webp"
                     alt="Dra. Aline Gonçalves Brand Experience"
                     width={1400}
                     height={900}
@@ -188,7 +188,7 @@ export default function AlineGoncalves() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/PlacaAline.png"
+                    src="/projects/PlacaAline.webp"
                     alt="Placa de Identificação da Clínica"
                     width={1400}
                     height={900}
@@ -214,7 +214,7 @@ export default function AlineGoncalves() {
                   <span>Frente do Cartão</span>
                   <div className={styles.vectorCard}>
                     <Image
-                      src="/projects/cartao_real_frente.png"
+                      src="/projects/cartao_real_frente.webp"
                       alt="Cartão de Visita Frente Real"
                       width={900}
                       height={500}
@@ -227,7 +227,7 @@ export default function AlineGoncalves() {
                   <span>Verso do Cartão</span>
                   <div className={styles.vectorCard}>
                     <Image
-                      src="/projects/cartao_real_verso.png"
+                      src="/projects/cartao_real_verso.webp"
                       alt="Cartão de Visita Verso Real"
                       width={900}
                       height={500}

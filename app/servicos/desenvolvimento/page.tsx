@@ -50,7 +50,7 @@ export default function DesenvolvimentoPage() {
             {/* ── HERO ── */}
             <section className={styles.heroWrapper} style={{ backgroundColor: '#1a1a1a' }}>
               <div className={styles.heroBackground}>
-                <Image src="/projects/work1.png" alt="Desenvolvimento Personalizado" layout="fill" className={styles.bgImage} />
+                <Image src="/projects/work1.webp" alt="Desenvolvimento Personalizado" layout="fill" className={styles.bgImage} />
                 <div className={styles.heroOverlay} style={{
                   background: 'linear-gradient(to bottom, rgba(26, 26, 26, 0.4) 0%, rgba(26, 26, 26, 1) 100%)'
                 }}></div>
@@ -88,7 +88,7 @@ export default function DesenvolvimentoPage() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   {/* Dashboard / CRM Image */}
-                  <Image src="/projects/mockup.jpeg" width={800} height={600} alt="Dashboard de Sistema ERP/CRM" />
+                  <Image src="/projects/mockup.webp" width={800} height={600} alt="Dashboard de Sistema ERP/CRM" />
                 </div>
               </div>
             </section>
@@ -108,7 +108,7 @@ export default function DesenvolvimentoPage() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   {/* Vitrine Masculina Image */}
-                  <Image src="/projects/vitrine-masculina/hero.png" width={800} height={600} alt="E-commerce Vitrine Masculina" />
+                  <Image src="/projects/vitrine-masculina/hero.webp" width={800} height={600} alt="E-commerce Vitrine Masculina" />
                 </div>
               </div>
             </section>
@@ -139,7 +139,7 @@ export default function DesenvolvimentoPage() {
                       <div className={styles.lidScreen}>
                         <div className={styles.laptopScreenInner}>
                           {/* Hinelna Busca Image */}
-                          <Image src="/projects/work2.png" width={800} height={600} alt="Sistema de Busca de Imóveis" className={styles.scrollingImage} />
+                          <Image src="/projects/work2.webp" width={800} height={600} alt="Sistema de Busca de Imóveis" className={styles.scrollingImage} />
                         </div>
                       </div>
                     </div>

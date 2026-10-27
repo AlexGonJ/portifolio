@@ -12,11 +12,11 @@ import { useLanguage } from '@/i18n/LanguageContext'
 import styles from '@/styles/work-list.module.scss'
 
 const heroShowcase = [
-  { src: '/projects/vitrine-masculina/hero.png', alt: 'Vitrine Masculina' },
-  { src: '/projects/post-car1.png', alt: 'Localiza Multas' },
-  { src: '/projects/moda-home.png', alt: 'Moda Agency' },
-  { src: '/projects/PlacaAline.png', alt: 'Dra. Aline Gonçalves' },
-  { src: '/projects/via-bike/poster-stand.png', alt: 'Via Bike' },
+  { src: '/projects/vitrine-masculina/hero.webp', alt: 'Vitrine Masculina' },
+  { src: '/projects/post-car1.webp', alt: 'Localiza Multas' },
+  { src: '/projects/moda-home.webp', alt: 'Moda Agency' },
+  { src: '/projects/PlacaAline.webp', alt: 'Dra. Aline Gonçalves' },
+  { src: '/projects/via-bike/poster-stand.webp', alt: 'Via Bike' },
 ]
 
 const allProjects = [
@@ -25,7 +25,7 @@ const allProjects = [
     meta: { en: 'Medusa v2 · Mercado Pago Integration · Full-Stack', pt: 'Medusa v2 · Integração Mercado Pago · Full-Stack' },
     year: '2026',
     tags: ['Medusa v2', 'Next.js', 'Mercado Pago', 'E-commerce'],
-    image: '/projects/vitrine-masculina/hero.png',
+    image: '/projects/vitrine-masculina/hero.webp',
     href: '/work/vitrine-masculina',
   },
   {
@@ -33,7 +33,7 @@ const allProjects = [
     meta: { en: 'Brand Identity & Shop Facade', pt: 'Identidade de Marca e Fachada Comercial' },
     year: '2026',
     tags: ['Branding', 'Storefront Design', 'Banners', 'Video Production'],
-    image: '/projects/via-bike/cap.jpg',
+    image: '/projects/via-bike/cap.webp',
     href: '/work/via-bike',
   },
   {
@@ -41,7 +41,7 @@ const allProjects = [
     meta: { en: 'Website and ERP System', pt: 'Website e Sistema ERP' },
     year: '2025',
     tags: ['Next.js', 'Firebase', 'Cybersecurity'],
-    image: '/projects/post-car1.png',
+    image: '/projects/post-car1.webp',
     href: '/work/localiza-multas',
   },
   {
@@ -49,7 +49,7 @@ const allProjects = [
     meta: { en: 'Branding and Design', pt: 'Branding e Design' },
     year: '2024',
     tags: ['Branding', 'Visual Identity', 'Strategy'],
-    image: '/projects/PlacaAline.png',
+    image: '/projects/PlacaAline.webp',
     href: '/work/aline-goncalves',
   },
   {
@@ -57,7 +57,7 @@ const allProjects = [
     meta: { en: 'Website and GSAP Animations — Moda Agency', pt: 'Website e Animações GSAP — Moda Agency' },
     year: '2024',
     tags: ['Web Design', 'GSAP', 'Next.js'],
-    image: '/projects/moda-home.png',
+    image: '/projects/moda-home.webp',
     href: '/work/moda-agency',
   },
   /* Ocultando projetos sem páginas reais por enquanto
@@ -66,7 +66,7 @@ const allProjects = [
     meta: { en: 'Visual Strategy & Content', pt: 'Estratégia Visual e Conteúdo' },
     year: '2024',
     tags: ['Social Media', 'Art Direction'],
-    image: '/projects/sport.png',
+    image: '/projects/sport.webp',
     href: '#',
   },
   {
@@ -74,7 +74,7 @@ const allProjects = [
     meta: { en: 'UI Design & Branding', pt: 'UI Design e Branding' },
     year: '2023',
     tags: ['E-commerce', 'UI Design'],
-    image: '/projects/bag.png',
+    image: '/projects/bag.webp',
     href: '#',
   },
   {
@@ -82,7 +82,7 @@ const allProjects = [
     meta: { en: 'Web Application & UX', pt: 'Aplicação Web e UX' },
     year: '2023',
     tags: ['Dashboard', 'React', 'UX'],
-    image: '/projects/financa.png',
+    image: '/projects/financa.webp',
     href: '#',
   },
   {
@@ -90,7 +90,7 @@ const allProjects = [
     meta: { en: 'Branding & Visual Identity', pt: 'Branding e Identidade Visual' },
     year: '2023',
     tags: ['Branding', 'Healthcare'],
-    image: '/projects/dental.png',
+    image: '/projects/dental.webp',
     href: '#',
   },
   {
@@ -98,7 +98,7 @@ const allProjects = [
     meta: { en: 'Web Development', pt: 'Desenvolvimento Web' },
     year: '2022',
     tags: ['Web Dev', 'Next.js'],
-    image: '/projects/enge.png',
+    image: '/projects/enge.webp',
     href: '#',
   },
   */

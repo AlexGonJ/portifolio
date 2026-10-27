@@ -8,11 +8,11 @@ import { useLanguage } from '@/i18n/LanguageContext';
 
 const SLIDE_CASE_MEDIA: string[][] = [
   // 01 — Webdesign, Sistemas & E-commerce
-  ['/projects/post-car1.png', '/projects/vitrine-masculina/hero.png'],
+  ['/projects/post-car1.webp', '/projects/vitrine-masculina/hero.webp'],
   // 02 — Branding & Identidade Visual
-  ['/projects/PlacaAline.png', '/projects/via-bike/cap.jpg'],
+  ['/projects/PlacaAline.webp', '/projects/via-bike/cap.webp'],
   // 03 — Direção Criativa & Marketing Visual
-  ['/projects/moda-home.png', '/projects/via-bike/poster-stand.png'],
+  ['/projects/moda-home.webp', '/projects/via-bike/poster-stand.webp'],
 ];
 
 export default function MotionShowcase() {

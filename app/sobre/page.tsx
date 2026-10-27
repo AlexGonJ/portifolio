@@ -125,17 +125,17 @@ const teamAreas = [
 
 const featuredProjects = [
   {
-    src: '/projects/vitrine-masculina/hero.png',
+    src: '/projects/vitrine-masculina/hero.webp',
     label: 'Vitrine Masculina',
     href: '/work/vitrine-masculina',
   },
   {
-    src: '/projects/via-bike/cap.jpg',
+    src: '/projects/via-bike/cap.webp',
     label: 'Via Bike',
     href: '/work/via-bike',
   },
   {
-    src: '/projects/post-car1.png',
+    src: '/projects/post-car1.webp',
     label: 'Localiza Multas',
     href: '/work/localiza-multas',
   },

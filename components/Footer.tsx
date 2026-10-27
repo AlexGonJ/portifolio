@@ -138,7 +138,7 @@ export default function Footer() {
         <div className={styles.main}>
           <div className={styles.copyColumn}>
             <p className={styles.kicker}>{t.footer.kicker}</p>
-            <h2 ref={titleRef} className={styles.title} aria-label={`${t.footer.title1} ${t.footer.title2} ${t.footer.title3}`}>
+            <h2 ref={titleRef} className={styles.title}>
               {[t.footer.title1, t.footer.title2, t.footer.title3].map((line, idx) => (
                 <SplitText
                   key={line}

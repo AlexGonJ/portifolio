@@ -93,7 +93,7 @@ export default function VitrineMasculinaProject() {
             <section className={styles.heroWrapper} style={{ backgroundColor: '#0a0a0a' }}>
               <div className={styles.heroBackground}>
                 <Image
-                  src="/projects/vitrine-masculina/hero.png"
+                  src="/projects/vitrine-masculina/hero.webp"
                   alt="Vitrine Masculina DTNA Background"
                   fill
                   priority
@@ -175,7 +175,7 @@ export default function VitrineMasculinaProject() {
                           <div ref={screenContentRef} className={styles.screenContent}>
                             <img
                               ref={imageRef}
-                              src="/projects/vitrine-masculina/fullpage.png"
+                              src="/projects/vitrine-masculina/fullpage.webp"
                               alt="Vitrine Masculina Web Experience"
                               className={styles.scrollingImage}
                               onLoad={() => ScrollTrigger.refresh()}
@@ -274,7 +274,7 @@ export default function VitrineMasculinaProject() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/vitrine-masculina/product.png"
+                    src="/projects/vitrine-masculina/product.webp"
                     alt="Página de Produto — Vitrine Masculina"
                     width={1400}
                     height={900}
@@ -303,7 +303,7 @@ export default function VitrineMasculinaProject() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/vitrine-masculina/categories.png"
+                    src="/projects/vitrine-masculina/categories.webp"
                     alt="Categorias — Vitrine Masculina"
                     width={1400}
                     height={900}
@@ -316,7 +316,7 @@ export default function VitrineMasculinaProject() {
             {/* ── FULL WIDTH SHOWCASE ── */}
             <div className={`${styles.showcase} project-animate`}>
               <Image
-                src="/projects/vitrine-masculina/hero.png"
+                src="/projects/vitrine-masculina/hero.webp"
                 alt="Apresentação Final — Vitrine Masculina DTNA"
                 width={1400}
                 height={800}

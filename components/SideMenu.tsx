@@ -86,9 +86,9 @@ const getSocialIcon = (name: string) => {
 }
 
 const IMAGES = [
-  '/nav_about.png',
-  '/nav_projects.png',
-  '/nav_contact.png'
+  '/nav_about.webp',
+  '/nav_projects.webp',
+  '/nav_contact.webp'
 ]
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {

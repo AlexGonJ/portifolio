@@ -22,18 +22,18 @@ export interface DiagonalMarqueeCarouselProps {
 }
 
 const DEFAULT_CARDS: CardItem[] = [
-  { id: "1", url: "/projects/next.png", title: "Next.js Platform" },
-  { id: "2", url: "/projects/via.png", title: "Via Express" },
-  { id: "3", url: "/projects/bag.png", title: "Branding & Design" },
-  { id: "4", url: "/projects/work1.png", title: "Web Application" },
-  { id: "5", url: "/projects/post.png", title: "Social Media" },
-  { id: "6", url: "/projects/localiza.png", title: "Localiza Multas" },
-  { id: "7", url: "/projects/mockup.jpeg", title: "UI/UX Mockup" },
-  { id: "8", url: "/projects/sport.png", title: "Marketing Digital" },
-  { id: "9", url: "/projects/golde.png", title: "Alta Conversão" },
-  { id: "10", url: "/projects/PlacaAline.png", title: "Aline Gonçalves" },
-  { id: "11", url: "/projects/enge.png", title: "Engenharia Web" },
-  { id: "12", url: "/projects/dental.png", title: "Clínica Dental" },
+  { id: "1", url: "/projects/next.webp", title: "Next.js Platform" },
+  { id: "2", url: "/projects/via.webp", title: "Via Express" },
+  { id: "3", url: "/projects/bag.webp", title: "Branding & Design" },
+  { id: "4", url: "/projects/work1.webp", title: "Web Application" },
+  { id: "5", url: "/projects/post.webp", title: "Social Media" },
+  { id: "6", url: "/projects/localiza.webp", title: "Localiza Multas" },
+  { id: "7", url: "/projects/mockup.webp", title: "UI/UX Mockup" },
+  { id: "8", url: "/projects/sport.webp", title: "Marketing Digital" },
+  { id: "9", url: "/projects/golde.webp", title: "Alta Conversão" },
+  { id: "10", url: "/projects/PlacaAline.webp", title: "Aline Gonçalves" },
+  { id: "11", url: "/projects/enge.webp", title: "Engenharia Web" },
+  { id: "12", url: "/projects/dental.webp", title: "Clínica Dental" },
 ];
 
 const Card = ({ card, className }: { card: CardItem; className?: string }) => {

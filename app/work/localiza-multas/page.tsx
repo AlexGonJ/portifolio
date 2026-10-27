@@ -95,7 +95,7 @@ export default function LocalizaMultas() {
           <section className={styles.heroWrapper}>
             <div className={styles.heroBackground}>
               <Image
-                src="/projects/localiza.png"
+                src="/projects/localiza.webp"
                 alt="Localiza Multas Background"
                 fill
                 priority
@@ -272,7 +272,7 @@ export default function LocalizaMultas() {
               <div className={styles.splitMedia}>
                 <div className={styles.imageFrame}>
                   <Image
-                    src="/projects/mockup.jpeg"
+                    src="/projects/mockup.webp"
                     alt="Mockup Localiza Multas Detalhes"
                     width={1400}
                     height={900}
@@ -284,7 +284,7 @@ export default function LocalizaMultas() {
             {/* ── FULL WIDTH IMAGE ── */}
             <div className={`${styles.showcase} project-animate`}>
               <Image
-                src="/projects/post-car1.png"
+                src="/projects/post-car1.webp"
                 alt="Apresentação Final Localiza Multas"
                 width={1400}
                 height={800}

@@ -102,11 +102,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className={`${fontDisplay.variable} ${fontSans.variable}`}>
+    <html lang="pt-BR" suppressHydrationWarning className={`${fontDisplay.variable} ${fontSans.variable}`}>
       <head>
         <StructuredData />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <CustomCursor />
           {children}

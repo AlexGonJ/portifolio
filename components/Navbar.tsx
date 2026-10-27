@@ -143,6 +143,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
             <button
               className={`${styles.burgerBtn} ${isMenuOpen ? styles.isOpen : ''}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
             >
               <span>{isMenuOpen ? 'Fechar' : t.nav.menu}</span>
               <div className={styles.burgerLines}>

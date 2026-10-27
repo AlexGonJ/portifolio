@@ -9,7 +9,7 @@ import { useLanguage } from '@/i18n/LanguageContext'
 
 const PORTFOLIO_CARDS: HaloReelItem[] = [
   {
-    src: '/projects/vitrine-masculina/hero.png',
+    src: '/projects/vitrine-masculina/hero.webp',
     alt: 'Vitrine Masculina - E-commerce Full-Stack',
     title: 'Vitrine Masculina',
     category: 'Ecommerce',
@@ -20,7 +20,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Medusa v2', 'Next.js', 'Checkout'],
   },
   {
-    src: '/projects/post-car1.png',
+    src: '/projects/post-car1.webp',
     alt: 'Localiza Multas - Plataforma Web & ERP',
     title: 'Localiza Multas',
     category: 'Web Platform & ERP',
@@ -31,7 +31,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Next.js', 'ERP', 'SEO'],
   },
   {
-    src: '/projects/moda-home.png',
+    src: '/projects/moda-home.webp',
     alt: 'Moda Agency - Plataforma Editorial & GSAP',
     title: 'Moda Agency',
     category: 'Web Editorial & GSAP',
@@ -42,7 +42,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['GSAP', 'Next.js', 'Editorial'],
   },
   {
-    src: '/projects/PlacaAline.png',
+    src: '/projects/PlacaAline.webp',
     alt: 'Aline Gonçalves - Branding & Identidade Visual',
     title: 'Aline Gonçalves',
     category: 'Branding & Identidade',
@@ -53,7 +53,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Branding', 'Design', 'Print'],
   },
   {
-    src: '/projects/via-bike/poster-stand.png',
+    src: '/projects/via-bike/poster-stand.webp',
     alt: 'Via Bike - Direção Criativa & Marketing',
     title: 'Via Bike',
     category: 'Marketing Visual & Direção',
@@ -64,7 +64,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Branding', 'Campanhas', 'Visual'],
   },
   {
-    src: '/projects/vitrine-masculina/product.png',
+    src: '/projects/vitrine-masculina/product.webp',
     alt: 'Vitrine Masculina - Vitrine de Produtos & Checkout',
     title: 'Vitrine Masculina',
     category: 'Ecommerce',
@@ -75,7 +75,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['E-commerce', 'Checkout', 'UI/UX'],
   },
   {
-    src: '/projects/localiza.png',
+    src: '/projects/localiza.webp',
     alt: 'Localiza Multas - Dashboard & Automação',
     title: 'Localiza Multas',
     category: 'Web Platform & ERP',
@@ -86,7 +86,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['ERP', 'Performance', 'Dashboard'],
   },
   {
-    src: '/projects/moda-hero.jpg',
+    src: '/projects/moda-hero.webp',
     alt: 'Moda Agency - Direção Tipográfica',
     title: 'Moda Agency',
     category: 'Web Editorial & GSAP',
@@ -97,7 +97,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Design System', 'GSAP', 'Animações'],
   },
   {
-    src: '/projects/bag.png',
+    src: '/projects/bag.webp',
     alt: 'Aline Gonçalves - Aplicações de Marca',
     title: 'Aline Gonçalves',
     category: 'Branding & Identidade',
@@ -108,7 +108,7 @@ const PORTFOLIO_CARDS: HaloReelItem[] = [
     tags: ['Branding', 'Papelaria', 'Embalagens'],
   },
   {
-    src: '/projects/via-bike/cap.jpg',
+    src: '/projects/via-bike/cap.webp',
     alt: 'Via Bike - Materiais Promocionais',
     title: 'Via Bike',
     category: 'Marketing Visual & Direção',
@@ -147,7 +147,7 @@ export default function SelectedWork() {
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-mono font-medium border border-neutral-200">
             <span>{String(currentIndex + 1).padStart(2, '0')}</span>
             <span className="text-neutral-300">/</span>
-            <span className="text-neutral-400">{String(PORTFOLIO_CARDS.length).padStart(2, '0')}</span>
+            <span className="text-neutral-600">{String(PORTFOLIO_CARDS.length).padStart(2, '0')}</span>
           </div>
         </div>
 
@@ -192,7 +192,7 @@ export default function SelectedWork() {
                 </span>
               )}
               {currentProject.year && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono text-neutral-500 bg-neutral-100 border border-neutral-200">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono text-neutral-700 bg-neutral-200 border border-neutral-200">
                   {currentProject.year}
                 </span>
               )}
@@ -272,7 +272,7 @@ export default function SelectedWork() {
                   <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-mono font-medium border border-neutral-200">
                     <span>{currentNum}</span>
                     <span className="text-neutral-300">/</span>
-                    <span className="text-neutral-400">{totalNum}</span>
+                    <span className="text-neutral-600">{totalNum}</span>
                   </div>
                 </div>
 
@@ -295,7 +295,7 @@ export default function SelectedWork() {
                           </span>
                         )}
                         {item.year && (
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-neutral-500 bg-neutral-100 border border-neutral-200">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-neutral-700 bg-neutral-200 border border-neutral-200">
                             {item.year}
                           </span>
                         )}
@@ -339,7 +339,7 @@ export default function SelectedWork() {
                 </div>
 
                 {/* Bottom: Instrução sutil e barra de progresso dos projetos */}
-                <div className="flex items-center justify-between text-xs text-neutral-400 border-t border-neutral-100 pt-4 pointer-events-auto">
+                <div className="flex items-center justify-between text-xs text-neutral-600 border-t border-neutral-100 pt-4 pointer-events-auto">
                   <span className="hidden sm:inline font-medium text-neutral-500">
                     {dragHintText}
                   </span>

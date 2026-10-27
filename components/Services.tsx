@@ -102,12 +102,12 @@ export default function Services() {
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={styles.actionAnchor}
+                            className={styles.actionAnchor} tabIndex={isOpen ? 0 : -1}
                           >
                             {detailsLinkContent}
                           </a>
                         ) : (
-                          <Link href={link} className={styles.actionAnchor}>
+                          <Link href={link} className={styles.actionAnchor} tabIndex={isOpen ? 0 : -1}>
                             {detailsLinkContent}
                           </Link>
                         )}
