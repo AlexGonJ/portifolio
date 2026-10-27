@@ -247,7 +247,7 @@ export default function Sobre() {
             <div className={styles.heroBackground}>
               <Image
                 src="/heroi1.png"
-                alt="Lexon Digital — Alexander Gonçalves"
+                alt="Lexon Digital — Soluções em Software, Sites e TI"
                 fill
                 priority
                 className={styles.heroBgImage}
@@ -376,7 +376,7 @@ export default function Sobre() {
           </section>
 
           {/* ══════════════════════════════════════════════════════════════
-              4. FOUNDER CARD
+              4. CORPO TÉCNICO & ENGENHARIA
               ══════════════════════════════════════════════════════════════ */}
           <section className={styles.founderSection}>
             <div className={styles.container}>
@@ -384,22 +384,22 @@ export default function Sobre() {
                 <div className={styles.founderPhoto}>
                   <Image
                     src="/heroi.png"
-                    alt="Alexander Gonçalves — Fundador e Diretor Criativo"
+                    alt="Lexon Digital — Engenharia de Software e Liderança em TI"
                     fill
                     priority
                     onLoad={() => ScrollTrigger.refresh()}
                   />
                 </div>
                 <div className={styles.founderInfo}>
-                  <span className={styles.tag}>O Fundador</span>
-                  <h2>Alexander<br />Gonçalves</h2>
+                  <span className={styles.tag}>Excelência & Liderança Técnica</span>
+                  <h2>Engenharia &<br />Tecnologia</h2>
                   <p>
-                    Fundador e Diretor Criativo da Lexon Digital. Atuo na interseção entre design estratégico e engenharia de software, coordenando cada projeto desde a concepção visual até o código em produção.
+                    A Lexon Digital é uma empresa de tecnologia estruturada na intersecção entre engenharia de software de alta performance, criação de sites estratégicos e soluções completas em TI e informática corporativa.
                   </p>
                   <p>
-                    Minha abordagem combina visão de negócio com execução técnica: antes de abrir qualquer ferramenta de design, eu entendo o modelo de receita do cliente, seus gargalos de conversão e o posicionamento da concorrência.
+                    Nossa equipe técnica atua com processos rigorosos de arquitetura, segurança e sustentação contínua. Atendemos com agilidade e compromisso em Belo Horizonte, Diamantina e todo o Brasil, entregando ferramentas digitais que geram previsibilidade e crescimento real.
                   </p>
-                  <span className={styles.founderRole}>Diretor Criativo & Full-Stack Developer</span>
+                  <span className={styles.founderRole}>Fábrica de Software & Soluções em TI</span>
                 </div>
               </div>
             </div>

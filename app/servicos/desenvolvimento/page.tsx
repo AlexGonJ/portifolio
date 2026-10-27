@@ -58,10 +58,10 @@ export default function DesenvolvimentoPage() {
 
               <header className={styles.hero}>
                 <div className={`${styles.heroInner} project-animate`}>
-                  <p className={styles.eyebrow}>Tecnologia & Web</p>
-                  <h1 className={styles.title}>Sistemas <br /><span style={{ color: '#c9a84c' }}>Sob Medida</span></h1>
+                  <p className={styles.eyebrow}>Software & Criação de Sites</p>
+                  <h1 className={styles.title}>Software, Sites & <br /><span style={{ color: '#c9a84c' }}>Sistemas Sob Medida</span></h1>
                   <p className={styles.subtitle}>
-                    Sistemas ERP, CRMs, E-commerces e Apps. Não vendemos código, vendemos ferramentas que reduzem custos, aumentam a produtividade da sua equipe e multiplicam faturamento.
+                    Desenvolvimento de software sob medida, criação de sites profissionais e plataformas web escaláveis. Soluções completas para empresas em Belo Horizonte, Diamantina e todo o Brasil que reduzem custos operacionais e multiplicam faturamento.
                   </p>
                   <a href="/#contato" className={styles.cta}>
                     Solicitar Orçamento

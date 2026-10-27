@@ -3,35 +3,56 @@ import { SITE_URL, SEO_CONFIG } from '@/lib/seo'
 export default function StructuredData() {
   const organizationSchema = {
     '@context': 'https://schema.org',
-    '@type': ['ProfessionalService', 'Organization'],
+    '@type': ['ProfessionalService', 'Organization', 'LocalBusiness'],
     '@id': `${SITE_URL}/#organization`,
     name: SEO_CONFIG.name,
-    alternateName: 'Alexander Gonçalves - Lexon Digital',
+    alternateName: [
+      'Lexon Digital — Software, Sites & TI',
+      'Lexon Digital Tecnologia',
+      'Lexon Digital Suporte e Informática',
+    ],
     url: SITE_URL,
     logo: `${SITE_URL}/lexon.jpeg`,
     image: `${SITE_URL}/og-image.png`,
     description: SEO_CONFIG.description,
-    founder: {
-      '@type': 'Person',
-      name: SEO_CONFIG.founder,
-      jobTitle: 'Fundador & Engenheiro de Software / Diretor Criativo',
-      url: SITE_URL,
-      sameAs: [
-        SEO_CONFIG.socials.linkedin,
-        SEO_CONFIG.socials.github,
-        SEO_CONFIG.socials.instagram,
-      ],
-    },
     email: SEO_CONFIG.contact.email,
+    telephone: SEO_CONFIG.contact.phone,
+    priceRange: '$$',
     sameAs: [
       SEO_CONFIG.socials.instagram,
       SEO_CONFIG.socials.linkedin,
       SEO_CONFIG.socials.github,
     ],
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: 'MG',
+      addressCountry: 'BR',
+      description: 'Atendimento corporativo e projetos em Diamantina, Belo Horizonte e todo o Brasil',
+    },
     areaServed: [
       {
+        '@type': 'City',
+        name: 'Diamantina',
+        containedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: 'Minas Gerais',
+        },
+      },
+      {
+        '@type': 'City',
+        name: 'Belo Horizonte',
+        containedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: 'Minas Gerais',
+        },
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Minas Gerais',
+      },
+      {
         '@type': 'Country',
-        name: 'Brazil',
+        name: 'Brasil',
       },
       {
         '@type': 'AdministrativeArea',
@@ -39,27 +60,37 @@ export default function StructuredData() {
       },
     ],
     knowsAbout: [
-      'Web Development',
-      'Next.js & React',
-      'UI/UX Design',
-      'Design Estratégico',
+      'Desenvolvimento de Software',
+      'Fábrica de Software e Sistemas Web',
+      'Tecnologia da Informação (TI)',
+      'Consultoria e Gestão em TI',
+      'Criação de Sites Profissionais e Portais',
       'Landing Pages de Alta Conversão',
+      'Suporte de TI e Sustentação de Sistemas',
+      'Informática Corporativa e Manutenção',
+      'Desenvolvimento de Software em Belo Horizonte',
+      'Criação de Sites em Belo Horizonte',
+      'Suporte de TI em Belo Horizonte',
+      'Desenvolvimento de Software em Diamantina',
+      'Criação de Sites em Diamantina',
+      'Suporte de TI e Informática em Diamantina',
+      'Next.js, React e TypeScript',
       'Search Engine Optimization (SEO)',
-      'Chatbots WhatsApp e Automação',
-      'Sistemas Web e ERPs',
-      'Identidade Visual e Branding',
+      'Chatbots WhatsApp e Automação de Processos',
+      'Sistemas Web, ERP e CRM sob Medida',
+      'Sistemas Fiscais e Emissão de Notas',
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Serviços e Soluções Digitais',
+      name: 'Catálogo de Soluções em Tecnologia, Software, Sites e TI',
       itemListElement: [
         {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Desenvolvimento Web Personalizado & Landing Pages',
+            name: 'Desenvolvimento de Software & Sistemas Sob Medida',
             description:
-              'Criação de websites institucionais, landing pages de alta conversão e sistemas sob medida com Next.js, SEO avançado e performance máxima.',
+              'Engenharia de software personalizada, sistemas ERP, CRM e plataformas corporativas desenvolvidas sob medida com alta escalabilidade e segurança.',
             url: `${SITE_URL}/servicos/desenvolvimento`,
           },
         },
@@ -67,19 +98,29 @@ export default function StructuredData() {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Marketing & Imagem (Branding e Design)',
+            name: 'Criação de Sites Profissionais & Landing Pages',
             description:
-              'Soluções completas de identidade visual, logotipos, branding estratégico, materiais gráficos e comunicação visual premium.',
-            url: `${SITE_URL}/servicos/marketing-imagem`,
+              'Criação de websites institucionais rápidos, responsivos e otimizados para SEO e conversão de clientes em Belo Horizonte, Diamantina e todo o Brasil.',
+            url: `${SITE_URL}/servicos/desenvolvimento`,
           },
         },
         {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Automações & Chatbots Inteligentes no WhatsApp',
+            name: 'Suporte de TI & Gestão de Informática Empresarial',
             description:
-              'Atendimento automatizado 24h via WhatsApp para qualificação de leads, agendamentos e suporte com scripts persuasivos.',
+              'Acompanhamento técnico contínuo, manutenção preventiva, infraestrutura e sustentação de sistemas e informática para empresas.',
+            url: `${SITE_URL}/servicos/suporte-ti`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Automações & Chatbots Inteligentes para WhatsApp',
+            description:
+              'Atendimento automatizado 24h via WhatsApp para qualificação de leads, agendamentos e suporte integrado a sistemas.',
             url: `${SITE_URL}/servicos/chatbots`,
           },
         },
@@ -87,10 +128,20 @@ export default function StructuredData() {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Sistema Fiscal de Emissão de Notas',
+            name: 'Sistema Fiscal de Emissão de Notas em Nuvem',
             description:
-              'Emissor de notas fiscais prático, seguro e integrado com as secretarias da fazenda para automatizar o faturamento.',
+              'Emissor de notas fiscais (NF-e, NFS-e) seguro, prático e integrado às secretarias da fazenda para automação de faturamento.',
             url: `${SITE_URL}/servicos/sistema-fiscal`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Marketing & Imagem (Branding e Design Estratégico)',
+            description:
+              'Identidade visual de alto padrão, posicionamento de marca, design comercial e estratégias para aumentar o valor percebido.',
+            url: `${SITE_URL}/servicos/marketing-imagem`,
           },
         },
       ],
@@ -115,42 +166,42 @@ export default function StructuredData() {
     mainEntity: [
       {
         '@type': 'Question',
-        name: 'Qual retorno posso esperar do investimento?',
+        name: 'A Lexon Digital desenvolve software e sistemas personalizados?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Clientes reportam aumento nas conversões e na percepção de valor da marca após o lançamento. Projetos bem estruturados com design e engenharia estratégica geram aumento médio de 32% no faturamento e multiplicam a taxa de conversão.',
+          text: 'Sim. Desenvolvemos softwares completos sob medida, incluindo sistemas ERP, CRM, plataformas web, painéis de gestão e integrações de APIs, projetados especificamente para a regra de negócio da sua empresa.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Por que investir em design profissional e desenvolvimento sob medida em vez de templates ou IA?',
+        name: 'Como funciona a criação de sites profissionais pela Lexon Digital?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Templates e IA entregam resultados genéricos que comunicam ao cliente que o seu negócio também é comum. Um projeto sob medida posiciona sua marca como autoridade premium, justifica preços maiores e cria uma experiência pensada para o seu cliente, carregando em milissegundos com SEO impecável.',
+          text: 'Criamos sites institucionais e landing pages de alta conversão arquitetados com Next.js, SEO avançado para ranqueamento no Google, carregamento instantâneo em milissegundos e design responsivo premium.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Qual é o prazo e como funciona o processo de desenvolvimento?',
+        name: 'A Lexon Digital oferece suporte de TI e manutenção de informática para empresas?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Projetos duram entre 2 e 8 semanas, divididos em 4 fases claras: Discovery (análise do negócio e concorrência), Demo (prototipagem e design de alta fidelidade), Build (código em Next.js com SEO e animações) e Validação (testes e suporte contínuo).',
+          text: 'Sim. Oferecemos suporte de TI contínuo, manutenção corretiva e preventiva de sistemas, gestão de infraestrutura digital, suporte técnico e consultoria em informática para manter a operação das empresas sempre estável e segura.',
         },
       },
       {
         '@type': 'Question',
-        name: 'A Lexon Digital faz desenvolvimento de software ou apenas design?',
+        name: 'A Lexon Digital atende em Belo Horizonte e Diamantina - MG?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Entregamos a solução completa ponta a ponta: do posicionamento estratégico e identidade visual até a arquitetura de software, desenvolvimento frontend e backend, APIs e publicação em produção.',
+          text: 'Sim. Atendemos com destaque regional em Belo Horizonte, Diamantina e todo o estado de Minas Gerais, prestando serviços presenciais ou remotos de desenvolvimento de software, criação de sites, suporte de TI e informática corporativa, além de clientes em todo o Brasil.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Vocês atendem clientes em todo o Brasil e no exterior?',
+        name: 'Qual o prazo médio de entrega de um projeto com a Lexon Digital?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Sim. Atendemos clientes em todo o Brasil e internacionalmente com comunicação ágil, reuniões estratégicas online e suporte contínuo.',
+          text: 'O ciclo típico dura entre 2 e 8 semanas, passando pelas etapas de Discovery (imersão no negócio), Demo (direção de arte e prototipagem), Build (engenharia de software e SEO) e Validação (testes de performance e estabilidade).',
         },
       },
     ],

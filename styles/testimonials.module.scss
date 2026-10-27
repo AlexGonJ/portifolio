@@ -44,6 +44,14 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   max-width: 18ch;
 }
 
+/* ── Carousel Wrapper ── */
+.carouselWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 /* ── Grid: equal columns, equal heights ── */
 .grid {
   display: grid;

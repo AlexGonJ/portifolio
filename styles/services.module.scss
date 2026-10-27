@@ -1,21 +1,22 @@
 .services {
-  padding: clamp(5.5rem, 10vw, 9rem) 8vw clamp(4.5rem, 9vw, 7rem);
+  padding: clamp(5.5rem, 9vw, 8.5rem) clamp(1.5rem, 5vw, 5rem) clamp(4.5rem, 8vw, 7rem);
   background:
     radial-gradient(circle at top right, rgba(166, 142, 116, 0.05), transparent 28%),
     linear-gradient(180deg, #fafafa 0%, #f3f3f6 100%);
   color: var(--color-ink, #0b0b0d);
 
   @media (max-width: 768px) {
-    padding: 4rem 6vw;
+    padding: 4rem 5vw;
   }
 }
 
 .servicesLayout {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(1.75rem, 3.2vw, 3rem);
+  grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
   align-items: start;
-  max-width: 1220px;
+  max-width: 1540px;
+  width: 100%;
   margin: 0 auto;
 
   @media (max-width: 980px) {

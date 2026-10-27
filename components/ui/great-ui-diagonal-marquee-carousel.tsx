@@ -40,7 +40,7 @@ const Card = ({ card, className }: { card: CardItem; className?: string }) => {
   return (
     <div
       className={cn(
-        "group relative h-[250px] w-[360px] sm:h-[300px] sm:w-[440px] md:h-[320px] md:w-[480px] shrink-0 cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 shadow-2xl transition-all duration-300",
+        "group relative h-[140px] w-[210px] sm:h-[220px] sm:w-[330px] md:h-[280px] md:w-[420px] shrink-0 cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 shadow-2xl transition-all duration-300",
         className,
       )}
       style={{ backgroundColor: "#14171d" }}
@@ -80,7 +80,7 @@ const MarqueeRow = ({
         )}
         style={{ "--speed": `${speed}s` } as React.CSSProperties}
       >
-        <div className="flex shrink-0 items-center gap-7 pr-7 sm:gap-9 sm:pr-9">
+        <div className="flex shrink-0 items-center gap-4 pr-4 sm:gap-7 sm:pr-7 md:gap-9 md:pr-9">
           {cards.map((card, idx) => (
             <Card
               key={`${card.id}-${idx}`}
@@ -89,7 +89,7 @@ const MarqueeRow = ({
             />
           ))}
         </div>
-        <div className="flex shrink-0 items-center gap-7 pr-7 sm:gap-9 sm:pr-9">
+        <div className="flex shrink-0 items-center gap-4 pr-4 sm:gap-7 sm:pr-7 md:gap-9 md:pr-9">
           {cards.map((card, idx) => (
             <Card
               key={`${card.id}-${idx}-copy`}
@@ -142,16 +142,24 @@ export default function DiagonalMarqueeCarousel({
         }
         .animate-marquee-left {
           animation: marquee-left var(--speed) linear infinite !important;
+          will-change: transform;
         }
         .animate-marquee-right {
           animation: marquee-right var(--speed) linear infinite !important;
+          will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-marquee-left,
+          .animate-marquee-right {
+            animation: none !important;
+          }
         }
       `,
         }}
       />
       )}
       <div
-        className="absolute z-0 flex w-[280vw] min-w-[2400px] flex-col gap-7 sm:gap-9"
+        className="absolute z-0 flex w-[320vw] sm:w-[280vw] min-w-[1200px] sm:min-w-[2400px] flex-col gap-4 sm:gap-7 md:gap-9"
         style={rotationStyle}
       >
         {/* Linha 1 */}

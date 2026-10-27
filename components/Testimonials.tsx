@@ -2,15 +2,26 @@
 
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import TestimonialCards from '@/components/ui/testimonial'
+import CircularTestimonials, { Testimonial } from '@/components/ui/circular-testimonials'
 import styles from '../styles/testimonials.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
+
+const DEFAULT_PORTRAITS: Record<string, string> = {
+  'Joanna Dias': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
+  'Rafael Martins': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
+  'Camila Souza': 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop',
+}
 
 export default function Testimonials() {
   const { t } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
-  const testimonials = t.testimonials?.items ?? []
+  const items: Testimonial[] = (t.testimonials?.items ?? []).map((item) => ({
+    quote: item.quote,
+    name: item.name,
+    designation: item.role,
+    src: (item as { src?: string }).src || DEFAULT_PORTRAITS[item.name] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+  }))
 
   // Scroll-triggered stagger animation
   useEffect(() => {
@@ -80,7 +91,7 @@ export default function Testimonials() {
     return () => ctx?.revert()
   }, [])
 
-  if (testimonials.length === 0) return null
+  if (items.length === 0) return null
 
   return (
     <section ref={sectionRef} className={styles.testimonials}>
@@ -90,7 +101,25 @@ export default function Testimonials() {
           <h2 className={styles.title}>{t.testimonials?.title}</h2>
         </div>
 
-        <TestimonialCards items={testimonials} />
+        <div data-testimonial-card className={styles.carouselWrapper}>
+          <CircularTestimonials
+            testimonials={items}
+            autoplay={true}
+            colors={{
+              name: '#0b0b0e',
+              designation: '#8c7b68',
+              testimony: '#2b2b30',
+              arrowBackground: '#111114',
+              arrowForeground: '#f5f5f7',
+              arrowHoverBackground: '#8c7b68',
+            }}
+            fontSizes={{
+              name: '1.75rem',
+              designation: '0.95rem',
+              quote: '1.15rem',
+            }}
+          />
+        </div>
 
         <div className={styles.ctaWrapper} data-testimonial-cta>
           <a href="#contato" className={styles.ctaLink}>

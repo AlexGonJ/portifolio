@@ -116,17 +116,17 @@ export default function SuporteTiPage() {
             {/* ── SUPORTE DE TI EMPRESARIAL ── */}
             <section className={`${styles.splitSection} ${styles.splitReverse} project-animate`}>
               <div className={styles.splitText}>
-                <span className={styles.sectionTag}>Suporte & Infraestrutura</span>
+                <span className={styles.sectionTag}>Suporte de TI & Informática</span>
                 <h2>
-                  Apoio Técnico para
+                  Apoio Técnico e TI para
                   <br />
                   Empresas e Equipes
                 </h2>
                 <p>
-                  Atendimento próximo e estruturado para apoiar a rotina tecnológica da sua empresa com agilidade e clareza.
+                  Atendimento estruturado para apoiar a rotina de TI, informática corporativa e sustentação de softwares da sua empresa em <strong>Belo Horizonte</strong>, <strong>Diamantina</strong> e todo o Brasil com agilidade e clareza.
                 </p>
                 <p>
-                  Auxiliamos no suporte à equipe, configuração de ambientes em nuvem, gestão de acessos, rotinas de backup e organização da infraestrutura digital do seu negócio.
+                  Auxiliamos no suporte técnico a colaboradores, consultoria em informática, configuração de ambientes em nuvem, rotinas seguras de backup e organização da infraestrutura digital do seu negócio.
                 </p>
               </div>
               <div className={styles.splitMedia}>
@@ -144,12 +144,12 @@ export default function SuporteTiPage() {
             {/* ── FINAL CTA ── */}
             <section className={`${styles.splitSection} project-animate`} style={{ textAlign: 'center', display: 'block' }}>
               <div style={{ maxWidth: '42rem', margin: '0 auto' }}>
-                <span className={styles.sectionTag}>Atendimento Ágil</span>
+                <span className={styles.sectionTag}>Atendimento em Belo Horizonte e Diamantina</span>
                 <h2 style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>
-                  Sua operação acompanhada de perto.
+                  Sua operação tecnológica acompanhada de perto.
                 </h2>
                 <p style={{ marginBottom: '2rem' }}>
-                  Conte com suporte técnico contínuo ou sob demanda para manter seus sistemas e sua estrutura funcionando sem imprevistos.
+                  Conte com suporte de TI e informática contínuo ou sob demanda para manter seus sistemas, softwares, sites e estrutura operacional funcionando com máxima estabilidade e segurança.
                 </p>
                 <a
                   href="/#contato"

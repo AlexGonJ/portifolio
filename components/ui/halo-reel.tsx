@@ -15,23 +15,30 @@ import { cn } from "@/lib/utils";
  * Cards ride an ellipse. Card i sits at θ = i·step + rotation on an
  * ellipse of radii (rx, ry):
  *
- *   x = rx·cos θ      y = ry·sin θ
+ *   x = rx·cos θ      y = ry·sin θ      scale = min + (1−min)·(cos θ + 1)/2
  *
- * Progressive 3D Depth Curve:
- * The front card (cos θ ≈ 1) expands dramatically to `maxScale`.
- * Surrounding cards scale down exponentially in sequence (`depthExponent`),
- * accompanied by subtle 3D tilt (rotateY) and lighting attenuation (brightness & opacity),
- * producing an authentic, tactile 3D perspective stack.
+ * cos θ does all the work: it places the card, sizes it, and — through the
+ * scale — stacks it. One number driving three properties is why a card that
+ * looks nearer *is* nearer; the stacking can never disagree with the
+ * perspective.
+ *
+ * One `rotation` motion value drives the whole ring. Every card derives its
+ * transform from it through `useTransform`, so a spin never re-renders React
+ * — the ring turns at 60 fps whether it is autoplaying, being dragged, or
+ * settling onto a snap.
  * ─────────────────────────────────────────────────────────────── */
 
 export type HaloReelItem = {
+  /** Image for the card. Omit it and the card falls back to the text face. */
   src?: string;
   alt?: string;
+  /** Text face, used when there is no `src`. Both default to the shadcn
+   *  `card` tokens, so a text card themes itself in light and dark. */
   bgColor?: string;
   textColor?: string;
   title?: string;
   subtitle?: string;
-  category?: string; // e.g. "Ecommerce"
+  category?: string;
   role?: string;
   href?: string;
   year?: string;
@@ -43,39 +50,39 @@ export type HaloReelItem = {
 export interface HaloReelProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
   items: HaloReelItem[];
-  /** Card base width in px. @default 140 */
+  /** Card width in px at the front of the ring. @default 130 */
   cardWidth?: number;
-  /** Card base height in px. @default 195 */
+  /** Card height in px at the front of the ring. @default 180 */
   cardHeight?: number;
-  /** Scale of the card at the far back side of the ring. @default 0.35 */
+  /** Scale of the card at the far side of the ring. @default 0.4 */
   minScale?: number;
-  /** Scale of the active card in the front. @default 1.3 */
-  maxScale?: number;
-  /** Exponent controlling how rapidly cards shrink away from the active front card. @default 2.7 */
-  depthExponent?: number;
-  /** Horizontal radius as a fraction of the stage width. @default 0.44 */
+  /** Horizontal radius as a fraction of the stage width. @default 0.45 */
   radiusXRatio?: number;
-  /** Where the ellipse is centred across the stage. `0` pins it to the left edge. @default 0.02 */
+  /** Where the ellipse is centred across the stage. `0` pins it to the left
+   *  edge, so the far half of the ring is clipped away. @default 0 */
   centerXRatio?: number;
   /** Vertical radius as a fraction of the stage height. @default 0.36 */
   radiusYRatio?: number;
   /** Rotate one card forward on a timer. @default true */
   autoPlay?: boolean;
-  /** Time (ms) a card is held at the front before the next step. @default 1800 */
+  /** Time (ms) a card is held at the front before the next step. @default 1000 */
   holdDuration?: number;
-  /** Duration (ms) of one step. @default 800 */
+  /** Duration (ms) of one step. @default 700 */
   stepDuration?: number;
   /** Hold the autoplay while a pointer rests on a card. @default true */
   pauseOnHover?: boolean;
   /** Spin the ring by dragging it. @default true */
   draggable?: boolean;
-  /** Gap between neighbouring cards. @default 1.25 */
+  /** Gap between neighbouring cards at the widest point of the ring, in card
+   *  widths. `1` is just touching, above that they sit slightly apart, below
+   *  that they overlap. The ring repeats `items` until it holds this spacing,
+   *  so a wider ring means more cards rather than bigger gaps. @default 1.2 */
   spread?: number;
   /** Ceiling on the number of cards drawn around the ring. @default 64 */
   maxCards?: number;
   /** Multiplier on the drag rotation. @default 1 */
   dragSensitivity?: number;
-  /** Node parked in the right half of the section. Can be a React node or render function. */
+  /** Node parked in the middle / side of the ring, behind the cards. */
   centerLabel?:
     | React.ReactNode
     | ((activeItem: HaloReelItem, activeIndex: number) => React.ReactNode);
@@ -94,20 +101,18 @@ const clamp = (v: number, lo: number, hi: number) =>
 
 export function HaloReel({
   items,
-  cardWidth = 140,
-  cardHeight = 195,
-  minScale = 0.35,
-  maxScale = 1.3,
-  depthExponent = 2.7,
-  radiusXRatio = 0.44,
-  centerXRatio = 0.02,
+  cardWidth = 130,
+  cardHeight = 180,
+  minScale = 0.4,
+  radiusXRatio = 0.45,
+  centerXRatio = 0,
   radiusYRatio = 0.36,
   autoPlay = true,
-  holdDuration = 1800,
-  stepDuration = 800,
+  holdDuration = 1000,
+  stepDuration = 700,
   pauseOnHover = true,
   draggable = true,
-  spread = 1.25,
+  spread = 1.2,
   maxCards = 64,
   dragSensitivity = 1,
   centerLabel,
@@ -140,13 +145,17 @@ export function HaloReel({
   }, []);
 
   const isCompact = size.w > 0 && size.w < 768;
-  const effectiveRadiusXRatio = isCompact ? 0.36 : radiusXRatio;
   const effectiveCenterXRatio = isCompact ? 0.01 : centerXRatio;
+  const effectiveRadiusXRatio = isCompact ? 0.38 : radiusXRatio;
 
   const radiusX = size.w * effectiveRadiusXRatio;
   const radiusY = size.h * radiusYRatio;
 
-  // Sized by the stage and filled by repeating items
+  // The ring is sized by the stage and *filled* by repeating the items — the
+  // one way a wide ring and close cards can both be true. Neighbours sit
+  // `radius × step` apart at the widest point of each axis, so the tighter
+  // axis decides how many slots the ring needs; below that number a wider ring
+  // just means bigger gaps.
   const slots = clamp(
     Math.ceil(
       TAU *
@@ -160,7 +169,7 @@ export function HaloReel({
   );
   const step = slots ? TAU / slots : 0;
 
-  // Active item tracking
+  // Active item tracking to sync with the project info display
   const [activeSlot, setActiveSlot] = React.useState(0);
 
   React.useEffect(() => {
@@ -186,7 +195,9 @@ export function HaloReel({
   const activeIndex = count ? ((activeSlot % count) + count) % count : 0;
   const activeItem = items[activeIndex] ?? items[0];
 
-  // Continuous responsive fit
+  // Cards shrink continuously to fit whatever box they are given, instead of
+  // stepping at a breakpoint — a ring that jumps at 768px reads as broken on
+  // every width either side of it.
   const fit = size.w
     ? clamp(
         Math.min(
@@ -200,7 +211,8 @@ export function HaloReel({
   const cardW = cardWidth * fit;
   const cardH = cardHeight * fit;
 
-  // Autoplay
+  // Autoplay. Each step schedules the next, so a paused tick costs a re-check
+  // and nothing else — no interval keeps firing behind a held pointer.
   React.useEffect(() => {
     if (!autoPlay || reduceMotion || !count) return;
 
@@ -237,7 +249,7 @@ export function HaloReel({
     stepDuration,
   ]);
 
-  /* ── drag & click ─────────────────────────────────────────── */
+  /* ── drag ──────────────────────────────────────────────────── */
 
   const dragRef = React.useRef({
     left: 0,
@@ -250,6 +262,8 @@ export function HaloReel({
 
   const pointerAngle = (e: React.PointerEvent) => {
     const { left, top } = dragRef.current;
+    // Normalising by the radii un-squashes the ellipse, so a drag along its
+    // flat side turns the ring by the same amount as one along its tall side.
     return Math.atan2(
       (e.clientY - top - size.h / 2) / (radiusY || 1),
       (e.clientX - left - size.w * effectiveCenterXRatio) / (radiusX || 1),
@@ -282,6 +296,8 @@ export function HaloReel({
       dragRef.current.moved = true;
     }
     const angle = pointerAngle(e);
+    // Wrap into (−π, π] so crossing the seam behind the ring is one small
+    // delta and not a full turn in the wrong direction.
     const delta =
       ((angle - dragRef.current.angle + Math.PI * 3) % TAU) - Math.PI;
     dragRef.current.angle = angle;
@@ -294,6 +310,7 @@ export function HaloReel({
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
+    // Settle onto the nearest card — the ring never rests between two.
     const snapped = Math.round(rotation.get() / step) * step;
     if (reduceMotion) {
       rotation.set(snapped);
@@ -321,8 +338,8 @@ export function HaloReel({
       return;
     }
     animate(rotation, target, {
-      duration: 0.65,
-      ease: [0.16, 1, 0.3, 1],
+      duration: stepDuration / 1000,
+      ease: [0.4, 0, 0.2, 1],
     });
   };
 
@@ -353,76 +370,24 @@ export function HaloReel({
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         className,
       )}
-      style={{
-        perspective: 1200,
-        ...style,
-      }}
+      style={style}
       {...props}
     >
-      {showCenterLabel ? (
+      {showCenterLabel && centerLabel ? (
         <div
-          className="pointer-events-none absolute inset-y-0 z-0 flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-6 sm:py-10"
+          className="pointer-events-none absolute inset-y-0 z-0 flex items-center justify-center px-4"
+          // Parked in whatever space the ring leaves rather than at a fixed
+          // spot, so it can never end up underneath the cards at any width.
           style={{
             left: isCompact
-              ? Math.max(160, size.w * 0.42)
-              : size.w * effectiveCenterXRatio + radiusX + (cardW * maxScale) / 2 + 28,
+              ? Math.max(140, size.w * 0.42)
+              : size.w * effectiveCenterXRatio + radiusX + cardW / 2 + 20,
             right: 0,
           }}
         >
-          {centerLabel ? (
-            typeof centerLabel === "function" ? (
-              centerLabel(activeItem, activeIndex)
-            ) : (
-              centerLabel
-            )
-          ) : (
-            <>
-              {/* Top: Selected works */}
-              <div className="flex items-center gap-3">
-                <span className="inline-block h-2 w-2 rounded-full bg-neutral-900 animate-pulse" />
-                <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">
-                  Selected Works
-                </span>
-                <span className="text-xs font-mono text-neutral-400 ml-2">
-                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                  {String(count).padStart(2, "0")}
-                </span>
-              </div>
-
-              {/* Middle: Project title & Category */}
-              <div className="my-auto pointer-events-auto flex flex-col items-start gap-2 max-w-lg">
-                {activeItem?.category && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium tracking-wider uppercase bg-neutral-100 text-neutral-800 border border-neutral-200">
-                    {activeItem.category}
-                  </span>
-                )}
-                <h3 className="text-3xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-neutral-900 leading-[1.1]">
-                  {activeItem?.title}
-                </h3>
-                {activeItem?.description && (
-                  <p className="text-sm sm:text-base text-neutral-600 line-clamp-2 mt-2">
-                    {activeItem.description}
-                  </p>
-                )}
-                {activeItem?.href && (
-                  <a
-                    href={activeItem.href}
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 hover:text-neutral-600 transition-colors group"
-                  >
-                    <span>Ver projeto</span>
-                    <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                      ↗
-                    </span>
-                  </a>
-                )}
-              </div>
-
-              {/* Bottom: hints */}
-              <div className="flex items-center justify-between text-xs text-neutral-400">
-                <span>Arraste para explorar</span>
-              </div>
-            </>
-          )}
+          {typeof centerLabel === "function"
+            ? centerLabel(activeItem, activeIndex)
+            : centerLabel}
         </div>
       ) : null}
 
@@ -430,6 +395,9 @@ export function HaloReel({
         <WheelCard
           key={i}
           item={items[i % count]}
+          // The ring repeats `items` to stay dense. A screen reader should hear
+          // each image once, not once per lap, so only the first pass is real
+          // content and the copies are decoration.
           decorative={i >= count}
           index={i}
           step={step}
@@ -438,8 +406,6 @@ export function HaloReel({
           radiusY={radiusY}
           centerXRatio={effectiveCenterXRatio}
           minScale={minScale}
-          maxScale={maxScale}
-          depthExponent={depthExponent}
           width={cardW}
           height={cardH}
           onHoverChange={(hovered) => {
@@ -478,8 +444,6 @@ function WheelCard({
   radiusY,
   centerXRatio,
   minScale,
-  maxScale,
-  depthExponent,
   width,
   height,
   decorative,
@@ -494,8 +458,6 @@ function WheelCard({
   radiusY: number;
   centerXRatio: number;
   minScale: number;
-  maxScale: number;
-  depthExponent: number;
   width: number;
   height: number;
   decorative: boolean;
@@ -507,35 +469,11 @@ function WheelCard({
 
   const x = useTransform(cos, (c) => c * radiusX);
   const y = useTransform(sin, (s) => s * radiusY);
-
-  // Progressive 3D scaling with exponential curve:
-  // Active front card reaches `maxScale` (e.g. 1.3+).
-  // Near cards drop to ~1.05, mid cards to ~0.65, back cards to ~0.35.
-  const scale = useTransform(cos, (c) => {
-    const t = Math.max(0, (c + 1) / 2);
-    const curved = Math.pow(t, depthExponent);
-    return minScale + (maxScale - minScale) * curved;
-  });
-
-  // Strict z-indexing based on scale ensures the front card is always on top
+  const scale = useTransform(
+    cos,
+    (c) => minScale + (1 - minScale) * ((c + 1) / 2),
+  );
   const zIndex = useTransform(scale, (s) => Math.round(s * 1000));
-
-  // Opacity falloff into the depth
-  const opacity = useTransform(cos, (c) => {
-    const t = Math.max(0, (c + 1) / 2);
-    return 0.35 + 0.65 * Math.pow(t, 1.4);
-  });
-
-  // 3D rotation along the ellipse curve
-  const rotateY = useTransform(sin, (s) => s * -15);
-  const rotateZ = useTransform(sin, (s) => s * -2.5);
-
-  // Depth lighting attenuation
-  const filter = useTransform(cos, (c) => {
-    const t = Math.max(0, (c + 1) / 2);
-    const b = 0.70 + 0.30 * Math.pow(t, 1.6);
-    return `brightness(${b.toFixed(3)})`;
-  });
 
   return (
     <motion.div
@@ -550,19 +488,15 @@ function WheelCard({
         y,
         scale,
         zIndex,
-        opacity,
-        rotateY,
-        rotateZ,
-        filter,
         width,
         height,
         left: `${centerXRatio * 100}%`,
         top: "50%",
+        borderRadius: 0,
         marginLeft: -width / 2,
         marginTop: -height / 2,
-        transformStyle: "preserve-3d",
       }}
-      className="absolute overflow-hidden rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.22)] border border-black/10 bg-neutral-900 cursor-pointer transition-shadow hover:shadow-[0_28px_56px_rgba(0,0,0,0.32)]"
+      className="absolute overflow-hidden shadow-2xl rounded-none cursor-pointer bg-neutral-900"
     >
       {item.src ? (
         <img
@@ -573,14 +507,14 @@ function WheelCard({
         />
       ) : (
         <div
-          className="flex h-full w-full flex-col items-center justify-center gap-1 bg-neutral-900 p-3 text-center text-white"
+          className="flex h-full w-full flex-col items-center justify-center gap-1 bg-card p-3 text-center text-card-foreground"
           style={{
             backgroundColor: item.bgColor,
             color: item.textColor,
           }}
         >
           {item.title ? (
-            <span className="text-xl font-semibold leading-none">
+            <span className="text-2xl font-black leading-none">
               {item.title}
             </span>
           ) : null}

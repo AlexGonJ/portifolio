@@ -8,21 +8,24 @@ export const en = {
     socials: 'Socials',
   },
   hero: {
+    eyebrow: 'Strategic Design & Engineering — Lexon Digital',
     title1: 'Brands that sell more start with',
     title2: 'decisions that convert',
     description:
-      'Visual strategy, websites and identities that turn visitors into customers with premium design that positions your brand above the competition.',
+      'Custom software engineering, high-converting websites, IT solutions and computer support for businesses seeking market leadership.',
     ctaEyebrow: 'Next step',
     ctaLabel: 'Request a quote',
     ctaSecondaryLabel: 'See the work',
+    hint: 'Move across the form',
+    hintTouch: 'Touch the form',
     scrollText: 'Scroll',
-    whatsappTooltip: 'Chat with me',
+    whatsappTooltip: 'Contact us',
   },
   about: {
     title:
-      'We craft brands, websites, and digital ecosystems that drive sales and position companies as industry leaders.',
+      'We engineer custom software, build high-performance websites, and provide enterprise IT support to accelerate your company.',
     description:
-      'Design and technology are not decorations—they are the strategic engine behind your company\'s growth. Our agency combines brand positioning, user experience, and high-performance engineering to accelerate your results.',
+      'Lexon Digital combines high-performance software engineering, conversion-focused web development, IT management, and computer systems support. Serving clients across Belo Horizonte, Diamantina, and throughout Brazil and worldwide.',
     ctaText: 'Explore our process',
     availableText: 'Agency Structure',
   },
@@ -30,13 +33,13 @@ export const en = {
     label: 'Services & Solutions',
     title: 'What we build for your business.',
     description:
-      'Technological and visual solutions developed to optimize processes, strengthen your brand and boost sales.',
+      'Complete solutions in software engineering, website development, IT infrastructure, and technical support designed to drive scalable growth.',
     items: [
       {
-        title: 'Web Development',
+        title: 'Software & Website Development',
         description:
-          'Institutional websites, landing pages and custom web systems with premium appearance, high performance and conversion focus.',
-        details: ['Institutional sites & Landing Pages', 'Advanced SEO optimization', 'Custom web systems', 'Conversion-focused interfaces'],
+          'Institutional websites, high-converting landing pages, and bespoke software/ERP systems with maximum performance and SEO.',
+        details: ['Custom Software & Web Systems', 'Websites & High-Converting Landing Pages', 'Advanced Google SEO Optimization', 'Serving BH, Diamantina & Nationwide'],
         link: '/servicos/desenvolvimento',
         isExternal: false
       },
@@ -81,10 +84,10 @@ export const en = {
         isExternal: false
       },
       {
-        title: 'IT & Systems Support',
+        title: 'IT Support & Systems Management',
         description:
-          'Technical support, preventive maintenance, and continuous evolution for your business systems and digital infrastructure.',
-        details: ['Systems maintenance & updates', 'Business technical support', 'Monitoring & stability'],
+          'Expert IT support, preventive maintenance, infrastructure management, and continuous evolution for business operations.',
+        details: ['IT Support & Systems Maintenance', 'Corporate IT solutions', 'Serving BH, Diamantina & Nationwide'],
         link: '/servicos/suporte-ti',
         isExternal: false
       },
@@ -240,24 +243,24 @@ export const en = {
     title: 'Frequently asked questions.',
     questions: [
       {
-        q: 'What return can I expect from this investment?',
-        a: "Clients report increases in conversions and brand value perception after launch. This isn't a cost, it's the highest-ROI investment you can make in your business.",
+        q: 'What return can I expect from investing with Lexon Digital?',
+        a: "Clients report notable increases in conversions and brand valuation after launch. Our solutions blend high-performance software engineering with strategic design to maximize ROI and operational velocity.",
       },
       {
-        q: 'Why invest in professional design instead of templates or AI?',
-        a: "Templates and AI deliver generic results that signal your business is generic too. They don't understand your brand, your audience, or your strategy. A custom project positions your brand as premium, justifies higher prices, and creates an experience designed for your customer, something no template or prompt can replicate.",
+        q: 'Why invest in custom software and bespoke websites instead of templates or generic AI?',
+        a: "Templates and generic tools deliver sluggish, generic outputs that fail to reflect your business value. Custom engineering ensures millisecond speed, dominant Google SEO, and flawless execution tailored to your specific business logic.",
       },
       {
-        q: "What's the timeline and process?",
-        a: 'Projects typically take 2 to 8 weeks with clear phases: strategic briefing, visual proposal, development, and delivery with support. You follow every step and get revisions included to ensure the final result drives real impact.',
+        q: 'Does Lexon Digital serve companies in Belo Horizonte and Diamantina?',
+        a: 'Yes! We have an established regional presence in Belo Horizonte (BH), Diamantina, and throughout Minas Gerais, delivering software development, website creation, IT support, and enterprise systems, as well as nationwide and global remote delivery.',
       },
       {
-        q: 'Do you also do development or just design?',
-        a: "I deliver the complete solution: from strategic positioning to production code. This means the design doesn't get lost in translation, every visual detail converts exactly as intended, using modern technologies and high-performance architecture.",
+        q: 'Does Lexon Digital develop custom software and provide IT support, or just web design?',
+        a: "We deliver full-cycle solutions: from strategic positioning and high-converting websites to complex software engineering, ERP/CRM systems, continuous IT support, and cloud infrastructure.",
       },
       {
-        q: 'Do you take international projects?',
-        a: 'Yes. I work with clients in Brazil and worldwide, with async processes and clear checkpoints. Time zones are never an obstacle, results are what matter.',
+        q: 'What is the average project timeline and process?',
+        a: 'Projects typically span 2 to 8 weeks through structured phases: Discovery (strategic immersion), Demo (UI/UX architecture and prototyping), Build (software engineering and SEO), and Validation with continuous support.',
       },
     ],
     ctaText: 'Questions resolved? Let\'s talk',
@@ -268,7 +271,7 @@ export const en = {
     ctaText: 'Want results like these?',
     items: [
       {
-        quote: 'Alex delivered much more than a website — he delivered a sales tool. Our organic traffic tripled and conversion rate increased 47% in the first month.',
+        quote: 'Lexon Digital delivered much more than a website — they delivered a sales engine. Our organic traffic tripled and conversion rate increased 47% in the first month.',
         name: 'Joanna Dias',
         role: 'Lawyer — Joanna Dias Office',
       },
@@ -278,7 +281,7 @@ export const en = {
         role: 'CEO — De Olho Multas',
       },
       {
-        quote: 'Professionalism and strategic vision. Alex doesn\'t just understand design, he understands business. Every visual decision was backed by conversion logic.',
+        quote: 'Professionalism and strategic vision. The Lexon team doesn\'t just understand technology and design, they understand business. Every decision was backed by conversion logic.',
         name: 'Camila Souza',
         role: 'Marketing Director — VIA Express',
       },
@@ -286,16 +289,16 @@ export const en = {
   },
   footer: {
     topLine1: 'Strategic projects for brands that want to sell more',
-    topLine2: 'Available worldwide',
+    topLine2: 'Available in Belo Horizonte, Diamantina & Worldwide',
     kicker: 'Final step',
     title1: 'YOUR RESULT',
     title2: 'STARTS IN THE NEXT',
     title3: 'CONVERSATION',
     copy:
-      "While you're thinking, your competitor is already investing in digital presence. Strategic design is the difference between growing and falling behind.",
+      "While you're thinking, your competitor is already investing in digital presence and software. Strategic engineering is the difference between growing and falling behind.",
     orbOrbit: 'REQUEST A QUOTE • REQUEST A QUOTE •',
     orbEyebrow: 'Start a project',
-    orbLabel: 'Talk to me',
+    orbLabel: 'Contact us',
     orbMeta: 'Response within 24h',
     localTime: 'Local Time',
     privacyPolicy: 'Privacy Policy',
@@ -303,7 +306,7 @@ export const en = {
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/lexondigital/' },
     { label: 'WhatsApp', url: '/whatsapp' },
   ],
   cookieConsent: {

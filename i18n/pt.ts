@@ -10,21 +10,24 @@ export const pt: TranslatorProps = {
     socials: 'Redes Sociais',
   },
   hero: {
+    eyebrow: 'Software, Sites & Soluções em TI — Lexon Digital',
     title1: 'Marcas que vendem mais começam com',
     title2: 'decisões que convertem',
     description:
-      'Estratégia visual, sites e identidades que transformam visitantes em clientes com design premium que posiciona sua marca acima da concorrência.',
+      'Engenharia de software sob medida, criação de sites de alta conversão, soluções em TI e suporte de informática para empresas que buscam liderança no mercado.',
     ctaEyebrow: 'Próximo passo',
     ctaLabel: 'Solicitar orçamento',
     ctaSecondaryLabel: 'Ver projetos',
+    hint: 'Mova o cursor pela forma',
+    hintTouch: 'Toque na forma',
     scrollText: 'Scroll',
-    whatsappTooltip: 'Fale comigo',
+    whatsappTooltip: 'Fale conosco',
   },
   about: {
     title:
-      'Criamos marcas, sites e ecossistemas digitais que impulsionam vendas e posicionam empresas como líderes do seu segmento.',
+      'Desenvolvemos software sob medida, criamos sites profissionais e fornecemos suporte de TI para empresas que buscam liderança e escala.',
     description:
-      'Design e tecnologia não são ornamentos, são a engrenagem estratégica por trás do crescimento da sua empresa. Nossa agência une posicionamento de marca, experiência de usuário e engenharia de alta performance para acelerar seus resultados.',
+      'A Lexon Digital é uma empresa de tecnologia que une engenharia de software de alta performance, criação de sites de alta conversão, gestão de TI e suporte de informática. Com atendimento de referência em Belo Horizonte, Diamantina e todo o Brasil, aceleramos os resultados da sua operação.',
     ctaText: 'Conheça nosso processo',
     availableText: 'Estrutura de Agência',
   },
@@ -32,13 +35,13 @@ export const pt: TranslatorProps = {
     label: 'Serviços & Soluções',
     title: 'O que construímos para sua empresa.',
     description:
-      'Soluções tecnológicas e visuais desenvolvidas para otimizar processos, fortalecer sua marca e impulsionar vendas.',
+      'Soluções completas em software, criação de sites, TI, suporte e informática desenvolvidas para otimizar processos e impulsionar vendas.',
     items: [
       {
-        title: 'Desenvolvimento Web',
+        title: 'Desenvolvimento de Software & Sites',
         description:
-          'Sites institucionais, landing pages e sistemas web sob medida com aparência premium, alta performance e foco em conversão.',
-        details: ['Sites institucionais & Landing Pages', 'Otimização avançada para SEO', 'Sistemas web personalizados', 'Interfaces focadas em conversão'],
+          'Criação de sites institucionais, landing pages de alta conversão e desenvolvimento de softwares e sistemas web sob medida com foco em performance e SEO.',
+        details: ['Software sob medida & Sistemas Web', 'Criação de Sites e Landing Pages', 'Otimização avançada para SEO Google', 'Atendimento BH, Diamantina e Brasil'],
         link: '/servicos/desenvolvimento',
         isExternal: false
       },
@@ -83,10 +86,10 @@ export const pt: TranslatorProps = {
         isExternal: false
       },
       {
-        title: 'Suporte de TI & Sistemas',
+        title: 'Suporte de TI & Informática',
         description:
-          'Acompanhamento técnico, manutenção preventiva e evolução contínua para os sistemas e a estrutura digital da sua empresa.',
-        details: ['Manutenção e evolução de sistemas', 'Suporte técnico empresarial', 'Monitoramento e estabilidade'],
+          'Acompanhamento técnico especializado, consultoria em informática, manutenção preventiva e suporte contínuo para sistemas e infraestrutura empresarial.',
+        details: ['Suporte de TI e manutenção de sistemas', 'Informática corporativa para empresas', 'Atendimento em BH, Diamantina e todo o Brasil'],
         link: '/servicos/suporte-ti',
         isExternal: false
       },
@@ -242,24 +245,24 @@ export const pt: TranslatorProps = {
     title: 'Perguntas frequentes.',
     questions: [
       {
-        q: 'Qual retorno posso esperar do investimento?',
-        a: 'Clientes reportam aumento nas conversões e na percepção de valor da marca após o lançamento. Isso não é custo, é o investimento com maior ROI que você pode fazer no seu negócio.',
+        q: 'Qual retorno posso esperar ao investir em soluções com a Lexon Digital?',
+        a: 'Clientes reportam aumento expressivo nas conversões e na percepção de valor da marca após a implementação. Nossos projetos unem engenharia de software e design estratégico para gerar maior ROI e eficiência operacional.',
       },
       {
-        q: 'Por que investir em design profissional em vez de usar templates ou IA?',
-        a: 'Templates e IA entregam resultados genéricos que comunicam que seu negócio também é. Eles não entendem a sua marca, seu público ou sua estratégia. Um projeto sob medida posiciona sua marca como premium, justifica preços maiores e cria uma experiência pensada para o seu cliente, algo que nenhum template ou prompt consegue replicar.',
+        q: 'Por que investir em software sob medida e sites profissionais em vez de usar templates genéricos?',
+        a: 'Templates e IA genérica entregam resultados lentos e engessados. Um projeto sob medida posiciona sua empresa como referência, garante SEO com carregamento em milissegundos e atende com precisão às necessidades exclusivas da sua operação.',
       },
       {
-        q: 'Qual é o prazo e como funciona o processo?',
-        a: 'Projetos costumam durar entre 2 e 8 semanas, com etapas claras: briefing estratégico, proposta visual, desenvolvimento e entrega com suporte. Você acompanha cada fase e tem revisões incluídas para garantir que o resultado final gere impacto real.',
+        q: 'A Lexon Digital atende empresas em Belo Horizonte e Diamantina?',
+        a: 'Sim! Atendemos com destaque regional em Belo Horizonte (BH), Diamantina e em todo o estado de Minas Gerais com desenvolvimento de software, criação de sites, suporte de TI e informática corporativa, além de projetos em todo o Brasil.',
       },
       {
-        q: 'Você também faz desenvolvimento ou só design?',
-        a: 'Entrego a solução completa: do posicionamento estratégico ao código em produção. Isso significa que o design não se perde na tradução, cada detalhe visual se transforma exatamente no que converte, usando tecnologias modernas e arquitetura de alta performance.',
+        q: 'A Lexon Digital desenvolve software e oferece suporte em TI ou apenas criação de sites?',
+        a: 'Oferecemos soluções completas ponta a ponta: da criação de sites institucionais e landing pages até desenvolvimento de software sob medida, sistemas ERP/CRM, suporte de TI contínuo e gestão de informática.',
       },
       {
-        q: 'Você pega projetos internacionais?',
-        a: 'Sim. Trabalho com clientes no Brasil e no exterior, com processos assíncronos e checkpoints claros. Fuso horário nunca foi obstáculo, resultado é o que importa.',
+        q: 'Qual é o prazo médio de entrega de um projeto?',
+        a: 'Projetos costumam durar entre 2 e 8 semanas, divididos em fases estruturadas: Discovery (imersão no negócio), Demo (direção visual e arquitetura), Build (engenharia de software e SEO) e Validação com suporte contínuo.',
       },
     ],
     ctaText: 'Dúvidas resolvidas? Vamos conversar',
@@ -270,7 +273,7 @@ export const pt: TranslatorProps = {
     ctaText: 'Quer resultados assim?',
     items: [
       {
-        quote: 'O Alex entregou muito mais do que um site — entregou uma ferramenta de vendas. Nosso tráfego orgânico triplicou e a taxa de conversão subiu 47% no primeiro mês.',
+        quote: 'A Lexon Digital entregou muito mais do que um site — entregou uma ferramenta de vendas. Nosso tráfego orgânico triplicou e a taxa de conversão subiu 47% no primeiro mês.',
         name: 'Joanna Dias',
         role: 'Advogada — Escritório Joanna Dias',
       },
@@ -280,7 +283,7 @@ export const pt: TranslatorProps = {
         role: 'CEO — De Olho Multas',
       },
       {
-        quote: 'Profissionalismo e visão estratégica. O Alex não só entende de design, ele entende de negócio. Cada decisão visual foi justificada com lógica de conversão.',
+        quote: 'Profissionalismo e visão estratégica. A equipe da Lexon não só entende de tecnologia e design, entende de negócio. Cada decisão técnica e visual foi justificada com lógica de conversão.',
         name: 'Camila Souza',
         role: 'Diretora de Marketing — VIA Express',
       },
@@ -288,16 +291,16 @@ export const pt: TranslatorProps = {
   },
   footer: {
     topLine1: 'Projetos estratégicos para marcas que querem vender mais',
-    topLine2: 'Disponível remotamente',
+    topLine2: 'Disponível em Belo Horizonte, Diamantina e todo o Brasil',
     kicker: 'Último passo',
     title1: 'SEU RESULTADO',
     title2: 'COMEÇA NA PRÓXIMA',
     title3: 'CONVERSA',
     copy:
-      'Enquanto você pensa, seu concorrente já está investindo em presença digital. Design estratégico é a diferença entre crescer ou ficar para trás.',
+      'Enquanto você pensa, seu concorrente já está investindo em tecnologia e presença digital. Engenharia de software e design estratégico são a diferença entre crescer ou ficar para trás.',
     orbOrbit: 'SOLICITE UM ORÇAMENTO • SOLICITE UM ORÇAMENTO •',
     orbEyebrow: 'Começar um projeto',
-    orbLabel: 'Fale comigo',
+    orbLabel: 'Fale conosco',
     orbMeta: 'Resposta em até 24h',
     localTime: 'Hora local',
     privacyPolicy: 'Política de Privacidade',
@@ -305,7 +308,7 @@ export const pt: TranslatorProps = {
   },
   socialLinks: [
     { label: 'Instagram', url: 'https://www.instagram.com/lexon.digital/' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/alexander-goncalvesdev/' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/lexondigital/' },
     { label: 'WhatsApp', url: '/whatsapp' },
   ],
   cookieConsent: {

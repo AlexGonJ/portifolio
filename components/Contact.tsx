@@ -38,9 +38,9 @@ export default function Contact() {
       {/* ── Background: Great UI Diagonal Marquee Carousel com as imagens reais da Lexon ── */}
       <div className={styles.carouselBackdrop} aria-hidden="true">
         <DiagonalMarqueeCarousel
-          animated={false}
-          baseSpeed={72}
-          angle={-22}
+          animated={true}
+          baseSpeed={85}
+          angle={-20}
           className="absolute -inset-16 h-[calc(100%+8rem)] max-h-none w-[calc(100%+8rem)] max-w-none"
         />
         <div className={styles.carouselOverlay} />

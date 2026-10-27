@@ -112,8 +112,8 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
     ...(pathname !== '/' ? [{ label: 'Home', href: '/', index: -1 }] : []),
     { label: t.nav.about, href: pathname === '/' ? 'sobre' : '/sobre', index: 0 },
     { label: t.nav.projects, href: pathname === '/' ? 'projetos' : '/work', index: 1 },
-    { label: lang === 'pt' ? 'Produtos' : 'Products', href: '/products', index: 2 },
-    { label: t.nav.contact, href: pathname === '/' ? '#contato' : '/#contato', index: 3 }
+
+    { label: t.nav.contact, href: pathname === '/' ? '#contato' : '/#contato', index: 2 }
   ]
 
   return (

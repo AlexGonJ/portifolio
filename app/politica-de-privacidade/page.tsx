@@ -83,18 +83,18 @@ export default function PoliticaPrivacidadePage() {
               </h2>
               <p className={styles.sectionParagraph}>
                 {isPt
-                  ? 'A Lexon Digital, atuando sob responsabilidade técnica e profissional de Alexander Gonçalves, é a controladora dos dados pessoais tratados através deste website e de suas aplicações associadas, nos termos da Lei Geral de Proteção de Dados (LGPD - Lei Federal nº 13.709/2018) e, subsidiariamente, do Regulamento Geral sobre a Proteção de Dados da UE (GDPR).'
-                  : 'Lexon Digital, operated by Alexander Gonçalves, is the controller of personal data processed through this website and associated applications, in accordance with the Brazilian General Data Protection Law (LGPD - Law No. 13,709/2018) and the European General Data Protection Regulation (GDPR).'}
+                  ? 'A Lexon Digital é a pessoa jurídica controladora dos dados pessoais tratados através deste website e de suas aplicações associadas, nos termos da Lei Geral de Proteção de Dados (LGPD - Lei Federal nº 13.709/2018) e, subsidiariamente, do Regulamento Geral sobre a Proteção de Dados da UE (GDPR).'
+                  : 'Lexon Digital is the legal entity controller of personal data processed through this website and associated applications, in accordance with the Brazilian General Data Protection Law (LGPD - Law No. 13,709/2018) and the European General Data Protection Regulation (GDPR).'}
               </p>
               <div className={styles.contactBox}>
                 <div className={styles.contactItem}>
-                  <div className={styles.contactLabel}>{isPt ? 'Encarregado (DPO)' : 'Data Officer'}</div>
-                  <div className={styles.contactValue}>Alexander Gonçalves</div>
+                  <div className={styles.contactLabel}>{isPt ? 'Encarregado de Privacidade (DPO)' : 'Data Officer Desk'}</div>
+                  <div className={styles.contactValue}>Lexon Digital — Governança de Dados</div>
                 </div>
                 <div className={styles.contactItem}>
                   <div className={styles.contactLabel}>{isPt ? 'Canal de Privacidade' : 'Privacy Email'}</div>
-                  <a href="mailto:alexandergoncalvesdev@gmail.com" className={styles.contactValue}>
-                    alexandergoncalvesdev@gmail.com
+                  <a href="mailto:contato@lexondigital.com.br" className={styles.contactValue}>
+                    contato@lexondigital.com.br
                   </a>
                 </div>
               </div>
@@ -292,8 +292,8 @@ export default function PoliticaPrivacidadePage() {
               <div className={styles.contactBox}>
                 <div className={styles.contactItem}>
                   <div className={styles.contactLabel}>{isPt ? 'E-mail Oficial' : 'Official Email'}</div>
-                  <a href="mailto:alexandergoncalvesdev@gmail.com" className={styles.contactValue}>
-                    alexandergoncalvesdev@gmail.com
+                  <a href="mailto:contato@lexondigital.com.br" className={styles.contactValue}>
+                    contato@lexondigital.com.br
                   </a>
                 </div>
                 <div className={styles.contactItem}>

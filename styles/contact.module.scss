@@ -13,6 +13,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 1080px) {
+    min-height: auto;
+    padding: 6rem 5vw 7rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 4.5rem 5vw 5.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 3.5rem 1.25rem 4.5rem;
+  }
 }
 
 /* ── Diagonal Marquee Carousel Background ── */
@@ -23,21 +36,40 @@
   pointer-events: none;
   z-index: 0;
   opacity: 0.52;
-  filter: blur(4px) saturate(0.75);
+  filter: blur(3.5px) saturate(0.8);
   -webkit-mask-image: linear-gradient(
     158deg,
-    transparent 18%,
-    #000 40%,
-    #000 60%,
-    transparent 82%
+    transparent 14%,
+    #000 36%,
+    #000 64%,
+    transparent 86%
   );
   mask-image: linear-gradient(
     158deg,
-    transparent 18%,
-    #000 40%,
-    #000 60%,
-    transparent 82%
+    transparent 14%,
+    #000 36%,
+    #000 64%,
+    transparent 86%
   );
+
+  @media (max-width: 768px) {
+    opacity: 0.44;
+    filter: blur(2px) saturate(0.85);
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.9) 18%,
+      rgba(0, 0, 0, 0.9) 82%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.9) 18%,
+      rgba(0, 0, 0, 0.9) 82%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+  }
 }
 
 .carouselOverlay {
@@ -47,6 +79,11 @@
   pointer-events: none;
   background:
     radial-gradient(circle at 50% 50%, rgba(5, 5, 7, 0.38) 0%, rgba(5, 5, 7, 0.74) 100%);
+
+  @media (max-width: 768px) {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(5, 5, 7, 0.45) 0%, rgba(5, 5, 7, 0.82) 100%);
+  }
 }
 
 .container {
@@ -55,6 +92,10 @@
   width: 100%;
   transform: translateY(calc(var(--parallax-y) * 0.18));
   will-change: transform;
+
+  @media (max-width: 768px) {
+    transform: none;
+  }
 }
 
 /* ── Balanced 2-Column Editorial Layout com espaço amplo ── */
@@ -67,7 +108,13 @@
 
   @media (max-width: 1080px) {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    gap: 3rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    gap: 2.25rem;
+    margin: 1rem 0;
   }
 }
 
@@ -75,6 +122,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1.5rem;
+  }
 }
 
 .label {
@@ -95,6 +146,18 @@
   flex-direction: column;
   margin: 0;
   text-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(1.8rem, 7.8vw, 2.35rem);
+  }
 }
 
 .line1 {
@@ -109,6 +172,14 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  @media (max-width: 768px) {
+    padding-left: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    padding-left: 0.35rem;
+  }
 }
 
 .asideLead {
@@ -118,6 +189,12 @@
   color: rgba(246, 246, 246, 0.88);
   margin: 0.35rem 0 0;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+
+  @media (max-width: 768px) {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    max-width: 100%;
+  }
 }
 
 .responseInfo {
@@ -147,6 +224,12 @@
   flex-direction: column;
   gap: 1rem;
   max-width: 34rem;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 0.25rem;
+    padding-top: 1.25rem;
+  }
 }
 
 .directLabel {
@@ -161,6 +244,13 @@
   flex-wrap: wrap;
   gap: 0.85rem;
   align-items: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
 }
 
 .whatsappLink {
@@ -188,6 +278,11 @@
     .whatsappArrow {
       transform: translate3d(3px, -3px, 0);
     }
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -219,19 +314,13 @@
     color: #ffffff;
     transform: translateY(-2px);
   }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .formColumn {
   width: 100%;
-}
-
-@media (max-width: 768px) {
-  .contact {
-    min-height: auto;
-    padding: 6rem 6vw 8rem;
-  }
-
-  .container {
-    transform: none;
-  }
 }
