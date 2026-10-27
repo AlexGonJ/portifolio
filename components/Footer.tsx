@@ -33,6 +33,7 @@ const socialLinks = [
 export default function Footer() {
   const { t } = useLanguage()
   const { openPreferences } = useCookieConsent()
+  const [timeString, setTimeString] = useState('')
   const containerRef = useRef<HTMLDivElement | null>(null)
   const innerContentRef = useRef<HTMLDivElement | null>(null)
   const orbRef = useRef<HTMLAnchorElement | null>(null)
@@ -40,6 +41,16 @@ export default function Footer() {
   const copyRef = useRef<HTMLParagraphElement | null>(null)
   const socialsRef = useRef<HTMLDivElement | null>(null)
   const bottomRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      setTimeString(`${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`)
+    }
+    updateTime()
+    const timer = setInterval(updateTime, 30000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -217,8 +228,7 @@ export default function Footer() {
           <div className={styles.info}>
             <span>&copy; 2026 Lexon Digital</span>
             <span>
-              {t.footer.localTime} {new Date().getHours()}:
-              {new Date().getMinutes().toString().padStart(2, '0')}
+              {t.footer.localTime} {timeString}
             </span>
           </div>
 

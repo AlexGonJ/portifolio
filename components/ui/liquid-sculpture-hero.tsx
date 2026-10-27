@@ -463,6 +463,7 @@ class LiquidEngine {
   private stateTex: WebGLTexture[] = []
   private stateFb: WebGLFramebuffer[] = []
   private stateIdx = 0
+  private slowFrames = 0
   private texH = 1
   private n = 0
   private gridW = 1
@@ -518,8 +519,9 @@ class LiquidEngine {
       premultipliedAlpha: true,
       preserveDrawingBuffer: false,
       powerPreference: "high-performance",
+      failIfMajorPerformanceCaveat: true,
     }) as WebGL2RenderingContext | null
-    if (!gl) throw new Error("WebGL2 unavailable")
+    if (!gl) throw new Error("WebGL2 unavailable or performance caveat")
     this.gl = gl
     const nav = navigator as Navigator & { deviceMemory?: number }
     this.lowPower =
@@ -539,6 +541,14 @@ class LiquidEngine {
 
   private initGL() {
     const gl = this.gl
+    const dbg = gl.getExtension("WEBGL_debug_renderer_info")
+    const renderer = dbg
+      ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL))
+      : String(gl.getParameter(gl.RENDERER))
+    if (/SwiftShader|llvmpipe|Software|Basic Render/i.test(renderer)) {
+      throw new Error("Software WebGL renderer detected")
+    }
+
     // float render targets: RGBA16F is enough (offsets in px, sub-pixel precision)
     const full = gl.getExtension("EXT_color_buffer_float")
     const half = full ? null : gl.getExtension("EXT_color_buffer_half_float")
@@ -882,6 +892,16 @@ class LiquidEngine {
     const rawMs = now - this.last
     const dt = clamp(rawMs / 16.6667, 0.25, 3)
     this.last = now
+    if (rawMs > 75) {
+      this.slowFrames++
+      if (this.slowFrames >= 3) {
+        this.stop()
+        this.onFail()
+        return
+      }
+    } else {
+      this.slowFrames = 0
+    }
     const o = this.opts
     const ambientOn = o.ambient && !o.reducedMotion
 

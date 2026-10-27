@@ -211,6 +211,21 @@ export function HaloReel({
   const cardW = cardWidth * fit;
   const cardH = cardHeight * fit;
 
+  // Only autoPlay when visible in the viewport
+  const isVisibleRef = React.useRef(false);
+  React.useEffect(() => {
+    const el = stageRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      isVisibleRef.current = true;
+      return;
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0.1 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   // Autoplay. Each step schedules the next, so a paused tick costs a re-check
   // and nothing else — no interval keeps firing behind a held pointer.
   React.useEffect(() => {
@@ -221,7 +236,7 @@ export function HaloReel({
 
     const tick = () => {
       timer = window.setTimeout(() => {
-        if (draggingRef.current || (pauseOnHover && hoverRef.current)) {
+        if (!isVisibleRef.current || draggingRef.current || (pauseOnHover && hoverRef.current)) {
           tick();
           return;
         }

@@ -192,14 +192,14 @@ export default function SelectedWork() {
                 </span>
               )}
               {currentProject.year && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono text-neutral-700 bg-neutral-200 border border-neutral-200">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono text-neutral-900 bg-neutral-200 font-medium border border-neutral-300">
                   {currentProject.year}
                 </span>
               )}
             </div>
             <h3 className="text-4xl font-medium tracking-tight text-[#0b0b0d] leading-[1.06]">{currentProject.title}</h3>
             {currentProject.description && (
-              <p className="text-sm text-neutral-600 leading-relaxed">{currentProject.description}</p>
+              <p className="text-sm text-neutral-700 leading-relaxed">{currentProject.description}</p>
             )}
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Link
@@ -209,7 +209,7 @@ export default function SelectedWork() {
                 <span>{exploreCaseText}</span>
                 <span>↗</span>
               </Link>
-              <Link href="/work" className="text-xs text-neutral-500 font-medium underline underline-offset-4">
+              <Link href="/work" className="text-xs text-neutral-700 hover:text-neutral-950 font-medium underline underline-offset-4">
                 {allProjectsText}
               </Link>
             </div>
@@ -217,7 +217,7 @@ export default function SelectedWork() {
         </AnimatePresence>
 
         <div className="mt-6 flex items-center justify-between border-t border-neutral-100 pt-4">
-          <span className="text-xs font-medium text-neutral-500">{isEn ? 'Swipe to browse' : 'Arraste para navegar'}</span>
+          <span className="text-xs font-medium text-neutral-700">{isEn ? 'Swipe to browse' : 'Arraste para navegar'}</span>
           <div className="flex items-center gap-1.5">
             {PORTFOLIO_CARDS.map((_, i) => (
               <span
@@ -295,7 +295,7 @@ export default function SelectedWork() {
                           </span>
                         )}
                         {item.year && (
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-neutral-700 bg-neutral-200 border border-neutral-200">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono text-neutral-900 bg-neutral-200 border border-neutral-300 font-medium">
                             {item.year}
                           </span>
                         )}
@@ -308,7 +308,7 @@ export default function SelectedWork() {
 
                       {/* Descrição e detalhes */}
                       {item.description && (
-                        <p className="text-sm sm:text-base text-neutral-600 leading-relaxed max-w-lg mt-1">
+                        <p className="text-sm sm:text-base text-neutral-700 leading-relaxed max-w-lg mt-1">
                           {item.description}
                         </p>
                       )}
@@ -328,7 +328,7 @@ export default function SelectedWork() {
 
                           <Link
                             href="/work"
-                            className="text-xs sm:text-sm text-neutral-500 hover:text-neutral-900 transition-colors font-medium underline underline-offset-4"
+                            className="text-xs sm:text-sm text-neutral-700 hover:text-neutral-950 transition-colors font-medium underline underline-offset-4"
                           >
                             {allProjectsText}
                           </Link>
@@ -339,11 +339,11 @@ export default function SelectedWork() {
                 </div>
 
                 {/* Bottom: Instrução sutil e barra de progresso dos projetos */}
-                <div className="flex items-center justify-between text-xs text-neutral-600 border-t border-neutral-100 pt-4 pointer-events-auto">
-                  <span className="hidden sm:inline font-medium text-neutral-500">
+                <div className="flex items-center justify-between text-xs text-neutral-700 border-t border-neutral-200 pt-4 pointer-events-auto">
+                  <span className="hidden sm:inline font-medium text-neutral-700">
                     {dragHintText}
                   </span>
-                  <span className="sm:hidden font-medium text-neutral-500">
+                  <span className="sm:hidden font-medium text-neutral-700">
                     {isEn ? 'Swipe or tap card' : 'Arraste ou toque'}
                   </span>
 

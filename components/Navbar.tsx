@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from '../styles/navbar.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 import SideMenu from './SideMenu'
@@ -119,7 +119,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
                 <button
                   onClick={toggleLanguage}
                   className={styles.langBtn}
-                  aria-label="Alternar idioma"
+                  aria-label="EN • PT - Alternar idioma"
                 >
                   <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
                 </button>
@@ -137,7 +137,7 @@ export default function Navbar({ isProjectPage = false }: { isProjectPage?: bool
             <button
               onClick={toggleLanguage}
               className={`${styles.langBtn} ${styles.mobileLangBtn}`}
-              aria-label="Alternar idioma"
+              aria-label="EN • PT - Alternar idioma"
             >
               <span style={{ opacity: lang === 'en' ? 1 : 0.4 }}>EN</span> • <span style={{ opacity: lang === 'pt' ? 1 : 0.4 }}>PT</span>
             </button>

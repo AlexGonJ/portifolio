@@ -44,7 +44,7 @@ export default function EditorialBreak() {
   return (
     <section ref={sectionRef} className={styles.breakSection}>
       <p className={styles.label}>{t.editorialBreak.label}</p>
-      <div ref={trackRef} className={styles.track}>
+      <div ref={trackRef} className={styles.track} aria-hidden="true">
         <span>{t.editorialBreak.track1}</span>
         <span>{t.editorialBreak.track2}</span>
         <span>{t.editorialBreak.track3}</span>
