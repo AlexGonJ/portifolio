@@ -10,6 +10,8 @@
  */
 
 import * as React from "react"
+import * as THREE from "three"
+import { createLexonLogo3D, Logo3DMesh, LEXON_LOGO_PATH } from "./LexonLogo3D"
 
 /* ────────────────────────────────────────────────────────────────────
    Engine (WebGL2 GPGPU particles)
@@ -47,18 +49,18 @@ function clamp(v: number, a: number, b: number) {
 function hexToRgb(hex: string, fallback: [number, number, number]): [number, number, number] {
   if (typeof hex !== "string") return fallback
   const s = hex.trim()
-  let m = s.match(/^#?([0-9a-f]{3})$/i)
-  if (m) {
-    const [r, g, b] = m[1].split("").map((c) => parseInt(c + c, 16) / 255)
-    return [r, g, b]
-  }
-  m = s.match(/^#?([0-9a-f]{6})([0-9a-f]{2})?$/i)
-  if (m) {
-    const n = parseInt(m[1], 16)
+  let m6 = s.match(/#([0-9a-f]{6})/i)
+  if (m6) {
+    const n = parseInt(m6[1], 16)
     return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
   }
-  m = s.match(/^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i)
-  if (m) return [+m[1] / 255, +m[2] / 255, +m[3] / 255]
+  let m3 = s.match(/#([0-9a-f]{3})/i)
+  if (m3) {
+    const [r, g, b] = m3[1].split("").map((c) => parseInt(c + c, 16) / 255)
+    return [r, g, b]
+  }
+  let mRgb = s.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i)
+  if (mRgb) return [+mRgb[1] / 255, +mRgb[2] / 255, +mRgb[3] / 255]
   return fallback
 }
 
@@ -294,7 +296,11 @@ void main(){
   vec2 world = center + dir*lc.x + vec2(-dir.y, dir.x)*lc.y;
 
   vec2 clip = world/uRes*2.0-1.0;
-  gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
+  // Natural 3D intertwining: particles weave dynamically around the 3D metal letters
+  // The bulk of ribbon mass flows behind (+0.02 to +0.16), while arching filaments cross gracefully in front
+  float zWave = sin(world.x * 0.0035 + world.y * 0.0025 + uTime * 0.45) * 0.035;
+  float zDepth = clamp(0.010 + (hm.z - 0.5) * 0.09 + zWave + (st.x * 0.012) / 1000.0, -0.06, 0.26);
+  gl_Position = vec4(clip.x, -clip.y, zDepth, 1.0);
   vLocal = lc;
   vHalfLen = len*0.5;
   vR = r;
@@ -447,6 +453,8 @@ class LiquidEngine {
   private pSim!: Prog
   private pPart!: Prog
   private pImg!: Prog
+  private logo3D: Logo3DMesh | null = null
+  private band: { top: number; bottom: number } = { top: 80, bottom: 600 }
   private vao!: WebGLVertexArrayObject
   private quad!: WebGLBuffer
 
@@ -514,20 +522,18 @@ class LiquidEngine {
     const gl = canvas.getContext("webgl2", {
       alpha: true,
       antialias: false,
-      depth: false,
+      depth: true,
       stencil: false,
       premultipliedAlpha: true,
       preserveDrawingBuffer: false,
       powerPreference: "high-performance",
-      failIfMajorPerformanceCaveat: true,
     }) as WebGL2RenderingContext | null
-    if (!gl) throw new Error("WebGL2 unavailable or performance caveat")
+    if (!gl) throw new Error("WebGL2 unavailable")
     this.gl = gl
-    const nav = navigator as Navigator & { deviceMemory?: number }
+    const nav = navigator as Navigator & { deviceMemory?: number; hardwareConcurrency?: number }
     this.lowPower =
-      (nav.hardwareConcurrency || 8) <= 4 ||
-      (nav.deviceMemory || 8) <= 4 ||
-      window.matchMedia("(pointer: coarse)").matches
+      ((nav.hardwareConcurrency || 8) <= 2) ||
+      ((nav.deviceMemory || 8) <= 2)
     this.initGL()
     canvas.addEventListener("webglcontextlost", this.onLost, false)
   }
@@ -559,6 +565,7 @@ class LiquidEngine {
     this.pSim = compile(gl, QUAD_VS, SIM_FS)
     this.pPart = compile(gl, PART_VS, PART_FS)
     this.pImg = compile(gl, QUAD_VS, IMAGE_FS)
+    this.logo3D = createLexonLogo3D(gl)
 
     this.vao = gl.createVertexArray()!
     gl.bindVertexArray(this.vao)
@@ -659,7 +666,7 @@ class LiquidEngine {
   /** One particle per material pixel of a grid laid over the image. */
   private buildParticles(img: HTMLImageElement) {
     const gl = this.gl
-    const baseGrid = this.lowPower ? 480 : 720
+    const baseGrid = this.lowPower ? 640 : 1000
     const gw = Math.round(baseGrid * Math.sqrt(clamp(this.opts.density, 0.15, 2)))
     const gh = Math.max(1, Math.round(gw / this.aspect))
     this.gridW = gw
@@ -817,13 +824,14 @@ class LiquidEngine {
     this.wake()
   }
 
-  resize(cssW: number, cssH: number, rect: Rect) {
+  resize(cssW: number, cssH: number, rect: Rect, band?: { top: number; bottom: number }) {
     this.cssW = Math.max(1, cssW)
     this.cssH = Math.max(1, cssH)
     this.rect = rect
-    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.25 : 1.6)
+    if (band) this.band = band
+    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.5 : 2.0)
     const px = this.cssW * this.cssH * dpr * dpr
-    if (px > 4.5e6) dpr = Math.max(1, Math.sqrt(4.5e6 / (this.cssW * this.cssH)))
+    if (px > 8e6) dpr = Math.max(1, Math.sqrt(8e6 / (this.cssW * this.cssH)))
     const w = Math.round(this.cssW * dpr)
     const h = Math.round(this.cssH * dpr)
     if (this.canvas.width !== w || this.canvas.height !== h) {
@@ -892,16 +900,6 @@ class LiquidEngine {
     const rawMs = now - this.last
     const dt = clamp(rawMs / 16.6667, 0.25, 3)
     this.last = now
-    if (rawMs > 75) {
-      this.slowFrames++
-      if (this.slowFrames >= 3) {
-        this.stop()
-        this.onFail()
-        return
-      }
-    } else {
-      this.slowFrames = 0
-    }
     const o = this.opts
     const ambientOn = o.ambient && !o.reducedMotion
 
@@ -952,15 +950,21 @@ class LiquidEngine {
     const interacting = this.presence > 0.001 || this.burst > 0
     // settle is counted in simulated frames, so slow devices never snap mid-return
     this.settle = interacting || scrolling ? 0 : this.settle + dt
-    const maxIdle = this.lowPower ? 40 : (ambientOn ? 240 : SETTLE_FRAMES)
-    const active = interacting || this.settle < maxIdle || this.introT < 1 || scrolling
+    const active = interacting || this.settle < SETTLE_FRAMES || this.introT < 1 || scrolling
 
     if (!active) {
       if (this.flowDirty) this.clearFlow()
       if (this.stateDirty) this.clearState()
+      if (!ambientOn || (this.isOutro && this.outroT >= 0.998)) {
+        this.draw()
+        this.firstFrame()
+        this.stop()
+        return
+      }
+      this.raf = requestAnimationFrame(this.frame)
+      this.time += (dt * o.speed) / 60
       this.draw()
       this.firstFrame()
-      this.stop()
       return
     }
     this.raf = requestAnimationFrame(this.frame)
@@ -1057,10 +1061,7 @@ class LiquidEngine {
     gl.bindFramebuffer(gl.FRAMEBUFFER, null)
     gl.viewport(0, 0, this.canvas.width, this.canvas.height)
     gl.clearColor(0, 0, 0, 0)
-    gl.clear(gl.COLOR_BUFFER_BIT)
-
-    // While LEXON backdrop reveal is active and particles haven't started, keep canvas clear
-    if (introProgress <= 0.001) return
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
     // When outro is complete and particles have flown away off-screen, keep canvas clear
     if (this.isOutro && this.outroProgress >= 0.998) return
@@ -1103,13 +1104,86 @@ class LiquidEngine {
     gl.uniform1f(I.u.uAlphaMode, this.alphaMode ? 1 : 0)
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 
+    // ── 3D Extruded Industrial Brushed Steel Logo ──
+    if (this.logo3D) {
+      gl.enable(gl.DEPTH_TEST)
+      gl.depthFunc(gl.LEQUAL)
+      gl.depthMask(true)
+      gl.enable(gl.BLEND)
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+
+      gl.useProgram(this.logo3D.program)
+      gl.bindVertexArray(this.logo3D.vao)
+
+      const aspect = this.canvas.width / this.canvas.height
+      const cam = new THREE.PerspectiveCamera(38, aspect, 333.33, 1000)
+      cam.position.set(0, 0, 500)
+      cam.lookAt(0, 0, 0)
+      cam.updateMatrixWorld()
+      const projMat = cam.projectionMatrix
+      const viewMat = cam.matrixWorldInverse
+      const eye = cam.position
+
+      const hasMouse = this.mouse.x >= 0 && this.mouse.y >= 0
+      const mouseNormX = hasMouse ? clamp((this.mouse.x / this.cssW) * 2 - 1, -1, 1) : 0
+      const mouseNormY = hasMouse ? clamp(-((this.mouse.y / this.cssH) * 2 - 1), -1, 1) : 0
+
+      const fovRad = (38 * Math.PI) / 360
+      const H_world = 2 * 500 * Math.tan(fovRad)
+      const worldUnitsPerPixel = H_world / this.cssH
+
+      const mob = this.cssW < 768
+      const targetCenterXPx = this.cssW * (mob ? 0.50 : 0.59)
+      const targetCenterYPx = this.cssH * (mob ? 0.60 : 0.55)
+      const posX = (targetCenterXPx - this.cssW * 0.5) * worldUnitsPerPixel
+      const posY = -(targetCenterYPx - this.cssH * 0.5) * worldUnitsPerPixel
+
+      const targetLogoWidthPx = Math.min(this.cssW * (mob ? 0.94 : 0.69), this.cssH * 0.64 * (631 / 167))
+      const targetWorldWidth = targetLogoWidthPx * worldUnitsPerPixel
+      const scale3D = targetWorldWidth / 631
+
+      const modelMat = new THREE.Matrix4()
+        .makeTranslation(posX, posY, 6)
+        .multiply(new THREE.Matrix4().makeRotationY(mouseNormX * 0.08))
+        .multiply(new THREE.Matrix4().makeRotationX(-mouseNormY * 0.05))
+        .scale(new THREE.Vector3(scale3D, scale3D, scale3D))
+
+      const normalMat = new THREE.Matrix3().getNormalMatrix(modelMat)
+
+      if (this.logo3D.uniforms.uProjection) gl.uniformMatrix4fv(this.logo3D.uniforms.uProjection, false, projMat.elements)
+      if (this.logo3D.uniforms.uView) gl.uniformMatrix4fv(this.logo3D.uniforms.uView, false, viewMat.elements)
+      if (this.logo3D.uniforms.uModel) gl.uniformMatrix4fv(this.logo3D.uniforms.uModel, false, modelMat.elements)
+      if (this.logo3D.uniforms.uNormalMatrix) gl.uniformMatrix3fv(this.logo3D.uniforms.uNormalMatrix, false, normalMat.elements)
+      if (this.logo3D.uniforms.uCameraPos) gl.uniform3f(this.logo3D.uniforms.uCameraPos, eye.x, eye.y, eye.z)
+      if (this.logo3D.uniforms.uLightPosMouse) gl.uniform3f(this.logo3D.uniforms.uLightPosMouse, mouseNormX * 240, mouseNormY * 140, 75)
+      if (this.logo3D.uniforms.uMouseNorm) gl.uniform2f(this.logo3D.uniforms.uMouseNorm, mouseNormX, mouseNormY)
+      if (this.logo3D.uniforms.uTime) gl.uniform1f(this.logo3D.uniforms.uTime, this.time)
+      if (this.logo3D.uniforms.uAlpha) gl.uniform1f(this.logo3D.uniforms.uAlpha, 1.0)
+      const baseCol: [number, number, number] = this.alphaMode ? [0.44, 0.38, 0.30] : [0.38, 0.32, 0.25]
+      if (this.logo3D.uniforms.uBaseColor) gl.uniform3f(this.logo3D.uniforms.uBaseColor, baseCol[0], baseCol[1], baseCol[2])
+
+      gl.drawElements(gl.TRIANGLES, this.logo3D.indexCount, this.logo3D.indexType, 0)
+    }
+
+    gl.enable(gl.DEPTH_TEST)
+    gl.depthFunc(gl.LEQUAL)
+    gl.depthMask(false)
+
     // particles are invisible at rest in "image" mode: skip them entirely unless outro is active
-    if (!this.n || (!this.stateDirty && rest === 0 && introProgress >= 1 && this.outroProgress <= 0.001)) return
+    if (!this.n || (!this.stateDirty && rest === 0 && introProgress >= 1 && this.outroProgress <= 0.001)) {
+      gl.disable(gl.DEPTH_TEST)
+      gl.depthMask(true)
+      gl.bindVertexArray(null)
+      return
+    }
 
     const P = this.pPart
     gl.useProgram(P.p)
+    gl.bindVertexArray(this.vao)
     gl.enable(gl.BLEND)
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+    // Particles test depth against the logo, but do not write depth to preserve soft blending
+    gl.depthMask(false)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.stateTex[this.stateIdx])
     gl.uniform1i(P.u.uState, 0)
@@ -1141,6 +1215,9 @@ class LiquidEngine {
     else gl.uniform3f(P.u.uTint, br / Math.max(ir, 0.001), bg / Math.max(ig, 0.001), bb / Math.max(ib, 0.001))
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, this.n)
     gl.disable(gl.BLEND)
+    gl.disable(gl.DEPTH_TEST)
+    gl.depthMask(true)
+    gl.bindVertexArray(null)
   }
 
   destroy() {
@@ -1154,6 +1231,15 @@ class LiquidEngine {
       for (const t of [...this.flowTex, ...this.stateTex, this.imgTex, this.homeTex, this.colTex]) if (t) gl.deleteTexture(t)
       for (const f of [...this.flowFb, ...this.stateFb]) gl.deleteFramebuffer(f)
       for (const p of [this.pFlow, this.pSim, this.pPart, this.pImg]) if (p) gl.deleteProgram(p.p)
+      if (this.logo3D) {
+        gl.deleteProgram(this.logo3D.program)
+        gl.deleteVertexArray(this.logo3D.vao)
+        gl.deleteBuffer(this.logo3D.posBuffer)
+        gl.deleteBuffer(this.logo3D.normBuffer)
+        gl.deleteBuffer(this.logo3D.uvBuffer)
+        gl.deleteBuffer(this.logo3D.ibo)
+        this.logo3D = null
+      }
     }
     gl.getExtension("WEBGL_lose_context")?.loseContext()
   }
@@ -1315,44 +1401,36 @@ function computeRect(
   let cy: number
 
   if (oCenter) {
-    // Aligns the center of the liquid animation precisely to the letter O
-    // In mobile portrait sculpture (aspect < 1.3), the loop representing letter O occupies ~28% of the image height.
-    // A multiplier of ~3.2 scales the loop to match ~93-96% of the title letter height (0.92 * bdFontSize).
-    const mobileMult = aspect < 1.3 ? 3.2 : 1.5
-    const targetH = Math.min(bandH * 1.18, oCenter.bdFontSize * (mob ? mobileMult : 1.3)) * scale
-    rh = targetH
-    rw = rh * aspect
-    if (rw > w * 1.4) {
-      rw = w * 1.4
-      rh = rw / aspect
-    }
     if (mob && aspect < 1.3) {
-      // In sculpture-mobile (1024x1300), the loop representing letter O is centered at x ~ 51.91% and y ~ 39.82%.
-      // Adjust cx and cy so the center of the loop aligns precisely with oCenter (the backdrop letter O).
+      rw = w * 1.0 * scale
+      rh = rw / aspect
       cx = oCenter.x + (0.5 - 0.5191) * rw + w * (p.x / 100)
       cy = oCenter.y + (0.5 - 0.3982) * rh + h * (p.y / 100)
     } else {
-      cx = oCenter.x + w * (p.x / 100)
-      cy = oCenter.y + h * (p.y / 100)
+      // Desktop: Large dramatic liquid ribbon flowing across hero and looping through letter O
+      rw = Math.min(w * (mob ? 0.98 : 0.78), h * 0.90 * aspect) * scale
+      rh = rw / aspect
+      cx = oCenter.x + (0.5 - 0.60) * rw + w * (p.x / 100)
+      cy = oCenter.y + (0.5 - 0.50) * rh - rh * 0.08 + h * (p.y / 100)
     }
   } else {
     let maxH: number
     if (w >= 1024) {
-      rw = w * 1.02 * scale
-      maxH = bandH * 1.1 * scale
+      rw = w * 0.82 * scale
+      maxH = bandH * 1.05 * scale
     } else if (w >= 640) {
-      rw = w * 1.3 * scale
-      maxH = bandH * 1.15 * scale
+      rw = w * 1.15 * scale
+      maxH = bandH * 1.1 * scale
     } else if (aspect < 1.3) {
       rw = w * 1.0 * scale
       maxH = bandH * 1.0 * scale
     } else {
-      rw = w * 1.9 * scale
-      maxH = bandH * 1.2 * scale
+      rw = w * 1.45 * scale
+      maxH = bandH * 1.1 * scale
     }
     if (rw / aspect > maxH) rw = maxH * aspect
     rh = rw / aspect
-    cx = w * (0.5 + p.x / 100)
+    cx = w >= 1024 ? w * (0.58 + p.x / 100) : w * (0.5 + p.x / 100)
     cy = (band.top + band.bottom) / 2 + h * (p.y / 100)
   }
 
@@ -1388,17 +1466,17 @@ const CSS = `
   opacity:0.12;
   transform:scale(0.975);
   transition:opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1), filter 2.2s ease, transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
-  background:linear-gradient(172deg, #D5CBBF 0%, #BAAE9D 25%, #E4DDD2 50%, #A89C8A 75%, #827664 100%);
+  background:linear-gradient(172deg, #9F9183 0%, #A39284 22%, #AEA093 48%, #C9AE95 74%, #B79E87 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
   filter:blur(8px)
-    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.12))
-    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.08))}
+    drop-shadow(1px 2px 4px rgba(45, 35, 25, 0.22))
+    drop-shadow(3px 8px 16px rgba(45, 35, 25, 0.16))}
 .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-text{
   opacity:1;
   filter:blur(0px)
-    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.18))
-    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.12))
-    drop-shadow(6px 18px 36px rgba(40, 32, 22, 0.07));
+    drop-shadow(1px 2px 4px rgba(45, 35, 25, 0.25))
+    drop-shadow(3px 8px 16px rgba(45, 35, 25, 0.18))
+    drop-shadow(6px 18px 36px rgba(45, 35, 25, 0.12));
   transform:scale(1)}
 .sh-backdrop .sh-emerge-svg{
   height:0.92em;
@@ -1408,16 +1486,16 @@ const CSS = `
   overflow:visible;
   opacity:0.12;
   filter:blur(8px)
-    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.12))
-    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.08));
+    drop-shadow(1px 2px 4px rgba(45, 35, 25, 0.22))
+    drop-shadow(3px 8px 16px rgba(45, 35, 25, 0.16));
   transform:scale(0.975);
   transition:opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1), filter 2.2s ease, transform 2.2s cubic-bezier(0.16, 1, 0.3, 1)}
 .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-svg{
   opacity:1;
   filter:blur(0px)
-    drop-shadow(1px 2px 4px rgba(40, 32, 22, 0.18))
-    drop-shadow(3px 8px 16px rgba(40, 32, 22, 0.12))
-    drop-shadow(6px 18px 36px rgba(40, 32, 22, 0.07));
+    drop-shadow(1px 2px 4px rgba(45, 35, 25, 0.25))
+    drop-shadow(3px 8px 16px rgba(45, 35, 25, 0.18))
+    drop-shadow(6px 18px 36px rgba(45, 35, 25, 0.12));
   transform:scale(1)}
 [data-hero-theme="dark"] .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-svg,
 [data-hero-theme="dark"] .sh-root[data-revealed="1"] .sh-backdrop .sh-emerge-text{
@@ -1450,34 +1528,35 @@ const CSS = `
 .sh-root[data-scrolled="1"] .sh-hint{opacity:0;transition-delay:0s}
 @keyframes sh-pulse{0%,100%{transform:scale(.6);opacity:.45}50%{transform:scale(1);opacity:1}}
 .sh-spacer{flex:1 1 auto;min-height:0}
-.sh-content{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:end;
-  gap:clamp(24px,4cqw,68px);padding:0 6vw clamp(28px,3.8vh,54px)}
-.sh-eyebrow{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;margin:0 0 clamp(12px,1.4cqw,20px);
-  display:flex;align-items:center;gap:12px;color:var(--sh-fg);opacity:.92;font-weight:600}
-.sh-eyebrow::before{content:"";width:28px;height:1px;background:var(--sh-fg);opacity:.65}
-.sh-h1{font-family:var(--sh-head);font-weight:500;font-size:clamp(34px,min(4.35cqw,8cqh),74px);line-height:.96;letter-spacing:-.04em;margin:0;
-  text-wrap:balance;max-width:17ch}
+.sh-root:not([data-gl="off"]) .sh-backdrop{opacity:0!important;pointer-events:none}
+.sh-content{position:absolute;top:48%;transform:translateY(-50%);left:clamp(24px,7vw,96px);z-index:5;display:flex;flex-direction:column;align-items:flex-start;pointer-events:auto}
+@media(max-width:768px){
+  .sh-content{position:relative;top:auto;transform:none;left:auto;padding:28px var(--sh-pad) 20px;max-width:100%}
+}
+.sh-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 16px;display:flex;align-items:center;gap:10px;color:var(--sh-fg);opacity:.75;font-weight:600}
+.sh-eyebrow::before{content:"";width:24px;height:1px;background:var(--sh-fg);opacity:.65}
+.sh-h1{font-family:var(--sh-head);font-weight:550;font-size:clamp(32px,3.8vw,52px);line-height:1.08;letter-spacing:-.035em;margin:0 0 18px;text-wrap:balance}
 .sh-h1 .sh-line{display:block}
-.sh-accent{font-family:var(--sh-accent);font-style:italic;font-weight:400;letter-spacing:-.015em;color:var(--sh-acc);font-size:1.06em}
-.sh-aside{max-width:440px;justify-self:end;padding-bottom:.35em}
-.sh-body{font-size:clamp(14.5px,1.05cqw,16.5px);line-height:1.58;letter-spacing:-.01em;margin:0 0 26px;opacity:.8;text-wrap:pretty}
-.sh-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
-.sh-btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;background:var(--sh-btn-bg);
-  color:var(--sh-btn-fg);border:1px solid var(--sh-btn-border);box-shadow:var(--sh-btn-shadow);text-decoration:none;font-size:14.5px;font-weight:560;letter-spacing:-.01em;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,background .3s ease}
-.sh-btn:hover{transform:translateY(-2px);box-shadow:var(--sh-btn-shadow-hover)}
-.sh-btn svg,.sh-txt svg{transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.sh-btn:hover svg,.sh-txt:hover svg{transform:translateX(3px)}
-.sh-txt{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-size:14.5px;font-weight:500;
-  letter-spacing:-.01em;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--sh-fg) 32%,transparent);opacity:.88;transition:opacity .25s,border-color .25s}
-.sh-txt:hover{opacity:1;border-color:var(--sh-fg)}
+.sh-accent{font-family:var(--sh-accent, Georgia, serif);font-style:italic;font-weight:400;letter-spacing:-.015em;color:var(--sh-acc);font-size:1.06em}
+.sh-body{font-size:clamp(12.5px,0.85vw,13.5px);line-height:1.55;letter-spacing:-.01em;margin:0 0 24px;opacity:.82;max-width:275px;text-wrap:pretty}
+.sh-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.sh-btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 22px;border-radius:999px;background:#141414;color:#FFFFFF;border:none;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:-.01em;box-shadow:0 4px 14px rgba(0,0,0,0.14);transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,background .3s ease}
+.sh-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,0.24);background:#000000}
+.sh-btn .sh-plus{font-size:16px;font-weight:400;margin-left:4px;line-height:1}
+.sh-txt{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:-.01em;padding:5px 0;opacity:.85;transition:opacity .25s,transform .25s}
+.sh-txt:hover{opacity:1;transform:translateX(2px)}
+.sh-txt svg{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.sh-txt:hover svg{transform:translateX(3px)}
+.sh-scroll-indicator{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:4;pointer-events:none;user-select:none}
+.sh-scroll-indicator span{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sh-fg);opacity:.68}
+.sh-scroll-indicator .sh-scroll-line{width:1px;height:24px;background:var(--sh-fg);opacity:.32}
 .sh-root a:focus-visible{outline:2px solid var(--sh-fg);outline-offset:4px}
-.sh-credit{position:absolute;z-index:2;right:6vw;bottom:10px;font-size:10px;letter-spacing:.06em;
-  color:inherit;opacity:.38;text-decoration:none}
+.sh-credit{position:absolute;z-index:2;right:6vw;bottom:10px;font-size:10px;letter-spacing:.06em;color:inherit;opacity:.38;text-decoration:none}
 .sh-credit:hover{opacity:.8}
 @container (max-width:1023px){
   .sh-content{grid-template-columns:1fr;gap:22px}
   .sh-aside{justify-self:start;max-width:540px;padding-bottom:0}
-  .sh-h1{font-size:clamp(32px,min(6.8cqw,7.6cqh),58px);max-width:18ch}
+  .sh-h1{font-size:clamp(32px,min(6.8cqw,7.6cqh),54px);max-width:none;line-height:1.10}
 }
 @container (max-width:767px){
   .sh-links li:not(.sh-keep){display:none}
@@ -1485,11 +1564,11 @@ const CSS = `
 @container (max-width:639px){
   .sh-nav{padding-top:20px}
   .sh-nav-spacer{height:64px}
-  .sh-h1{font-size:clamp(30px,min(8.6cqw,6.2cqh),44px);line-height:.98}
-  .sh-body{font-size:14.5px;margin-bottom:18px;line-height:1.5}
-  .sh-eyebrow{font-size:10.5px;margin-bottom:10px}
+  .sh-h1{font-size:clamp(30px,min(8.6cqw,6.2cqh),44px);line-height:1.10}
+  .sh-body{font-size:14px;margin-bottom:20px;line-height:1.55;max-width:100%}
+  .sh-eyebrow{font-size:10.5px;margin-bottom:12px}
   .sh-ctas{gap:14px}
-  .sh-btn{height:46px;padding:0 20px;font-size:14px}
+  .sh-btn{height:46px;padding:0 22px;font-size:14px}
   .sh-content{padding-bottom:32px}
   .sh-credit{right:auto;left:50%;transform:translateX(-50%)}
 }
@@ -1535,10 +1614,14 @@ function injectFonts() {
 
 function renderHeadline(text: string, accent: string) {
   const lines = text.split("\n")
+  const accentParts = (accent || "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean)
+
   return lines.map((line, li) => {
     let content: React.ReactNode = line
-    const a = accent && accent.trim()
-    if (a) {
+    for (const a of accentParts) {
       const idx = line.indexOf(a)
       if (idx >= 0) {
         content = (
@@ -1548,6 +1631,7 @@ function renderHeadline(text: string, accent: string) {
             {line.slice(idx + a.length)}
           </>
         )
+        break
       }
     }
     return (
@@ -1792,7 +1876,7 @@ export default function SculptureHero(props: SculptureHeroProps) {
     const textSample = fullBackdropText || "LEXON"
     const chars = Math.max(1, textSample.length || 5)
     const isLexon = textSample === "LEXON"
-    const textAspect = isLexon ? 4.35 : chars * 0.58
+    const textAspect = isLexon ? (631 / 167) : chars * 0.58
     const bdFontSize = Math.min((band.bottom - band.top) * 0.9, (w * 0.92) / textAspect)
     const bd = backdropRef.current
     if (bd) {
@@ -1802,12 +1886,18 @@ export default function SculptureHero(props: SculptureHeroProps) {
 
     let oCenter: { x: number; y: number; bdFontSize: number } | null = null
     if (isLexon) {
-      const svgH = bdFontSize * 0.92
-      const W_svg = svgH * 4.35
-      // Center of letter O in viewBox (0 to 870, center is 600)
-      const oCenterX = w / 2 + W_svg * (165 / 870)
-      const oCenterY = (band.top + band.bottom) / 2
-      oCenter = { x: oCenterX, y: oCenterY, bdFontSize }
+      const mob = w < 768
+      const targetLogoWidth = Math.min(w * (mob ? 0.94 : 0.69), h * 0.64 * (631 / 167))
+      const targetCenterX = w * (mob ? 0.50 : 0.59)
+      const targetCenterY = h * (mob ? 0.60 : 0.55)
+      // In Lexon 631x167, letter O is at X offset +0.1957 of width right of center
+      const oCenterX = targetCenterX + targetLogoWidth * 0.1957
+      const oCenterY = targetCenterY
+      oCenter = { x: oCenterX, y: oCenterY, bdFontSize: targetLogoWidth / (631 / 167) }
+      if (bd) {
+        bd.style.left = (mob ? "50%" : targetCenterX + "px")
+        bd.style.top = targetCenterY + "px"
+      }
     }
 
     const rect = computeRect(w, h, aspectRef.current, band, layout.current, oCenter)
@@ -1829,7 +1919,7 @@ export default function SculptureHero(props: SculptureHeroProps) {
       hintEl.style.left = clamp(anchorX, 80, w - 80) + "px"
       hintEl.style.top = Math.min(rect.y + rect.h * 0.95, band.bottom - 20) + "px"
     }
-    engineRef.current?.resize(w, h, rect)
+    engineRef.current?.resize(w, h, rect, band)
   }, [fullBackdropText])
 
   // engine lifecycle (re-created only when the image changes)
@@ -2012,90 +2102,46 @@ export default function SculptureHero(props: SculptureHeroProps) {
           {fullBackdropText === "LEXON" ? (
             <svg
               className="sh-emerge-svg"
-              viewBox="0 0 870 200"
+              viewBox="0 0 508 124"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              aria-label="LEXON"
+              aria-label="Lexon"
               style={{ color: "var(--sh-fg)" }}
             >
               <defs>
-                {/* Champagne / silk palette - sampled directly from the 3D liquid sculpture */}
-                <linearGradient id="sh-bd-gradient" x1="0" y1="0" x2="0.18" y2="1">
-                  <stop offset="0%" stopColor="#D5CBBF" />
-                  <stop offset="25%" stopColor="#BAAE9D" />
-                  <stop offset="50%" stopColor="#E4DDD2" />
-                  <stop offset="75%" stopColor="#A89C8A" />
-                  <stop offset="100%" stopColor="#827664" />
+                {/* Reference-matched Champagne Titanium Palette */}
+                <linearGradient id="sh-bd-gradient" x1="0" y1="0" x2="0.22" y2="1">
+                  <stop offset="0%" stopColor="#9F9183" />
+                  <stop offset="22%" stopColor="#A39284" />
+                  <stop offset="48%" stopColor="#AEA093" />
+                  <stop offset="74%" stopColor="#C9AE95" />
+                  <stop offset="100%" stopColor="#B79E87" />
                 </linearGradient>
-                {/* 3D Specular bevel rim highlight (soft, subtle chamfer reflection) */}
+                {/* 3D Specular bevel rim highlight */}
                 <linearGradient id="sh-bd-rim" x1="0" y1="0" x2="0.25" y2="1">
-                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.4" />
-                  <stop offset="35%" stopColor="#EFE8DE" stopOpacity="0.2" />
-                  <stop offset="75%" stopColor="#C4B7A5" stopOpacity="0.05" />
-                  <stop offset="100%" stopColor="#7A6D5C" stopOpacity="0" />
+                  <stop offset="0%" stopColor="#DBD3CB" stopOpacity="0.75" />
+                  <stop offset="35%" stopColor="#DBC4B0" stopOpacity="0.45" />
+                  <stop offset="75%" stopColor="#9F9183" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#3B332B" stopOpacity="0" />
                 </linearGradient>
               </defs>
 
-              {/* Subtle 3D Extrusion Bevel: delicate micro-depth in warm champagne shadow */}
-              {/* Step 1: soft transition edge */}
-              <g transform="translate(0.35, 0.7)" aria-hidden="true">
-                <path d="M0 0H38V162H120V200H0V0Z" fill="#7D7262" />
-                <path d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z" fill="#7D7262" />
-                <path d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z" fill="#7D7262" />
-                <path className="sh-letter-o" fillRule="evenodd" clipRule="evenodd" d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z" fill="#7D7262" />
-                <path d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z" fill="#7D7262" />
+              {/* 3D Extrusion Depth: dark sepia-bronze shadow from reference */}
+              <g transform="translate(0.6, 1.0)" aria-hidden="true">
+                <path fillRule="evenodd" clipRule="evenodd" d={LEXON_LOGO_PATH} fill="#5D4E40" />
               </g>
-              {/* Step 2: subtle depth baseline */}
-              <g transform="translate(0.7, 1.4)" aria-hidden="true">
-                <path d="M0 0H38V162H120V200H0V0Z" fill="#5F5547" />
-                <path d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z" fill="#5F5547" />
-                <path d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z" fill="#5F5547" />
-                <path className="sh-letter-o" fillRule="evenodd" clipRule="evenodd" d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z" fill="#5F5547" />
-                <path d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z" fill="#5F5547" />
+              <g transform="translate(1.2, 2.2)" aria-hidden="true">
+                <path fillRule="evenodd" clipRule="evenodd" d={LEXON_LOGO_PATH} fill="#352B21" />
               </g>
 
               {/* Front Face with specular bevel rim highlight */}
-              {/* L: 100% retas, cantos em ângulo reto */}
               <path
-                d="M0 0H38V162H120V200H0V0Z"
-                fill="url(#sh-bd-gradient)"
-                stroke="url(#sh-bd-rim)"
-                strokeWidth="0.5"
-                style={{ paintOrder: "stroke fill" }}
-              />
-              {/* E: 100% retas, hastes superior e inferior perfeitamente simétricas */}
-              <path
-                d="M165 0H285V38H203V81H275V119H203V162H285V200H165V0Z"
-                fill="url(#sh-bd-gradient)"
-                stroke="url(#sh-bd-rim)"
-                strokeWidth="0.5"
-                style={{ paintOrder: "stroke fill" }}
-              />
-              {/* X: 100% retas diagonais com simetria quadrupla e espessura uniforme */}
-              <path
-                d="M330 0H376L405 56L434 0H480L428 100L480 200H434L405 144L376 200H330L382 100L330 0Z"
-                fill="url(#sh-bd-gradient)"
-                stroke="url(#sh-bd-rim)"
-                strokeWidth="0.5"
-                style={{ paintOrder: "stroke fill" }}
-              />
-              {/* O: arredondamento suave e simetria geométrica perfeita */}
-              <path
-                className="sh-letter-o"
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M600 0C646 0 675 36 675 80V120C675 164 646 200 600 200C554 200 525 164 525 120V80C525 36 554 0 600 0ZM600 38C624 38 637 60 637 86V114C637 140 624 162 600 162C576 162 563 140 563 114V86C563 60 576 38 600 38Z"
+                d={LEXON_LOGO_PATH}
                 fill="url(#sh-bd-gradient)"
                 stroke="url(#sh-bd-rim)"
-                strokeWidth="0.5"
-                style={{ paintOrder: "stroke fill" }}
-              />
-              {/* N: proporções perfeitas com diagonal robusta e hastes simétricas */}
-              <path
-                d="M720 0H768L834 129V0H870V200H822L756 71V200H720Z"
-                fill="url(#sh-bd-gradient)"
-                stroke="url(#sh-bd-rim)"
-                strokeWidth="0.5"
+                strokeWidth="0.6"
                 style={{ paintOrder: "stroke fill" }}
               />
             </svg>
@@ -2177,38 +2223,39 @@ export default function SculptureHero(props: SculptureHeroProps) {
       <div className="sh-spacer" />
 
       <div ref={contentRef} className="sh-content">
-        <div>
-          {eyebrow ? <p className="sh-eyebrow">{eyebrow}</p> : null}
-          <h1 className="sh-h1">{renderHeadline(headline, headlineAccent)}</h1>
+        {eyebrow ? <p className="sh-eyebrow">{eyebrow}</p> : null}
+        <h1 className="sh-h1">{renderHeadline(headline, headlineAccent)}</h1>
+        {body ? <p className="sh-body">{body}</p> : null}
+        <div className="sh-ctas">
+          {primaryCta && primaryCta.label ? (
+            <a className="sh-btn" href={primaryCta.href}>
+              {primaryCta.label}
+              <span className="sh-plus">+</span>
+            </a>
+          ) : null}
+          {secondaryCta && secondaryCta.label ? (
+            <a className="sh-txt" href={secondaryCta.href}>
+              {secondaryCta.label}
+              <Arrow />
+            </a>
+          ) : null}
+          {!showNav && themeToggle ? (
+            <button
+              type="button"
+              className="sh-theme"
+              aria-label={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
+              title={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
+              onClick={() => setMode((m) => (m === "dark" ? "light" : "dark"))}
+            >
+              {mode === "dark" ? <SunIcon /> : <MoonIcon />}
+            </button>
+          ) : null}
         </div>
-        <div className="sh-aside">
-          {body ? <p className="sh-body">{body}</p> : null}
-          <div className="sh-ctas">
-            {primaryCta && primaryCta.label ? (
-              <a className="sh-btn" href={primaryCta.href}>
-                {primaryCta.label}
-                <Arrow />
-              </a>
-            ) : null}
-            {secondaryCta && secondaryCta.label ? (
-              <a className="sh-txt" href={secondaryCta.href}>
-                {secondaryCta.label}
-                <Arrow />
-              </a>
-            ) : null}
-            {!showNav && themeToggle ? (
-              <button
-                type="button"
-                className="sh-theme"
-                aria-label={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
-                title={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
-                onClick={() => setMode((m) => (m === "dark" ? "light" : "dark"))}
-              >
-                {mode === "dark" ? <SunIcon /> : <MoonIcon />}
-              </button>
-            ) : null}
-          </div>
-        </div>
+      </div>
+
+      <div className="sh-scroll-indicator" aria-hidden="true">
+        <span>SCROLL &darr;</span>
+        <div className="sh-scroll-line" />
       </div>
 
       {showCredit && (

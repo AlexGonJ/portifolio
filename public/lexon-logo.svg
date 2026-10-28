@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="290 235 710 230" width="100%" height="100%">
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 329 292 L 360 264 L 360 356 L 329 385 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 369 264 L 400 292 L 400 356 L 369 385 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 329 395 L 360 366 L 360 400 L 436 400 C 441 411 447 420 455 428 L 356 428 L 329 404 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 379 391 L 407 362 L 449 362 C 452 329 476 308 510 308 C 546 308 570 332 570 369 L 570 380 L 478 380 C 481 396 494 405 512 405 C 525 405 535 400 542 392 L 564 407 C 552 422 534 431 511 431 C 476 431 452 411 449 380 L 449 391 Z M 478 356 L 540 356 C 537 340 526 331 510 331 C 493 331 481 340 478 356 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 573 312 L 609 312 L 639 351 L 669 312 L 704 312 L 657 369 L 706 428 L 670 428 L 639 387 L 607 428 L 572 428 L 621 369 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 768 308 C 805 308 832 334 832 370 C 832 406 805 431 768 431 C 731 431 704 406 704 370 C 704 334 731 308 768 308 Z M 768 334 C 748 334 735 349 735 370 C 735 391 748 405 768 405 C 788 405 801 391 801 370 C 801 349 788 334 768 334 Z" />
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#B5AA9A" d="M 847 312 L 877 312 L 877 327 C 886 314 900 308 917 308 C 944 308 960 325 960 354 L 960 428 L 929 428 L 929 360 C 929 342 920 334 905 334 C 889 334 878 344 878 362 L 878 428 L 847 428 Z" />
+</svg>
