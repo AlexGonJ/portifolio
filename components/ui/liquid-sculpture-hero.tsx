@@ -1369,9 +1369,12 @@ const CSS = `
   touch-action:pan-y;display:flex;flex-direction:column;box-sizing:border-box}
 .sh-root *,.sh-root *::before,.sh-root *::after{box-sizing:border-box}
 .sh-stage{position:absolute;inset:0;z-index:1;pointer-events:none}
+.sh-fallback-pic{display:contents}
 .sh-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .45s ease}
-.sh-fallback{position:absolute;display:block;max-width:none;user-select:none;-webkit-user-drag:none;opacity:0;transition:opacity .5s ease}
+.sh-fallback{position:absolute;display:block;user-select:none;-webkit-user-drag:none;top:50%;left:50%;transform:translate(-50%,-50%);max-width:min(85vw,420px);max-height:55vh;width:auto;height:auto;object-fit:contain;opacity:1;transition:opacity .5s ease}
 .sh-root[data-gl="on"] .sh-canvas{opacity:1}
+.sh-root[data-gl="on"] .sh-fallback{opacity:0;pointer-events:none}
+.sh-root[data-gl="off"] .sh-canvas{display:none}
 .sh-root[data-gl="off"] .sh-fallback{opacity:1}
 .sh-root[data-gl="off"][data-scrolled="1"] .sh-fallback{opacity:0;transform:translateX(80px);transition:opacity .6s ease, transform .6s ease}
 .sh-root[data-swap="1"] .sh-canvas{opacity:0;transition-duration:.25s}
@@ -1449,9 +1452,9 @@ const CSS = `
 .sh-spacer{flex:1 1 auto;min-height:0}
 .sh-content{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:end;
   gap:clamp(24px,4cqw,68px);padding:0 6vw clamp(28px,3.8vh,54px)}
-.sh-eyebrow{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;opacity:.68;margin:0 0 clamp(12px,1.4cqw,20px);
-  display:flex;align-items:center;gap:12px;color:var(--sh-acc)}
-.sh-eyebrow::before{content:"";width:28px;height:1px;background:var(--sh-acc);opacity:.85}
+.sh-eyebrow{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;margin:0 0 clamp(12px,1.4cqw,20px);
+  display:flex;align-items:center;gap:12px;color:var(--sh-fg);opacity:.92;font-weight:600}
+.sh-eyebrow::before{content:"";width:28px;height:1px;background:var(--sh-fg);opacity:.65}
 .sh-h1{font-family:var(--sh-head);font-weight:500;font-size:clamp(34px,min(4.35cqw,8cqh),74px);line-height:.96;letter-spacing:-.04em;margin:0;
   text-wrap:balance;max-width:17ch}
 .sh-h1 .sh-line{display:block}
@@ -1814,6 +1817,9 @@ export default function SculptureHero(props: SculptureHeroProps) {
       img.style.top = rect.y + "px"
       img.style.width = rect.w + "px"
       img.style.height = rect.h + "px"
+      img.style.maxWidth = "none"
+      img.style.maxHeight = "none"
+      img.style.transform = "none"
     }
     const hintEl = hintRef.current
     if (hintEl) {
@@ -2101,7 +2107,26 @@ export default function SculptureHero(props: SculptureHeroProps) {
         </div>
       ) : null}
       <div ref={stageRef} className="sh-stage" aria-hidden="true">
-        <img ref={imgRef} className="sh-fallback" src={activeSrc} alt="" crossOrigin="anonymous" draggable={false} />
+        <picture className="sh-fallback-pic">
+          <source
+            media="(max-width: 639px)"
+            srcSet={mode === "dark" ? (mobileDarkSrc || darkSrc) : mobileSrc}
+          />
+          <source
+            media="(min-width: 640px)"
+            srcSet={mode === "dark" ? darkSrc : src}
+          />
+          <img
+            ref={imgRef}
+            className="sh-fallback"
+            src={mode === "dark" ? (mobileDarkSrc || darkSrc || src) : (mobileSrc || src)}
+            alt=""
+            crossOrigin="anonymous"
+            draggable={false}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
       <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>{imageAlt}</span>
 

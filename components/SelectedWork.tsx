@@ -171,7 +171,7 @@ export default function SelectedWork() {
               className="relative shrink-0 w-[72%] aspect-[3/4] snap-center overflow-hidden bg-neutral-900 shadow-xl"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={card.src} alt={card.alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+              <img src={card.src} alt={card.alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />
             </Link>
           ))}
         </div>

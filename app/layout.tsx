@@ -105,6 +105,20 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning className={`${fontDisplay.variable} ${fontSans.variable}`}>
       <head>
         <StructuredData />
+        <link
+          rel="preload"
+          as="image"
+          href="/sculpture-mobile-light.webp"
+          media="(max-width: 639px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/sculpture-3d-clean.webp"
+          media="(min-width: 640px)"
+          fetchPriority="high"
+        />
       </head>
       <body suppressHydrationWarning>
         <Providers>

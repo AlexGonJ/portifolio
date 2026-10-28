@@ -7,9 +7,9 @@ import styles from '../styles/testimonials.module.scss'
 import { useLanguage } from '../i18n/LanguageContext'
 
 const DEFAULT_PORTRAITS: Record<string, string> = {
-  'Joanna Dias': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-  'Rafael Martins': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
-  'Camila Souza': 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop',
+  'Joanna Dias': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=75&w=160&auto=format&fit=crop',
+  'Rafael Martins': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=75&w=160&auto=format&fit=crop',
+  'Camila Souza': 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=75&w=160&auto=format&fit=crop',
 }
 
 export default function Testimonials() {
@@ -20,7 +20,7 @@ export default function Testimonials() {
     quote: item.quote,
     name: item.name,
     designation: item.role,
-    src: (item as { src?: string }).src || DEFAULT_PORTRAITS[item.name] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+    src: (item as { src?: string }).src || DEFAULT_PORTRAITS[item.name] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=75&w=160&auto=format&fit=crop',
   }))
 
   // Scroll-triggered stagger animation

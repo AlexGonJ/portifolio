@@ -193,6 +193,8 @@ export const CircularTestimonials = ({
               className="testimonial-image"
               data-index={index}
               style={getImageStyle(index)}
+              loading="lazy"
+              decoding="async"
             />
           ))}
         </div>
