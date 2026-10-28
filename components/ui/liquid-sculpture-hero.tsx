@@ -1134,11 +1134,13 @@ class LiquidEngine {
 
       const mob = this.cssW < 768
       const targetCenterXPx = this.cssW * (mob ? 0.50 : 0.59)
-      const targetCenterYPx = this.cssH * (mob ? 0.60 : 0.55)
+      const targetCenterYPx = mob ? Math.min(this.cssH * 0.22, 175) : this.cssH * 0.55
       const posX = (targetCenterXPx - this.cssW * 0.5) * worldUnitsPerPixel
       const posY = -(targetCenterYPx - this.cssH * 0.5) * worldUnitsPerPixel
 
-      const targetLogoWidthPx = Math.min(this.cssW * (mob ? 0.94 : 0.69), this.cssH * 0.64 * (631 / 167))
+      const targetLogoWidthPx = mob
+        ? Math.min(this.cssW * 0.82, 330)
+        : Math.min(this.cssW * 0.69, this.cssH * 0.64 * (631 / 167))
       const targetWorldWidth = targetLogoWidthPx * worldUnitsPerPixel
       const scale3D = targetWorldWidth / 631
 
@@ -1392,7 +1394,7 @@ function computeRect(
   oCenter?: { x: number; y: number; bdFontSize: number } | null
 ): Rect {
   const bandH = Math.max(80, band.bottom - band.top)
-  const mob = w < 640
+  const mob = w < 768
   const scale = (mob ? p.mobileScale : p.scale) || 1
 
   let rw: number
@@ -1401,14 +1403,15 @@ function computeRect(
   let cy: number
 
   if (oCenter) {
-    if (mob && aspect < 1.3) {
-      rw = w * 1.0 * scale
+    if (mob) {
+      // Mobile: Upper stage centered with 3D logo
+      rw = Math.min(w * 0.96, 380) * scale
       rh = rw / aspect
-      cx = oCenter.x + (0.5 - 0.5191) * rw + w * (p.x / 100)
-      cy = oCenter.y + (0.5 - 0.3982) * rh + h * (p.y / 100)
+      cx = oCenter.x + (0.5 - 0.52) * rw + w * (p.x / 100)
+      cy = oCenter.y + (0.5 - 0.42) * rh + h * (p.y / 100)
     } else {
       // Desktop: Large dramatic liquid ribbon flowing across hero and looping through letter O
-      rw = Math.min(w * (mob ? 0.98 : 0.78), h * 0.90 * aspect) * scale
+      rw = Math.min(w * 0.78, h * 0.90 * aspect) * scale
       rh = rw / aspect
       cx = oCenter.x + (0.5 - 0.60) * rw + w * (p.x / 100)
       cy = oCenter.y + (0.5 - 0.50) * rh - rh * 0.08 + h * (p.y / 100)
@@ -1531,7 +1534,10 @@ const CSS = `
 .sh-root:not([data-gl="off"]) .sh-backdrop{opacity:0!important;pointer-events:none}
 .sh-content{position:absolute;top:48%;transform:translateY(-50%);left:clamp(24px,7vw,96px);z-index:5;display:flex;flex-direction:column;align-items:flex-start;pointer-events:auto}
 @media(max-width:768px){
-  .sh-content{position:relative;top:auto;transform:none;left:auto;padding:28px var(--sh-pad) 20px;max-width:100%}
+  .sh-root{height:auto;min-height:100svh;overflow-y:visible;padding-bottom:28px}
+  .sh-spacer{flex:0 0 clamp(200px, 28vh, 250px);height:clamp(200px, 28vh, 250px)}
+  .sh-content{position:relative;top:auto;transform:none;left:auto;padding:8px var(--sh-pad, 20px) 24px;max-width:100%}
+  .sh-scroll-indicator{display:none}
 }
 .sh-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 16px;display:flex;align-items:center;gap:10px;color:var(--sh-fg);opacity:.75;font-weight:600}
 .sh-eyebrow::before{content:"";width:24px;height:1px;background:var(--sh-fg);opacity:.65}
@@ -1562,14 +1568,14 @@ const CSS = `
   .sh-links li:not(.sh-keep){display:none}
 }
 @container (max-width:639px){
-  .sh-nav{padding-top:20px}
-  .sh-nav-spacer{height:64px}
-  .sh-h1{font-size:clamp(30px,min(8.6cqw,6.2cqh),44px);line-height:1.10}
-  .sh-body{font-size:14px;margin-bottom:20px;line-height:1.55;max-width:100%}
-  .sh-eyebrow{font-size:10.5px;margin-bottom:12px}
-  .sh-ctas{gap:14px}
-  .sh-btn{height:46px;padding:0 22px;font-size:14px}
-  .sh-content{padding-bottom:32px}
+  .sh-nav{padding-top:16px}
+  .sh-nav-spacer{height:54px}
+  .sh-h1{font-size:clamp(28px,min(8.2cqw,5.8cqh),40px);line-height:1.12;margin-bottom:14px}
+  .sh-body{font-size:13.5px;margin-bottom:20px;line-height:1.55;max-width:100%}
+  .sh-eyebrow{font-size:10.5px;margin-bottom:10px}
+  .sh-ctas{gap:12px}
+  .sh-btn{height:44px;padding:0 20px;font-size:13.5px}
+  .sh-content{padding-bottom:28px}
   .sh-credit{right:auto;left:50%;transform:translateX(-50%)}
 }
 `
@@ -1887,9 +1893,11 @@ export default function SculptureHero(props: SculptureHeroProps) {
     let oCenter: { x: number; y: number; bdFontSize: number } | null = null
     if (isLexon) {
       const mob = w < 768
-      const targetLogoWidth = Math.min(w * (mob ? 0.94 : 0.69), h * 0.64 * (631 / 167))
+      const targetLogoWidth = mob
+        ? Math.min(w * 0.82, 330)
+        : Math.min(w * 0.69, h * 0.64 * (631 / 167))
       const targetCenterX = w * (mob ? 0.50 : 0.59)
-      const targetCenterY = h * (mob ? 0.60 : 0.55)
+      const targetCenterY = mob ? Math.min(h * 0.22, 175) : h * 0.55
       // In Lexon 631x167, letter O is at X offset +0.1957 of width right of center
       const oCenterX = targetCenterX + targetLogoWidth * 0.1957
       const oCenterY = targetCenterY
