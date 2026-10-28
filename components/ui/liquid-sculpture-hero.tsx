@@ -151,6 +151,7 @@ uniform float uTime;
 uniform float uDt;
 uniform float uIntro;
 uniform float uOutro;
+uniform float uAmbient;
 ${NOISE}
 vec2 curl(vec2 p){
   const float e = 0.35;
@@ -200,10 +201,11 @@ void main(){
   acc += vec2(-n.y, n.x)*f*1.45*uStrength*uSpread*(0.4+sd);
   // carried by the liquid wake
   acc += (wake*42.0*uSpread*light - vel)*e*0.08;
-  // curl-noise turbulence where the material is disturbed (and during intro/outro waves)
+  // curl-noise turbulence where the material is disturbed (and continuously animated by ambient flow)
   vec2 q = p*0.0095 + vec2(uTime*0.35, -uTime*0.2);
   vec2 c = curl(q) + 0.5*curl(q*2.3 + 7.1);
-  acc += c*(e*1.2*uSpread + introEnergy*1.6 + outroEnergy*2.4)*uTurb*light;
+  float ambFlow = uAmbient * 0.45;
+  acc += c*(e*1.2*uSpread + ambFlow + introEnergy*1.6 + outroEnergy*2.4)*uTurb*light;
 
   // OUTRO: blow particles off-screen to the right (+X) as exit wave sweeps across
   if(outroProg > 0.001){
@@ -280,7 +282,8 @@ void main(){
   float E = energyAt(hm.xy*uRect.zw, uMouse, uRadius, uPresence, wakeE);
   float lift = smoothstep(0.35, 2.5, length(st.xy));
   float outroLift = smoothstep(0.0, 0.22, outroProg);
-  float a = max(max(E, lift), max(uRest, max(1.0 - localImgVis, outroLift))) * introAppear * outroFade;
+  float ambLift = uAmbient > 0.1 ? 1.0 : 0.0;
+  float a = max(max(E, lift), max(max(uRest, ambLift), max(1.0 - localImgVis, outroLift))) * introAppear * outroFade;
   if(a < 0.01){ gl_Position = vec4(2.0,2.0,2.0,1.0); return; }
 
   vec2 base = uRect.xy + hm.xy*uRect.zw + st.xy;
@@ -387,7 +390,8 @@ void main(){
   float outroProg = clamp((uOutro - outroDelay) / 0.39, 0.0, 1.0);
   float outroImgVis = 1.0 - smoothstep(0.02, 0.32, outroProg);
 
-  float show = (1.0 - max(E, uRest)) * localImgVis * outroImgVis;
+  float ambLift = uAmbient > 0.1 ? 1.0 : 0.0;
+  float show = (1.0 - max(max(E, uRest), ambLift)) * localImgVis * outroImgVis;
   vec3 mat = uAlphaMode > 0.5 ? col : col*(uBg/max(uImgBg, vec3(0.001)));
   // premultiplied: empty areas stay transparent so the page (and the backdrop word) shows through
   float A = k*show;
@@ -666,7 +670,8 @@ class LiquidEngine {
   /** One particle per material pixel of a grid laid over the image. */
   private buildParticles(img: HTMLImageElement) {
     const gl = this.gl
-    const baseGrid = this.lowPower ? 640 : 1000
+    const mob = this.cssW < 768
+    const baseGrid = mob ? 480 : (this.lowPower ? 640 : 1000)
     const gw = Math.round(baseGrid * Math.sqrt(clamp(this.opts.density, 0.15, 2)))
     const gh = Math.max(1, Math.round(gw / this.aspect))
     this.gridW = gw
@@ -829,7 +834,8 @@ class LiquidEngine {
     this.cssH = Math.max(1, cssH)
     this.rect = rect
     if (band) this.band = band
-    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.5 : 2.0)
+    const mob = this.cssW < 768
+    let dpr = Math.min(window.devicePixelRatio || 1, mob ? 1.5 : (this.lowPower ? 1.5 : 2.0))
     const px = this.cssW * this.cssH * dpr * dpr
     if (px > 8e6) dpr = Math.max(1, Math.sqrt(8e6 / (this.cssW * this.cssH)))
     const w = Math.round(this.cssW * dpr)
@@ -866,7 +872,7 @@ class LiquidEngine {
     this.lastInput = now
     this.settle = 0
     if (type === "down") {
-      this.burst = 1
+      this.burst = touch ? 0.35 : 1
       this.touchRelease = 0
     }
     this.wake()
@@ -963,6 +969,7 @@ class LiquidEngine {
       }
       this.raf = requestAnimationFrame(this.frame)
       this.time += (dt * o.speed) / 60
+      this.stepSim(dt)
       this.draw()
       this.firstFrame()
       return
@@ -1045,6 +1052,7 @@ class LiquidEngine {
     gl.uniform1f(P.u.uDt, dt)
     gl.uniform1f(P.u.uIntro, introProgress)
     gl.uniform1f(P.u.uOutro, this.outroProgress)
+    gl.uniform1f(P.u.uAmbient, o.ambient && !o.reducedMotion ? clamp(o.ambientIntensity, 0, 2) : 0)
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
     this.stateIdx = dst
     this.stateDirty = true
@@ -1124,7 +1132,8 @@ class LiquidEngine {
       const viewMat = cam.matrixWorldInverse
       const eye = cam.position
 
-      const hasMouse = this.mouse.x >= 0 && this.mouse.y >= 0
+      const mob = this.cssW < 768
+      const hasMouse = !mob && this.mouse.x >= 0 && this.mouse.y >= 0
       const mouseNormX = hasMouse ? clamp((this.mouse.x / this.cssW) * 2 - 1, -1, 1) : 0
       const mouseNormY = hasMouse ? clamp(-((this.mouse.y / this.cssH) * 2 - 1), -1, 1) : 0
 
@@ -1132,7 +1141,6 @@ class LiquidEngine {
       const H_world = 2 * 500 * Math.tan(fovRad)
       const worldUnitsPerPixel = H_world / this.cssH
 
-      const mob = this.cssW < 768
       const targetCenterXPx = this.cssW * (mob ? 0.50 : 0.59)
       const targetCenterYPx = mob ? Math.min(this.cssH * 0.22, 175) : this.cssH * 0.55
       const posX = (targetCenterXPx - this.cssW * 0.5) * worldUnitsPerPixel
@@ -1449,7 +1457,7 @@ const CSS = `
   background:var(--sh-bg);color:var(--sh-fg);font-family:var(--sh-body);-webkit-font-smoothing:antialiased;
   touch-action:pan-y;display:flex;flex-direction:column;box-sizing:border-box}
 .sh-root *,.sh-root *::before,.sh-root *::after{box-sizing:border-box}
-.sh-stage{position:absolute;inset:0;z-index:1;pointer-events:none}
+.sh-stage{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .sh-fallback-pic{display:contents}
 .sh-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .45s ease}
 .sh-fallback{position:absolute;display:block;user-select:none;-webkit-user-drag:none;top:50%;left:50%;transform:translate(-50%,-50%);max-width:min(85vw,420px);max-height:55vh;width:auto;height:auto;object-fit:contain;opacity:1;transition:opacity .5s ease}
@@ -1534,7 +1542,8 @@ const CSS = `
 .sh-root:not([data-gl="off"]) .sh-backdrop{opacity:0!important;pointer-events:none}
 .sh-content{position:absolute;top:48%;transform:translateY(-50%);left:clamp(24px,7vw,96px);z-index:5;display:flex;flex-direction:column;align-items:flex-start;pointer-events:auto}
 @media(max-width:768px){
-  .sh-root{height:auto;min-height:100svh;overflow-y:visible;padding-bottom:28px}
+  .sh-root{height:auto;min-height:100svh;overflow:visible;touch-action:pan-y;-webkit-overflow-scrolling:touch;padding-bottom:28px}
+  .sh-stage{overflow:hidden}
   .sh-spacer{flex:0 0 clamp(200px, 28vh, 250px);height:clamp(200px, 28vh, 250px)}
   .sh-content{position:relative;top:auto;transform:none;left:auto;padding:8px var(--sh-pad, 20px) 24px;max-width:100%}
   .sh-scroll-indicator{display:none}
@@ -1671,7 +1680,7 @@ export default function SculptureHero(props: SculptureHeroProps) {
     background: lightBackground = DEFAULTS.background,
     darkBackground = DEFAULTS.darkBackground,
     theme = "light",
-    themeToggle = true,
+    themeToggle = false,
     textColor,
     accentColor,
     headingFont = DEFAULTS.headingFont,
@@ -1980,23 +1989,29 @@ export default function SculptureHero(props: SculptureHeroProps) {
     }
     const onMove = (e: PointerEvent) => {
       const [x, y] = pos(e)
-      const touch = e.pointerType === "touch"
-      if (touch && e.buttons === 0 && e.pressure === 0) return
-      engine?.pointer("move", x, y, touch)
+      const isTouch = e.pointerType === "touch"
+      const mob = window.innerWidth < 768
+      if (isTouch && mob && y > 260) return
+      engine?.pointer("move", x, y, isTouch)
       markTouched()
     }
     const onDown = (e: PointerEvent) => {
       const [x, y] = pos(e)
-      engine?.pointer("down", x, y, e.pointerType === "touch")
+      const isTouch = e.pointerType === "touch"
+      const mob = window.innerWidth < 768
+      if (isTouch && mob && y > 260) return
+      engine?.pointer("down", x, y, isTouch)
       markTouched()
     }
     const onUp = (e: PointerEvent) => {
+      const isTouch = e.pointerType === "touch"
       const [x, y] = pos(e)
-      engine?.pointer("up", x, y, e.pointerType === "touch")
+      engine?.pointer("up", x, y, isTouch)
     }
     const onLeave = (e: PointerEvent) => {
+      const isTouch = e.pointerType === "touch"
       const [x, y] = pos(e)
-      engine?.pointer("leave", x, y, e.pointerType === "touch")
+      engine?.pointer("leave", x, y, isTouch)
     }
     root.addEventListener("pointermove", onMove, { passive: true })
     root.addEventListener("pointerdown", onDown, { passive: true })
@@ -2197,18 +2212,6 @@ export default function SculptureHero(props: SculptureHeroProps) {
                 </a>
               </li>
             ))}
-            {themeToggle && (
-              <li className="sh-keep">
-                <button
-                  type="button"
-                  className="sh-theme"
-                  aria-label={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
-                  onClick={() => setMode((m) => (m === "dark" ? "light" : "dark"))}
-                >
-                  {mode === "dark" ? <SunIcon /> : <MoonIcon />}
-                </button>
-              </li>
-            )}
             {navCta && navCta.label && (
               <li className="sh-keep">
                 <a className="sh-navcta" href={navCta.href}>
@@ -2246,17 +2249,6 @@ export default function SculptureHero(props: SculptureHeroProps) {
               {secondaryCta.label}
               <Arrow />
             </a>
-          ) : null}
-          {!showNav && themeToggle ? (
-            <button
-              type="button"
-              className="sh-theme"
-              aria-label={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
-              title={mode === "dark" ? "Alternar para tema claro" : "Alternar para tema escuro"}
-              onClick={() => setMode((m) => (m === "dark" ? "light" : "dark"))}
-            >
-              {mode === "dark" ? <SunIcon /> : <MoonIcon />}
-            </button>
           ) : null}
         </div>
       </div>
